@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Guide interactif des usages de Claude pour les opérations d'un groupe de restaurants et de bars.">
+  <meta name="description" content="Hugueleton, le guide interactif des usages de Claude pour les opérations d'un groupe de restaurants et de bars.">
   <link rel="icon" type="image/png" href="./assets/hugo-rugbyman.png">
-  <title>Le Bureau de Hugo — Conseiller IA des opérations</title>
+  <title>Hugueleton — Conseiller IA des opérations</title>
   <style>
     :root {
       --ink: #18231f;
@@ -262,7 +262,7 @@
 <body>
   <div class="app">
     <aside class="sidebar" aria-label="Catégories">
-      <div class="brand"><div class="brand-mark"><img src="./assets/hugo-rugbyman.png" alt=""></div><div><strong>Le Bureau de Hugo</strong><small>Responsable opérationnel</small></div></div>
+      <div class="brand"><div class="brand-mark"><img src="./assets/hugo-rugbyman.png" alt=""></div><div><strong>Hugueleton</strong><small>Responsable opérationnel</small></div></div>
       <div class="nav-label">Explorer</div>
       <nav class="nav-list" id="categoryNav"></nav>
       <div class="sidebar-note"><b>Une règle simple</b><p>Claude prépare, compare et recommande. Le responsable conserve la décision, surtout pour l'humain, les achats et les engagements.</p></div>
@@ -275,7 +275,7 @@
       </div>
 
       <section class="hero">
-        <span class="eyebrow">Votre conseiller IA opérationnel</span>
+        <span class="eyebrow">Le copilote qui met les problèmes à table</span>
         <h1>Qu’est-ce que Claude peut vous faire gagner aujourd’hui&nbsp;?</h1>
         <p class="hero-copy">Décrivez une difficulté et obtenez une méthode prête à appliquer. Remontées des restaurants, fournisseurs, marges, stocks, concepts ou recrutement cuisine&nbsp;: on part des fichiers et outils déjà utilisés.</p>
         <form class="ask-box" id="askForm">
@@ -292,7 +292,7 @@
       </section>
 
       <section class="venue-panel" id="tools">
-        <div class="venue-panel-head"><div><span class="eyebrow">Avec Claude Code</span><h2>Six micro-outils vraiment utiles.</h2></div><p>Des outils simples autour de Google Drive, Sheets et des exports Excel déjà disponibles. Un problème précis, peu de saisie et un résultat vérifiable.</p></div>
+        <div class="venue-panel-head"><div><span class="eyebrow">Avec Claude Code</span><h2>Six micro-outils vraiment utiles.</h2></div><p>Le premier est détaillé juste dessous comme exemple connecté. Cinq autres outils suivent, autour de Google Drive, Sheets et des exports Excel déjà disponibles.</p></div>
         <div class="connected-flow">
           <div class="connected-flow-head"><div><span class="eyebrow" style="color:var(--yellow)">Le circuit connecté le plus simple</span><h3>Une boîte de réception pour tous les restaurants.</h3><p>Chaque manager remplit un formulaire mobile d’une minute. Les réponses alimentent un Google Sheet et Hugo reçoit un digest priorisé, sans déployer de nouveau logiciel métier.</p></div><span class="connected-badge">Google Workspace · sans API métier</span></div>
           <div class="flow-steps">
@@ -569,7 +569,7 @@
     function catalogueCases() { return cases.filter(item => actionCases.has(item.t)).sort((left, right) => categoryOrder.get(left.c) - categoryOrder.get(right.c)); }
     function categoryCount(category) { return category === "Tous" ? catalogueCases().length : catalogueCases().filter(x => x.c === category).length; }
     function renderCodeTools() {
-      const tools = cases.filter(item => codeToolTitles.has(item.t));
+      const tools = cases.filter(item => codeToolTitles.has(item.t) && item.t !== "Construire la boîte de réception des restaurants");
       codeToolGrid.innerHTML = tools.map(item => {
         const connected = item.t === "Construire la boîte de réception des restaurants";
         const shared = connected || item.t === "Construire le vivier cuisine et le suivi des essais";
@@ -675,7 +675,7 @@
       const impact = document.getElementById("impact").value;
       const example = document.getElementById("example").value.trim() || "Aucun exemple ajouté";
       const recos = intakeRecommendations[pain] || [];
-      const summary = `Diagnostic Le Bureau de Hugo\n\nSujet prioritaire : ${pain}\nFréquence : ${frequency}\nMéthode actuelle : ${method}\nImpact : ${impact}\nExemple : ${example}\n\nCas d'usage recommandés :\n- ${recos.join("\n- ")}`;
+      const summary = `Diagnostic Hugueleton\n\nSujet prioritaire : ${pain}\nFréquence : ${frequency}\nMéthode actuelle : ${method}\nImpact : ${impact}\nExemple : ${example}\n\nCas d'usage recommandés :\n- ${recos.join("\n- ")}`;
       const subject = encodeURIComponent(`Diagnostic Claude — ${pain}`);
       const body = encodeURIComponent(summary);
       const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=marie_lemee%40hotmail.com&su=${subject}&body=${body}`;

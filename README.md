@@ -1,4 +1,4 @@
-# Le Bureau de Hugo — guide des cas d'usage Claude
+# Hugueleton — guide des cas d'usage Claude
 
 Prototype HTML autonome destiné à expliquer les usages possibles de Claude et Claude Code à un responsable opérationnel d'un groupe de restaurants et de bars.
 
