@@ -137,6 +137,18 @@
     .venue-recos { display: grid; gap: 7px; }
     .venue-reco { border: 0; background: var(--white); border-radius: 11px; min-height: 44px; padding: 10px 13px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; text-align: left; font-size: 11px; font-weight: 700; }
     .venue-reco:hover { color: var(--green); box-shadow: 0 8px 20px rgba(33,44,38,.08); }
+    .mission { max-width: 1080px; margin: 42px auto 58px; background: var(--green); color: white; border-radius: 26px; padding: clamp(26px,5vw,52px); }
+    .mission-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; }
+    .mission-head p { color: rgba(255,255,255,.68); max-width: 550px; font-size: 12px; line-height: 1.6; margin: 0; }
+    .mission-options { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-top: 28px; }
+    .mission-button { border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.08); color: white; border-radius: 13px; padding: 15px; min-height: 78px; text-align: left; cursor: pointer; font-size: 11px; line-height: 1.4; }
+    .mission-button:hover, .mission-button.active { background: var(--white); color: var(--ink); }
+    .mission-output { display: grid; grid-template-columns: .8fr 1.2fr; gap: 22px; margin-top: 16px; padding: 22px; background: var(--white); color: var(--ink); border-radius: 16px; }
+    .mission-output h3 { font: 600 27px Baskerville, Georgia, serif; margin: 5px 0 9px; }
+    .mission-output p { color: var(--muted); font-size: 12px; line-height: 1.55; margin: 0; }
+    .mission-deliverables { display: grid; gap: 7px; }
+    .mission-deliverable { padding: 11px 13px; border-radius: 10px; background: var(--paper); font-size: 11px; }
+    .mission-link { border: 0; background: var(--orange); color: white; border-radius: 10px; padding: 11px 14px; cursor: pointer; font-size: 11px; font-weight: 700; margin-top: 11px; }
 
     .method { margin-top: 60px; background: var(--ink); color: white; border-radius: 26px; padding: clamp(28px, 5vw, 58px); overflow: hidden; position: relative; }
     .method::after { content: ""; position: absolute; width: 340px; height: 340px; border-radius: 50%; background: var(--orange); filter: blur(1px); opacity: .11; right: -170px; top: -170px; }
@@ -174,6 +186,22 @@
     .prompt { background: var(--ink); color: rgba(255,255,255,.8); border-radius: 14px; padding: 18px; font: 400 11px/1.65 "SFMono-Regular", Consolas, monospace; white-space: pre-wrap; }
     .copy { margin-top: 10px; border: 0; background: var(--orange); color: white; border-radius: 10px; padding: 11px 16px; cursor: pointer; font-weight: 700; }
     .guardrail { padding: 15px 18px; background: #fff4d5; border-left: 3px solid var(--yellow); border-radius: 0 10px 10px 0; font-size: 12px; line-height: 1.55; }
+    .intake-dialog { width: min(720px, calc(100vw - 24px)); }
+    .intake-intro { padding: 28px 32px 0; }
+    .intake-intro h2 { margin: 7px 0 10px; }
+    .intake-intro p { color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .intake-form { padding: 22px 32px 32px; display: grid; gap: 16px; }
+    .field label, .field legend { display: block; font-size: 11px; font-weight: 700; margin-bottom: 7px; }
+    .field select, .field textarea { width: 100%; border: 1px solid var(--line); border-radius: 11px; background: var(--paper); color: var(--ink); padding: 12px 13px; font: inherit; font-size: 12px; }
+    .field textarea { min-height: 78px; resize: vertical; }
+    .intake-actions { display: flex; gap: 9px; justify-content: space-between; align-items: center; margin-top: 4px; }
+    .intake-actions button, .mail-result a { border: 0; border-radius: 11px; min-height: 44px; padding: 11px 16px; cursor: pointer; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; }
+    .primary-action, .mail-result a { background: var(--orange); color: white; }
+    .secondary-action { background: transparent; color: var(--muted); }
+    .mail-result { display: none; border-top: 1px solid var(--line); padding-top: 18px; }
+    .mail-result.visible { display: block; }
+    .mail-result p { color: var(--muted); font-size: 12px; line-height: 1.55; }
+    .diagnostic-trigger { border: 0; background: var(--green); color: white; border-radius: 999px; padding: 9px 14px; cursor: pointer; font-size: 11px; font-weight: 700; }
 
     footer { max-width: 1080px; margin: 55px auto 0; padding-top: 22px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 10px; }
     @keyframes rise { from { opacity: 0; transform: translateY(7px); } }
@@ -189,7 +217,8 @@
       .steps { grid-template-columns: repeat(2,1fr); }
     }
     @media (max-width: 620px) {
-      .usecase-grid, .facts, .source-kit, .need-grid, .venue-focus { grid-template-columns: 1fr; }
+      .usecase-grid, .facts, .source-kit, .need-grid, .venue-focus, .mission-output { grid-template-columns: 1fr; }
+      .mission-options { grid-template-columns: repeat(2,1fr); }
       .venue-panel-head { display: block; }
       .venue-panel-head p { margin-top: 10px; }
       .steps { grid-template-columns: 1fr; }
@@ -199,6 +228,7 @@
       h1 { font-size: 45px; }
       .card { min-height: 205px; }
       .modal-head, .modal-body { padding-left: 22px; padding-right: 22px; }
+      .mission-options { grid-template-columns: 1fr; }
       footer { flex-direction: column; }
     }
     @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; animation: none !important; transition: none !important; } }
@@ -216,7 +246,7 @@
     <main>
       <div class="topbar">
         <span class="eyebrow">Guide interactif · Groupe multi-établissements</span>
-        <span class="status"><i class="status-dot"></i> Démonstration locale — aucune donnée envoyée</span>
+        <button class="diagnostic-trigger" id="openIntake">Faire mon diagnostic</button>
       </div>
 
       <section class="hero">
@@ -234,6 +264,12 @@
           <button class="chip" data-question="Comment tester un nouveau concept ?">Tester un nouveau concept</button>
         </div>
         <div class="answer" id="answer" aria-live="polite"></div>
+      </section>
+
+      <section class="mission" id="mission">
+        <div class="mission-head"><div><span class="eyebrow" style="color:var(--yellow)">La mission d’Hugo</span><h2>Partir d’un vrai problème.</h2></div><p>Choisissez une situation. Claude prépare les idées et les décisions ; Claude Code peut ensuite transformer la méthode en outil réutilisable.</p></div>
+        <div class="mission-options" id="missionOptions"></div>
+        <div class="mission-output" id="missionOutput" aria-live="polite"></div>
       </section>
 
       <section class="venue-panel" id="venues">
@@ -275,6 +311,19 @@
     <div class="modal-body" id="dialogBody"></div>
   </dialog>
 
+  <dialog id="intakeDialog" class="intake-dialog" aria-labelledby="intakeTitle">
+    <div class="intake-intro"><span class="eyebrow">5 questions · 2 minutes</span><h2 id="intakeTitle">Où Claude peut-il vraiment vous aider&nbsp;?</h2><p>Ce court diagnostic permet de faire ressortir les cas d’usage à creuser en priorité. Aucune réponse n’est stockée sur ce site.</p></div>
+    <form class="intake-form" id="intakeForm">
+      <div class="field"><label for="mainPain">Quel sujet vous pose le plus de difficultés aujourd’hui&nbsp;?</label><select id="mainPain" required><option value="">Choisir un sujet</option><option>Performance des établissements</option><option>Fournisseurs, achats et factures</option><option>Recrutement cuisine et salle</option><option>Stocks, commandes et préparation</option><option>Organisation des équipes</option><option>Carte, coût matière et marge</option><option>Nouveaux concepts et temps forts</option><option>Ambiance, musique et programmation</option></select></div>
+      <div class="field"><label for="frequency">À quelle fréquence ce sujet revient-il&nbsp;?</label><select id="frequency" required><option value="">Choisir une fréquence</option><option>Tous les jours</option><option>Chaque semaine</option><option>Chaque mois</option><option>Quelques fois par an</option></select></div>
+      <div class="field"><label for="currentMethod">Comment le traitez-vous aujourd’hui&nbsp;?</label><select id="currentMethod" required><option value="">Choisir une réponse</option><option>Excel ou exports de caisse</option><option>Emails, WhatsApp et notes</option><option>Un logiciel métier</option><option>Principalement de mémoire et à l’intuition</option><option>Plusieurs outils difficiles à rapprocher</option></select></div>
+      <div class="field"><label for="impact">Quel est l’impact principal&nbsp;?</label><select id="impact" required><option value="">Choisir un impact</option><option>Beaucoup de temps perdu</option><option>Coûts ou marge mal maîtrisés</option><option>Décisions prises trop tard</option><option>Difficulté à recruter ou organiser l’équipe</option><option>Expérience client ou ambiance irrégulière</option><option>Manque de visibilité entre les établissements</option></select></div>
+      <div class="field"><label for="example">Un exemple concret ou une idée que vous aimeriez tester</label><textarea id="example" placeholder="Ex. préparer plus vite les entretiens cuisine, imaginer la Fête de la musique, comparer les prix fournisseurs…"></textarea></div>
+      <div class="intake-actions"><button type="button" class="secondary-action" id="closeIntake">Explorer sans répondre</button><button type="submit" class="primary-action">Voir mes priorités →</button></div>
+      <div class="mail-result" id="mailResult" aria-live="polite"></div>
+    </form>
+  </dialog>
+
   <script>
     const categories = [
       ["Tous", "◎"], ["Performance", "↗"], ["Fournisseurs & achats", "◇"], ["Recrutement", "+"],
@@ -283,11 +332,11 @@
     ];
 
     const venues = [
-      {n:"Les Grands Gamins",type:"Restaurant-bar et lieu de vie",desc:"Cuisine, brunch, terrasse et activité de bar : un terrain complet pour travailler fréquentation, carte et équipe.",use:["Revue hebdomadaire d’un restaurant","Analyser la rentabilité de la carte","Préparer les entretiens"]},
+      {n:"Les Grands Gamins",type:"Restaurant-bar et lieu de vie",desc:"Cuisine, brunch, terrasse et activité de bar : un terrain complet pour travailler fréquentation, carte et équipe.",use:["Revue hebdomadaire d’un restaurant","Faire comprendre un poste cuisine","Préparer les entretiens"]},
       {n:"Le Caliente",type:"Bar à tapas, cocktails et programmation",desc:"Plusieurs moments dans la journée, restauration à partager et soirées animées.",use:["Créer une playlist par moment","Préparer les commandes","Programmer une soirée"]},
       {n:"Le Grand Bain",type:"Bistrot le midi, bar d’ambiance le soir",desc:"Un concept récent dont il faut suivre séparément le déjeuner, l’apéritif, la soirée et la montée en compétence de l’équipe.",use:["Imaginer l’ambiance lumineuse","Tester un concept à petite échelle","Définir un poste clé"]},
       {n:"Delirium Café",type:"Pub à forte spécialisation bière",desc:"Large assortiment, groupes, terrasse et animation : priorité aux stocks boissons et aux pics d’activité.",use:["Alerter sur une rupture","Préparer les commandes","Prévoir couverts et chiffre d’affaires"]},
-      {n:"Little Delirium Café",type:"Bar-restaurant de grande capacité",desc:"Groupes, restauration, retransmissions et longue amplitude d’ouverture demandent une équipe cuisine et salle bien calibrée.",use:["Estimer le besoin par rôle","Préparer les entretiens","Analyser le staffing après service"]},
+      {n:"Little Delirium Café",type:"Bar-restaurant de grande capacité",desc:"Groupes, restauration, retransmissions et longue amplitude d’ouverture demandent une équipe cuisine et salle bien calibrée.",use:["Estimer le besoin par rôle","Fidéliser une équipe cuisine","Analyser le staffing après service"]},
       {n:"Le Sketch",type:"Bar lounge et activité de soirée",desc:"Cocktails, petite restauration et ambiance évolutive entre après-midi et nuit.",use:["Créer une playlist par moment","Imaginer l’ambiance lumineuse","Synthétiser les avis clients"]},
       {n:"Les Innocents",type:"Bar et petite restauration",desc:"Format compact où la simplicité de carte, la rotation des produits et la polyvalence comptent fortement.",use:["Mettre à jour le coût des recettes","Planifier la mise en place","Estimer le besoin par rôle"]},
       {n:"La Place",type:"Bar festif et privatisable",desc:"Événements, cocktails et soirées : le planning, l’ambiance et la rentabilité par événement sont centraux.",use:["Programmer une soirée","Créer une playlist par moment","Registre des décisions et du ROI"]},
@@ -303,10 +352,25 @@
       "Prévoir couverts et chiffre d’affaires", "Préparer les commandes", "Planifier la mise en place",
       "Estimer le besoin par rôle", "Analyser le staffing après service", "Mettre à jour le coût des recettes",
       "Analyser la rentabilité de la carte", "Définir un poste clé", "Préparer les entretiens",
-      "Intégrer un chef ou un responsable de salle", "Diagnostiquer un concept existant",
+      "Faire comprendre un poste cuisine", "Fidéliser une équipe cuisine", "Intégrer un chef ou un responsable de salle", "Diagnostiquer un concept existant",
       "Tester un concept à petite échelle", "Créer une playlist par moment", "Imaginer l’ambiance lumineuse",
       "Synthétiser les avis clients", "Analyser les incidents"
     ]);
+
+    const excludedCases = new Set([
+      "Préparer la réunion groupe", "Registre des décisions et du ROI", "Rationaliser le panel fournisseurs",
+      "Sourcer un produit ou un équipement", "Synthétiser les candidatures", "Réallouer entre établissements",
+      "Préparer les consignes managers", "Détecter les écarts théorique / réel", "Préparer le lancement",
+      "Transformer une pratique en procédure", "Créer des fiches réflexes", "Évaluer réparer ou remplacer",
+      "Construire un outil interne", "Créer une base de procédures interrogeable"
+    ]);
+
+    const missions = [
+      {id:"recrutement",label:"Je n’arrive pas à recruter ou garder les cuisiniers",title:"Rendre le poste cuisine clair et désirable",text:"Présenter honnêtement une cuisine de tapas simple et répétitive, sans la dévaloriser : rythme, qualité attendue, autonomie, équipe et possibilités d’évolution.",items:["Une annonce qui montre la vraie journée de travail","Une trame d’entretien centrée sur le terrain","Un plan d’intégration et de fidélisation sur les premières semaines"],use:"Faire comprendre un poste cuisine"},
+      {id:"temps-fort",label:"Je prépare la Fête de la musique ou une grosse soirée",title:"Créer un temps fort exploitable",text:"Passer d’une idée créative à une soirée cohérente avec le lieu, l’équipe, la carte et le budget.",items:["Trois concepts adaptés au lieu","Playlist, lumière et déroulé","Équipe, offre courte, risques et critères de réussite"],use:"Programmer une soirée"},
+      {id:"performance",label:"Un établissement fonctionne moins bien",title:"Comprendre avant d’agir",text:"Distinguer un problème de fréquentation, de ticket, de marge, d’équipe ou d’expérience client.",items:["Les écarts réellement significatifs","Les causes à vérifier sur le terrain","Trois actions maximum avec échéance"],use:"Revue hebdomadaire d’un restaurant"},
+      {id:"concept",label:"Je veux améliorer ou inventer un concept",title:"Tester une idée sans tout bouleverser",text:"Clarifier la promesse, imaginer plusieurs pistes et organiser un test réversible avant d’investir.",items:["Trois territoires de concept distincts","Une fiche offre, ambiance et fonctionnement","Un test court avec seuil de réussite"],use:"Imaginer de nouveaux concepts"}
+    ];
 
     const cases = [
       {c:"Performance",t:"Briefing opérationnel du matin",d:"Consolider ventes, réservations, météo, incidents et décisions urgentes en trois priorités.",m:"Claude Code",e:"Intermédiaire",v:"Temps et anticipation",steps:["Rassembler les exports disponibles et définir l'heure de coupure.","Comparer avec les services réellement comparables.","Faire ressortir changements, risques, actions, échéances et confiance.","Valider les décisions avec les responsables de site."],prompt:"Voici les données des établissements pour aujourd'hui. Produis un briefing opérationnel avec trois décisions maximum par service. Pour chacune : changement observé, sources, action, responsable, heure limite, gain ou risque et niveau de confiance. N'invente aucune donnée manquante.",g:"Ne pas présenter une corrélation comme une cause certaine."},
@@ -326,6 +390,8 @@
       {c:"Recrutement",t:"Préparer les entretiens",d:"Créer une trame commune, des mises en situation et une grille de preuves.",m:"Claude",e:"Rapide",v:"Sélection plus cohérente",steps:["Définir cinq compétences clés.","Créer les mêmes questions socles pour tous.","Ajouter deux situations proches du terrain.","Noter des preuves, pas une impression générale."],prompt:"Crée une trame d'entretien structurée pour ce poste. Pour chaque compétence : question comportementale, relance, mise en situation, signaux positifs, signaux à vérifier et échelle de notation fondée sur des preuves.",g:"La décision finale reste humaine et collégiale lorsque possible."},
       {c:"Recrutement",t:"Synthétiser les candidatures",d:"Comparer les preuves au besoin du poste sans automatiser la décision d’embauche.",m:"Claude",e:"Rapide",v:"Lecture plus rapide",steps:["Retirer les informations personnelles non pertinentes.","Comparer aux critères publiés.","Séparer preuve, déclaration et information manquante.","Préparer les questions complémentaires."],prompt:"Compare ces candidatures uniquement aux critères explicites du poste. Pour chacune : preuves pertinentes, déclarations non vérifiées, informations manquantes et questions de relance. N'établis pas de classement automatique et ignore les caractéristiques protégées.",g:"Ne jamais confier à l'IA seule la sélection ou le rejet."},
       {c:"Recrutement",t:"Intégrer un chef ou un responsable de salle",d:"Préparer une prise de poste terrain centrée sur la carte, l’équipe, le service et les premières responsabilités.",m:"Claude",e:"Rapide",v:"Prise de poste sécurisée",steps:["Lister les savoirs et relations essentiels.","Définir les objectifs progressifs.","Prévoir observations et feedbacks réguliers.","Mesurer l'intégration sans surveillance disproportionnée."],prompt:"Construis un plan d'intégration terrain pour ce chef ou responsable de salle. Organise les premières semaines autour du concept, de la carte, des fournisseurs, de l'équipe, des procédures de service et des décisions qu'il devra progressivement prendre.",g:"Rester centré sur la réussite opérationnelle du poste, pas sur l'administration RH."},
+      {c:"Recrutement",t:"Faire comprendre un poste cuisine",d:"Montrer concrètement la réalité d’une cuisine de tapas : préparation, répétition, coup de feu, qualité et travail d’équipe.",m:"Claude",e:"Rapide",v:"Candidats mieux informés",steps:["Décrire une journée réelle.","Montrer les gestes et le rythme.","Assumer les tâches répétitives.","Expliquer ce qui rend le poste intéressant."],prompt:"À partir de cette carte et de l'organisation réelle, décris honnêtement une journée type en cuisine. Explique la mise en place, les préparations répétitives, le coup de feu, le rangement, les standards de qualité, l'autonomie et le travail d'équipe. Produis ensuite une version courte pour une annonce et une trame à présenter en entretien.",g:"Ne pas embellir le poste : une attente réaliste améliore le recrutement et la fidélisation."},
+      {c:"Recrutement",t:"Fidéliser une équipe cuisine",d:"Identifier les irritants concrets qui font partir les cuisiniers et construire quelques améliorations réalistes.",m:"Claude",e:"Rapide",v:"Moins de départs subis",steps:["Recueillir des retours anonymisés.","Séparer irritants ponctuels et récurrents.","Choisir des améliorations contrôlables.","Faire un point après quelques semaines."],prompt:"Analyse ces retours anonymisés de l'équipe cuisine. Classe les irritants liés aux horaires, au management, à la charge, à la répétition, au matériel, à la reconnaissance et à la progression. Propose cinq améliorations réalistes, puis un court questionnaire de suivi après quatre semaines.",g:"Claude aide à structurer l'écoute ; les échanges directs et les engagements du manager restent essentiels."},
 
       {c:"Stocks & préparation",t:"Prévoir couverts et chiffre d’affaires",d:"Produire une fourchette par service, ses facteurs et une confiance explicite.",m:"Claude Code",e:"Avancé",v:"Anticipation",steps:["Créer une référence simple sur les mêmes services passés.","Utiliser uniquement les informations connues à l'heure de décision.","Tester chronologiquement sans fuite future.","Afficher une fourchette et savoir s'abstenir."],prompt:"Construis une prévision explicable à partir de ces historiques et signaux connus. Affiche référence, estimation, fourchette, facteurs, date de coupure et confiance. Abstention obligatoire si l'historique ou la qualité est insuffisant.",g:"Un LLM ne doit pas être le moteur numérique de prévision."},
       {c:"Stocks & préparation",t:"Préparer les commandes",d:"Proposer des quantités à partir du stock, de la consommation et des contraintes de livraison.",m:"Claude Code",e:"Avancé",v:"Moins de ruptures et surplus",steps:["Normaliser stocks et unités.","Estimer la demande avec une fourchette.","Appliquer minimums, délais et durée de conservation.","Faire valider chaque commande."],prompt:"Propose une commande à partir du stock constaté, de la consommation prévue, de la fourchette d'incertitude et des contraintes fournisseur. Justifie chaque quantité et signale toute donnée de stock douteuse.",g:"Aucune commande n'est envoyée automatiquement."},
@@ -350,7 +416,7 @@
 
       {c:"Ambiance & programmation",t:"Créer une playlist par moment",d:"Définir une direction musicale cohérente pour l’ouverture, l’apéritif, le dîner et la soirée.",m:"Claude",e:"Rapide",v:"Identité et rythme du lieu",steps:["Décrire le concept et le public.","Découper les moments de la journée.","Définir énergie, styles et transitions.","Tester avec l'équipe et les clients."],prompt:"À partir du concept, du public et des horaires, construis une direction musicale par tranche horaire. Pour chaque moment, propose énergie, styles, artistes de référence, tempo, transitions et morceaux à éviter. Termine par une trame de playlist à valider par l'équipe.",g:"Vérifier les droits de diffusion et faire valider la sélection par la personne responsable de l'identité musicale."},
       {c:"Ambiance & programmation",t:"Imaginer l’ambiance lumineuse",d:"Traduire le concept en scènes lumineuses adaptées au déjeuner, à l’apéritif et à la nuit.",m:"Claude",e:"Rapide",v:"Atmosphère plus cohérente",steps:["Fournir photos et plan du lieu.","Décrire les moments et usages.","Créer quelques scènes simples.","Faire valider techniquement sur place."],prompt:"Analyse les photos et le plan de ce lieu. Propose des ambiances lumineuses simples pour chaque moment : zones, intensité, température de couleur, points d'accent, transitions et erreurs à éviter. Reste dans les capacités du matériel indiqué.",g:"Claude donne une direction créative ; un professionnel valide sécurité électrique, faisabilité et installation."},
-      {c:"Ambiance & programmation",t:"Programmer une soirée",d:"Transformer une idée d’animation en concept de soirée cohérent, exploitable et mesurable.",m:"Claude",e:"Rapide",v:"Programmation plus structurée",steps:["Définir public, objectif et budget.","Construire le déroulé.","Prévoir équipe, offre et communication.","Mesurer le résultat."],prompt:"Transforme cette idée en fiche de soirée : public, promesse, déroulé, musique ou animation, offre restauration et boissons, équipe, matériel, communication, budget, risques et indicateurs de réussite.",g:"La programmation artistique, la sécurité et les engagements financiers restent validés par les responsables."},
+      {c:"Ambiance & programmation",t:"Programmer une soirée",d:"Imaginer un concept pour la Fête de la musique, un match ou un autre temps fort, puis le rendre exploitable.",m:"Claude",e:"Rapide",v:"Programmation plus structurée",steps:["Définir public, objectif et budget.","Construire le déroulé.","Prévoir équipe, offre et communication.","Mesurer le résultat."],prompt:"Imagine trois concepts différents pour ce temps fort. Pour chacun : public, promesse, nom, ambiance, musique ou animation, offre restauration et boissons, déroulé, équipe, matériel, communication, budget, risques et indicateurs. Termine par la piste la plus simple à tester.",g:"La programmation artistique, la sécurité et les engagements financiers restent validés par les responsables."},
 
       {c:"Qualité & procédures",t:"Synthétiser les avis clients",d:"Classer les retours par thème, fréquence, évolution et gravité.",m:"Claude",e:"Rapide",v:"Expérience améliorée",steps:["Rassembler les avis sur une période comparable.","Classer sans perdre le contexte.","Repérer les motifs récurrents.","Relier aux observations terrain avant d'agir."],prompt:"Analyse ces retours clients par thème, fréquence, évolution et gravité. Donne quelques exemples courts, les limites de l'échantillon, les hypothèses opérationnelles et les vérifications terrain nécessaires.",g:"Les avis en ligne ne représentent pas tous les clients."},
       {c:"Qualité & procédures",t:"Transformer une pratique en procédure",d:"Formaliser les étapes, responsabilités, contrôles et réactions aux écarts.",m:"Claude",e:"Rapide",v:"Pratiques homogènes",steps:["Faire raconter la pratique par les équipes.","Décrire la version réelle avant la version cible.","Définir points de contrôle et exceptions.","Tester la procédure avec un nouvel utilisateur."],prompt:"Transforme ces notes en procédure opérationnelle : objectif, périmètre, prérequis, étapes, responsabilités, points de contrôle, exceptions, conduite en cas d'écart et version courte affichable.",g:"La procédure doit être validée par les personnes qui l'exécutent."},
@@ -369,8 +435,12 @@
     const grid = document.getElementById("usecaseGrid");
     const count = document.getElementById("resultCount");
     const dialog = document.getElementById("detailDialog");
+    const intakeDialog = document.getElementById("intakeDialog");
+    const intakeForm = document.getElementById("intakeForm");
     const venueList = document.getElementById("venueList");
     const venueFocus = document.getElementById("venueFocus");
+    const missionOptions = document.getElementById("missionOptions");
+    const missionOutput = document.getElementById("missionOutput");
 
     const sourceKits = {
       "Performance": {
@@ -411,6 +481,17 @@
       }
     };
 
+    const intakeRecommendations = {
+      "Performance des établissements":["Revue hebdomadaire d’un restaurant","Détecter une dérive","Briefing opérationnel du matin"],
+      "Fournisseurs, achats et factures":["Comparer les tarifs fournisseurs","Contrôler les factures","Préparer une négociation"],
+      "Recrutement cuisine et salle":["Faire comprendre un poste cuisine","Préparer les entretiens","Fidéliser une équipe cuisine"],
+      "Stocks, commandes et préparation":["Préparer les commandes","Planifier la mise en place","Alerter sur une rupture"],
+      "Organisation des équipes":["Estimer le besoin par rôle","Analyser le staffing après service","Préparer les consignes managers"],
+      "Carte, coût matière et marge":["Mettre à jour le coût des recettes","Analyser la rentabilité de la carte","Simuler une évolution de carte"],
+      "Nouveaux concepts et temps forts":["Imaginer de nouveaux concepts","Tester un concept à petite échelle","Programmer une soirée"],
+      "Ambiance, musique et programmation":["Créer une playlist par moment","Imaginer l’ambiance lumineuse","Programmer une soirée"]
+    };
+
     const caseRequirements = {
       "Briefing opérationnel du matin":["Même heure de coupure et mêmes définitions chaque jour","Exports de la veille + réservations du jour + incidents ouverts","1 jour courant et 4 semaines comparables"],
       "Revue hebdomadaire d’un restaurant":["Une référence et des objectifs validés","Excel hebdomadaire : CA, couverts, ticket, coût matière, heures + notes manager","Semaine analysée + 8 à 12 semaines"],
@@ -427,6 +508,8 @@
       "Préparer les entretiens":["Cinq compétences liées au poste et une notation commune","Fiche de poste + grille d’entretien existante + situations terrain","Avant le premier entretien"],
       "Synthétiser les candidatures":["CV anonymisés et critères identiques pour tous","CV anonymisés + notes structurées + critères du poste","Campagne en cours uniquement"],
       "Intégrer un chef ou un responsable de salle":["Un manager terrain et des points de suivi sont désignés","Fiche de poste + carte + fournisseurs + procédures cuisine ou salle","Premières semaines de prise de poste"],
+      "Faire comprendre un poste cuisine":["Une personne de la cuisine décrit une journée réelle, sans la rendre artificiellement attractive","Carte tapas + horaires + tâches de mise en place, service et fermeture","Une journée type et un gros service"],
+      "Fidéliser une équipe cuisine":["Les retours sont anonymisés et le manager accepte d'agir sur quelques irritants","Retours d'équipe + horaires agrégés + motifs de départ disponibles","Derniers mois et premières semaines des nouvelles recrues"],
       "Prévoir couverts et chiffre d’affaires":["Historique stable, horodaté et sans fuite du futur","CSV : date, site, service, couverts, CA + réservations et signaux connus","12 mois minimum, 24 recommandé"],
       "Préparer les commandes":["Stock récent et unités fiables","Stock daté + ventes/consommation + délais et minimums fournisseur","Stock du jour + 8 semaines"],
       "Planifier la mise en place":["Fiches techniques reliées aux articles vendus","Prévision + stock + recettes, rendements et durées de conservation","Service à venir + 8 services comparables"],
@@ -462,7 +545,15 @@
       return `À JOINDRE\n${specific[1]}\n\nCONTEXTE\nÉtablissement concerné, période analysée et décision à prendre.\n\nDEMANDE À CLAUDE\n${item.prompt}`;
     }
 
-    function categoryCount(category) { return category === "Tous" ? cases.length : cases.filter(x => x.c === category).length; }
+    function catalogueCases() { return cases.filter(item => !excludedCases.has(item.t)); }
+    function categoryCount(category) { return category === "Tous" ? catalogueCases().length : catalogueCases().filter(x => x.c === category).length; }
+    function renderMission(activeId = missions[0].id) {
+      const active = missions.find(mission => mission.id === activeId) || missions[0];
+      missionOptions.innerHTML = missions.map(mission => `<button class="mission-button ${mission.id === active.id ? "active" : ""}" data-mission="${mission.id}">${mission.label}</button>`).join("");
+      missionOutput.innerHTML = `<div><span class="eyebrow">Ce que Claude prépare</span><h3>${active.title}</h3><p>${active.text}</p><button class="mission-link" data-open="${active.use}">Voir le cas d’usage →</button></div><div class="mission-deliverables">${active.items.map(item => `<div class="mission-deliverable">✓ ${item}</div>`).join("")}<div class="mission-deliverable"><b>Avec Claude Code ensuite :</b> transformer cette méthode en outil réutilisable.</div></div>`;
+      missionOptions.querySelectorAll("button").forEach(button => button.addEventListener("click", () => renderMission(button.dataset.mission)));
+      missionOutput.querySelector("[data-open]").addEventListener("click", event => openCase(cases.find(item => item.t === event.currentTarget.dataset.open)));
+    }
     function renderVenues(activeName = venues[0].n) {
       const active = venues.find(venue => venue.n === activeName) || venues[0];
       venueList.innerHTML = venues.map(venue => `<button class="venue-button ${venue.n === active.n ? "active" : ""}" data-venue="${venue.n}">${venue.n}</button>`).join("");
@@ -476,7 +567,7 @@
     }
 
     function visibleCases() {
-      return cases.filter(item => (selectedCategory === "Tous" || item.c === selectedCategory) && (selectedMode === "Tous" || (selectedMode === "Essentiels" ? essentialCases.has(item.t) : selectedMode === "Rapide" ? item.e === "Rapide" : item.m === selectedMode)));
+      return catalogueCases().filter(item => (selectedCategory === "Tous" || item.c === selectedCategory) && (selectedMode === "Tous" || (selectedMode === "Essentiels" ? essentialCases.has(item.t) : selectedMode === "Rapide" ? item.e === "Rapide" : item.m === selectedMode)));
     }
 
     function renderCards() {
@@ -528,7 +619,7 @@
       const q = question.toLowerCase();
       let best = "Performance", score = 0;
       Object.entries(keywords).forEach(([cat, words]) => { const s = words.filter(w => q.includes(w)).length; if (s > score) { score = s; best = cat; } });
-      const matches = cases.filter(x => x.c === best).slice(0,3);
+      const matches = catalogueCases().filter(x => x.c === best).slice(0,3);
       const answer = document.getElementById("answer");
       answer.innerHTML = `<strong>Je commencerais par la catégorie « ${best} ».</strong><br>Votre question correspond à ${matches.length} démarches concrètes. Commencez par une tâche fréquente avec des sources disponibles, puis mesurez le résultat avant d'automatiser.<div class="answer-actions">${matches.map(x => `<button class="chip" data-open="${x.t}">${x.t}</button>`).join("")}</div>`;
       answer.classList.add("visible");
@@ -538,7 +629,35 @@
     document.getElementById("askForm").addEventListener("submit", event => { event.preventDefault(); const q = document.getElementById("askInput").value.trim(); if (q) advise(q); });
     document.querySelectorAll("[data-question]").forEach(btn => btn.addEventListener("click", () => { document.getElementById("askInput").value = btn.dataset.question; advise(btn.dataset.question); }));
 
-    renderNav(); renderCards(); renderVenues();
+    function openIntake() {
+      document.getElementById("mailResult").classList.remove("visible");
+      intakeDialog.showModal();
+    }
+    document.getElementById("openIntake").addEventListener("click", openIntake);
+    document.getElementById("closeIntake").addEventListener("click", () => intakeDialog.close());
+    intakeForm.addEventListener("submit", event => {
+      event.preventDefault();
+      const pain = document.getElementById("mainPain").value;
+      const frequency = document.getElementById("frequency").value;
+      const method = document.getElementById("currentMethod").value;
+      const impact = document.getElementById("impact").value;
+      const example = document.getElementById("example").value.trim() || "Aucun exemple ajouté";
+      const recos = intakeRecommendations[pain] || [];
+      const summary = `Diagnostic Le Bureau de Hugo\n\nSujet prioritaire : ${pain}\nFréquence : ${frequency}\nMéthode actuelle : ${method}\nImpact : ${impact}\nExemple : ${example}\n\nCas d'usage recommandés :\n- ${recos.join("\n- ")}`;
+      const subject = encodeURIComponent(`Diagnostic Claude — ${pain}`);
+      const body = encodeURIComponent(summary);
+      const result = document.getElementById("mailResult");
+      result.innerHTML = `<span class="eyebrow">Vos pistes prioritaires</span><p>${recos.map((title, index) => `${index + 1}. ${title}`).join("<br>")}</p><p>Le bouton ci-dessous ouvre votre messagerie avec les réponses préremplies. Vérifiez-les puis envoyez l’email à Marie.</p><a href="mailto:marie_lemee@hotmail.com?subject=${subject}&body=${body}">Envoyer mon diagnostic à Marie →</a>`;
+      result.classList.add("visible");
+    });
+
+    renderNav(); renderCards(); renderMission(); renderVenues();
+    try {
+      if (!sessionStorage.getItem("hugo_intake_seen")) {
+        sessionStorage.setItem("hugo_intake_seen", "1");
+        openIntake();
+      }
+    } catch { openIntake(); }
   </script>
 </body>
 </html>
