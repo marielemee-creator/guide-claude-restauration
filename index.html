@@ -207,6 +207,24 @@
     .result-footer { display: flex; gap: 8px; flex-wrap: wrap; }
     .result-explore { border: 1px solid var(--line); color: var(--green); background: white; border-radius: 11px; padding: 11px 14px; cursor: pointer; font-weight: 700; font-size: 11px; }
     .diagnostic-trigger { border: 0; background: var(--green); color: white; border-radius: 999px; padding: 9px 14px; cursor: pointer; font-size: 11px; font-weight: 700; }
+    .file-lab { margin-top: 18px; border: 1px dashed rgba(24,92,75,.35); border-radius: 18px; padding: 22px; background: var(--green-2); }
+    .file-lab-head { display: flex; justify-content: space-between; gap: 18px; align-items: start; }
+    .file-lab h3 { font: 600 24px Baskerville, Georgia, serif; margin: 4px 0 7px; }
+    .file-lab p { color: var(--muted); font-size: 11px; line-height: 1.55; margin: 0; }
+    .file-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+    .file-input { background: var(--white); border-radius: 12px; padding: 14px; }
+    .file-input label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 8px; }
+    .file-input input { width: 100%; font-size: 10px; }
+    .lab-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .lab-actions button { border: 0; border-radius: 10px; padding: 11px 14px; cursor: pointer; font-size: 11px; font-weight: 700; }
+    .lab-run { background: var(--orange); color: white; }
+    .lab-sample { background: var(--white); color: var(--green); }
+    .lab-result { display: none; margin-top: 16px; background: var(--white); border-radius: 13px; padding: 16px; overflow: auto; }
+    .lab-result.visible { display: block; }
+    .lab-result table { width: 100%; border-collapse: collapse; font-size: 10px; }
+    .lab-result th, .lab-result td { padding: 8px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+    .lab-result th { color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+    .lab-status { font-size: 11px; line-height: 1.55; margin-bottom: 10px; }
 
     footer { max-width: 1080px; margin: 55px auto 0; padding-top: 22px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 10px; }
     @keyframes rise { from { opacity: 0; transform: translateY(7px); } }
@@ -222,7 +240,8 @@
       .steps { grid-template-columns: repeat(2,1fr); }
     }
     @media (max-width: 620px) {
-      .usecase-grid, .facts, .source-kit, .need-grid, .venue-focus, .mission-output { grid-template-columns: 1fr; }
+      .usecase-grid, .facts, .source-kit, .need-grid, .venue-focus, .mission-output, .file-inputs { grid-template-columns: 1fr; }
+      .file-lab-head { display: block; }
       .mission-options { grid-template-columns: repeat(2,1fr); }
       .venue-panel-head { display: block; }
       .venue-panel-head p { margin-top: 10px; }
@@ -271,25 +290,21 @@
         <div class="answer" id="answer" aria-live="polite"></div>
       </section>
 
-      <section class="mission" id="mission">
-        <div class="mission-head"><div><span class="eyebrow" style="color:var(--yellow)">La mission d’Hugo</span><h2>Partir d’un vrai problème.</h2></div><p>Choisissez une situation. Claude prépare les idées et les décisions ; Claude Code peut ensuite transformer la méthode en outil réutilisable.</p></div>
-        <div class="mission-options" id="missionOptions"></div>
-        <div class="mission-output" id="missionOutput" aria-live="polite"></div>
-      </section>
-
-      <section class="venue-panel" id="venues">
-        <div class="venue-panel-head"><div><span class="eyebrow">Votre terrain opérationnel</span><h2>Partir d’un établissement</h2></div><p>Chaque lieu a son rythme et ses priorités. Les profils ci-dessous s’appuient sur le positionnement public des enseignes ; les recommandations associées sont des exemples fictifs à adapter avec les données internes.</p></div>
-        <div class="venue-list" id="venueList" aria-label="Établissements"></div>
-        <div class="venue-focus" id="venueFocus" aria-live="polite"></div>
+      <section class="venue-panel" id="tools">
+        <div class="venue-panel-head"><div><span class="eyebrow">Avec Claude Code</span><h2>Six micro-outils utiles.</h2></div><p>Petites applications locales ou micro-sites construits autour des Excel et documents déjà disponibles. Un problème précis, quelques fichiers et un résultat vérifiable.</p></div>
+        <div class="usecase-grid" id="codeToolGrid" style="margin-top:24px"></div>
+        <div class="file-lab">
+          <div class="file-lab-head"><div><span class="eyebrow">Prototype fonctionnel</span><h3>Testez le comparateur fournisseurs.</h3><p>Exportez deux tableaux Excel au format CSV avec les colonnes <b>reference</b>, <b>article</b>, <b>prix</b> et, si possible, <b>conditionnement</b>. Le calcul se fait uniquement dans votre navigateur.</p></div><span class="tag">Aucun fichier envoyé</span></div>
+          <div class="file-inputs"><div class="file-input"><label for="supplierA">Fournisseur A · CSV</label><input id="supplierA" type="file" accept=".csv,text/csv"></div><div class="file-input"><label for="supplierB">Fournisseur B · CSV</label><input id="supplierB" type="file" accept=".csv,text/csv"></div></div>
+          <div class="lab-actions"><button class="lab-run" id="runComparison">Comparer les fichiers →</button><button class="lab-sample" id="downloadSample">Télécharger un exemple CSV</button></div>
+          <div class="lab-result" id="comparisonResult" aria-live="polite"></div>
+        </div>
       </section>
 
       <section class="workspace" id="catalogue">
-        <div class="section-head"><div><span class="eyebrow">La bibliothèque</span><h2>Tous les cas d’usage</h2></div><p><span id="resultCount">0</span> fiches pratiques</p></div>
+        <div class="section-head"><div><span class="eyebrow">Avec Claude</span><h2>Des actions concrètes, tout de suite.</h2></div><p><span id="resultCount">0</span> fiches pratiques</p></div>
         <div class="filters" id="filters">
-          <button class="filter active" data-mode="Essentiels">Essentiels</button>
-          <button class="filter" data-mode="Tous">Tous les cas</button>
-          <button class="filter" data-mode="Claude">Claude</button>
-          <button class="filter" data-mode="Claude Code">Claude Code</button>
+          <button class="filter active" data-mode="Tous">Toutes les actions</button>
           <button class="filter" data-mode="Rapide">Mise en place rapide</button>
         </div>
         <div class="usecase-grid" id="usecaseGrid"></div>
@@ -319,7 +334,7 @@
   <dialog id="intakeDialog" class="intake-dialog" aria-labelledby="intakeTitle">
     <div class="intake-intro"><span class="eyebrow">5 questions · 2 minutes</span><h2 id="intakeTitle">Où Claude peut-il vraiment vous aider&nbsp;?</h2><p>Ce court diagnostic permet de faire ressortir les cas d’usage à creuser en priorité. Aucune réponse n’est stockée sur ce site.</p></div>
     <form class="intake-form" id="intakeForm">
-      <div class="field"><label for="mainPain">Quel sujet vous pose le plus de difficultés aujourd’hui&nbsp;?</label><select id="mainPain" required><option value="">Choisir un sujet</option><option>Performance des établissements</option><option>Fournisseurs, achats et factures</option><option>Recrutement cuisine et salle</option><option>Stocks, commandes et préparation</option><option>Organisation des équipes</option><option>Carte, coût matière et marge</option><option>Nouveaux concepts et temps forts</option><option>Ambiance, musique et programmation</option></select></div>
+      <div class="field"><label for="mainPain">Quel sujet vous pose le plus de difficultés aujourd’hui&nbsp;?</label><select id="mainPain" required><option value="">Choisir un sujet</option><option>Performance des établissements</option><option>Fournisseurs, achats et factures</option><option>Recrutement cuisine et salle</option><option>Stocks, commandes et préparation</option><option>Organisation des équipes</option><option>Carte, coût matière et marge</option><option>Nouveaux concepts et temps forts</option><option>Ambiance, musique et programmation</option><option>Un petit outil à partir de mes fichiers Excel</option></select></div>
       <div class="field"><label for="frequency">À quelle fréquence ce sujet revient-il&nbsp;?</label><select id="frequency" required><option value="">Choisir une fréquence</option><option>Tous les jours</option><option>Chaque semaine</option><option>Chaque mois</option><option>Quelques fois par an</option></select></div>
       <div class="field"><label for="currentMethod">Comment le traitez-vous aujourd’hui&nbsp;?</label><select id="currentMethod" required><option value="">Choisir une réponse</option><option>Excel ou exports de caisse</option><option>Emails, WhatsApp et notes</option><option>Un logiciel métier</option><option>Principalement de mémoire et à l’intuition</option><option>Plusieurs outils difficiles à rapprocher</option></select></div>
       <div class="field"><label for="impact">Quel est l’impact principal&nbsp;?</label><select id="impact" required><option value="">Choisir un impact</option><option>Beaucoup de temps perdu</option><option>Coûts ou marge mal maîtrisés</option><option>Décisions prises trop tard</option><option>Difficulté à recruter ou organiser l’équipe</option><option>Expérience client ou ambiance irrégulière</option><option>Manque de visibilité entre les établissements</option></select></div>
@@ -362,12 +377,20 @@
       "Synthétiser les avis clients", "Analyser les incidents"
     ]);
 
-    const excludedCases = new Set([
-      "Préparer la réunion groupe", "Registre des décisions et du ROI", "Rationaliser le panel fournisseurs",
-      "Sourcer un produit ou un équipement", "Synthétiser les candidatures", "Réallouer entre établissements",
-      "Préparer les consignes managers", "Détecter les écarts théorique / réel", "Préparer le lancement",
-      "Transformer une pratique en procédure", "Créer des fiches réflexes", "Évaluer réparer ou remplacer",
-      "Construire un outil interne", "Créer une base de procédures interrogeable"
+    const actionCases = new Set([
+      "Briefing opérationnel du matin", "Revue hebdomadaire d’un restaurant", "Détecter une dérive",
+      "Comparer les tarifs fournisseurs", "Contrôler les factures", "Préparer une négociation",
+      "Définir un poste clé", "Préparer les entretiens", "Faire comprendre un poste cuisine",
+      "Fidéliser une équipe cuisine", "Intégrer un chef ou un responsable de salle",
+      "Préparer les commandes", "Planifier la mise en place", "Alerter sur une rupture",
+      "Estimer le besoin par rôle", "Mettre à jour le coût des recettes", "Analyser la rentabilité de la carte",
+      "Imaginer de nouveaux concepts", "Tester un concept à petite échelle", "Créer une playlist par moment",
+      "Imaginer l’ambiance lumineuse", "Programmer une soirée"
+    ]);
+    const codeToolTitles = new Set([
+      "Construire un comparateur fournisseurs", "Construire l’interrogateur de marges",
+      "Construire le briefing multi-sites", "Construire le suivi des recrutements cuisine",
+      "Construire l’assistant de commandes", "Construire le mini-site recrutement cuisine"
     ]);
 
     const missions = [
@@ -431,21 +454,24 @@
       {c:"Maintenance & outils",t:"Centraliser les demandes de maintenance",d:"Transformer les messages libres en tickets qualifiés et priorisés.",m:"Claude Code",e:"Intermédiaire",v:"Interventions plus rapides",steps:["Créer un formulaire court et mobile.","Qualifier équipement, symptôme et impact.","Prioriser sécurité et continuité.","Suivre prestataire, délai et résultat."],prompt:"Transforme cette demande en ticket : site, équipement, symptôme, début, impact, vérifications déjà faites, preuves, priorité proposée, prestataire, prochaine action et délai.",g:"Une urgence de sécurité ne doit jamais attendre l'analyse de l'IA."},
       {c:"Maintenance & outils",t:"Évaluer réparer ou remplacer",d:"Comparer pannes, indisponibilité, énergie et investissement sur une base documentée.",m:"Claude",e:"Rapide",v:"Investissement éclairé",steps:["Rassembler âge, pannes et coûts.","Estimer indisponibilité et contournements.","Comparer plusieurs horizons.","Documenter les hypothèses."],prompt:"Compare réparation et remplacement de cet équipement. Utilise coût des pannes, indisponibilité, maintenance, énergie, investissement, garantie et horizon d'usage. Montre les hypothèses et fais une analyse de sensibilité.",g:"Vérifier les données techniques auprès des fabricants et prestataires."},
       {c:"Maintenance & outils",t:"Construire un outil interne",d:"Transformer un workflow validé en application simple et maintenable avec Claude Code.",m:"Claude Code",e:"Avancé",v:"Automatisation durable",steps:["Observer le processus réel.","Définir le résultat et les validations humaines.","Prototyper avec données fictives.","Tester, documenter et mesurer l'adoption."],prompt:"Aide-moi à spécifier un outil interne pour ce processus. Décris utilisateurs, problème, données, parcours, décisions, permissions, erreurs, critères d'acceptation, sécurité, mesure d'usage et version minimale testable.",g:"Ne connecter des données réelles qu'après une phase dédiée de sécurité."},
-      {c:"Maintenance & outils",t:"Créer une base de procédures interrogeable",d:"Permettre aux managers de trouver une réponse sourcée dans les documents validés.",m:"Claude Code",e:"Intermédiaire",v:"Accès rapide au savoir",steps:["Nettoyer et versionner les procédures.","Définir droits et sources autorisées.","Répondre avec citation et date de version.","Prévoir « je ne sais pas » et escalade."],prompt:"Conçois une base documentaire interrogeable. Chaque réponse doit citer la procédure, sa version et le passage source, signaler les conflits et s'abstenir lorsque l'information n'est pas présente.",g:"Une réponse sans source ne doit pas être présentée comme une procédure officielle."}
+      {c:"Maintenance & outils",t:"Créer une base de procédures interrogeable",d:"Permettre aux managers de trouver une réponse sourcée dans les documents validés.",m:"Claude Code",e:"Intermédiaire",v:"Accès rapide au savoir",steps:["Nettoyer et versionner les procédures.","Définir droits et sources autorisées.","Répondre avec citation et date de version.","Prévoir « je ne sais pas » et escalade."],prompt:"Conçois une base documentaire interrogeable. Chaque réponse doit citer la procédure, sa version et le passage source, signaler les conflits et s'abstenir lorsque l'information n'est pas présente.",g:"Une réponse sans source ne doit pas être présentée comme une procédure officielle."},
+      {c:"Fournisseurs & achats",t:"Construire un comparateur fournisseurs",d:"Déposer deux mercuriales Excel et obtenir les écarts réellement comparables par article et conditionnement.",m:"Claude Code",e:"Intermédiaire",v:"Comparaison en quelques minutes",steps:["Importer Excel ou CSV.","Faire correspondre les articles.","Normaliser unités et conditionnements.","Exporter les économies potentielles à vérifier."],prompt:"Construis une petite application locale qui importe deux mercuriales Excel ou CSV, propose le rapprochement des articles, normalise les prix à l'unité et exporte les écarts. Les rapprochements incertains doivent être validés manuellement.",g:"Aucun tarif n'est comparable sans contrôler qualité, unité, marque et conditionnement."},
+      {c:"Carte & marge",t:"Construire l’interrogateur de marges",d:"Poser une question simple aux exports de ventes et aux fiches techniques : où perd-on de la marge et pourquoi ?",m:"Claude Code",e:"Intermédiaire",v:"Marges lisibles sans refaire Excel",steps:["Importer ventes et fiches techniques.","Vérifier les codes articles.","Calculer coût et marge théoriques.","Permettre des questions en langage courant."],prompt:"Construis une application locale qui rapproche un export de ventes Excel, les fiches techniques et les derniers prix d'achat. Elle doit répondre à des questions comme : quels plats ont perdu de la marge, quels ingrédients expliquent l'écart et quelles données manquent ?",g:"Toujours afficher la date des prix et distinguer marge théorique et marge réellement observée."},
+      {c:"Performance",t:"Construire le briefing multi-sites",d:"Déposer les exports de caisse des établissements et produire chaque semaine une page de priorités groupe.",m:"Claude Code",e:"Intermédiaire",v:"Pilotage groupe plus rapide",steps:["Importer les exports par site.","Uniformiser les colonnes.","Comparer chaque lieu à sa propre référence.","Sortir trois décisions maximum."],prompt:"Construis un outil local qui importe les exports Excel hebdomadaires de plusieurs établissements et génère une synthèse groupe : changements, écarts, questions à vérifier et trois décisions maximum avec responsables et échéances.",g:"Ne pas comparer brutalement un restaurant, un pub et un club ; conserver des références adaptées au concept."},
+      {c:"Recrutement",t:"Construire le suivi des recrutements cuisine",d:"Suivre les candidatures, entretiens, essais et premières semaines dans un petit tableau partagé et lisible.",m:"Claude Code",e:"Intermédiaire",v:"Moins de candidats perdus",steps:["Importer ou saisir les candidatures.","Suivre les prochaines actions.","Conserver les critères du poste.","Prévoir les points d'intégration terrain."],prompt:"Construis une application locale simple pour suivre les recrutements cuisine et salle : poste, établissement, statut, prochaine action, critères métier, notes d'entretien et points d'intégration. Prévoir anonymisation, accès limité et suppression des données à échéance.",g:"L'outil organise le processus ; il ne classe ni ne rejette automatiquement les candidats."},
+      {c:"Stocks & préparation",t:"Construire l’assistant de commandes",d:"Importer stock, ventes et contraintes fournisseurs pour préparer une proposition de commande modifiable.",m:"Claude Code",e:"Intermédiaire",v:"Commandes plus rapides",steps:["Importer stock et ventes Excel.","Lire délais et minimums.","Calculer une proposition expliquée.","Valider ou modifier chaque ligne."],prompt:"Construis une application locale qui importe stock, ventes récentes et contraintes fournisseurs depuis Excel. Elle propose une commande par fournisseur, explique chaque quantité et permet de modifier ou refuser chaque ligne avant export.",g:"L'outil ne transmet jamais automatiquement une commande au fournisseur."},
+      {c:"Recrutement",t:"Construire le mini-site recrutement cuisine",d:"Présenter un poste cuisine tel qu’il est vraiment et permettre aux candidats de comprendre le rythme avant de postuler.",m:"Claude Code",e:"Intermédiaire",v:"Candidats mieux qualifiés",steps:["Décrire la journée réelle.","Montrer le lieu, l'équipe et la carte.","Répondre aux questions fréquentes.","Proposer un contact ou formulaire simple."],prompt:"Construis un micro-site mobile de recrutement cuisine pour cet établissement. Présente honnêtement une journée type, la carte tapas, les tâches répétitives, le coup de feu, l'équipe, les horaires, les conditions et les possibilités d'apprendre. Termine par quelques questions d'auto-positionnement et un lien de candidature.",g:"Les conditions affichées doivent être exactes, inclusives et validées avant publication."}
     ];
 
     let selectedCategory = "Tous";
-    let selectedMode = "Essentiels";
+    let selectedMode = "Tous";
     const nav = document.getElementById("categoryNav");
     const grid = document.getElementById("usecaseGrid");
     const count = document.getElementById("resultCount");
     const dialog = document.getElementById("detailDialog");
     const intakeDialog = document.getElementById("intakeDialog");
     const intakeForm = document.getElementById("intakeForm");
-    const venueList = document.getElementById("venueList");
-    const venueFocus = document.getElementById("venueFocus");
-    const missionOptions = document.getElementById("missionOptions");
-    const missionOutput = document.getElementById("missionOutput");
+    const codeToolGrid = document.getElementById("codeToolGrid");
 
     const sourceKits = {
       "Performance": {
@@ -491,16 +517,18 @@
       "Fournisseurs, achats et factures":["Comparer les tarifs fournisseurs","Contrôler les factures","Préparer une négociation"],
       "Recrutement cuisine et salle":["Faire comprendre un poste cuisine","Préparer les entretiens","Fidéliser une équipe cuisine"],
       "Stocks, commandes et préparation":["Préparer les commandes","Planifier la mise en place","Alerter sur une rupture"],
-      "Organisation des équipes":["Estimer le besoin par rôle","Analyser le staffing après service","Préparer les consignes managers"],
-      "Carte, coût matière et marge":["Mettre à jour le coût des recettes","Analyser la rentabilité de la carte","Simuler une évolution de carte"],
+      "Organisation des équipes":["Estimer le besoin par rôle","Briefing opérationnel du matin","Revue hebdomadaire d’un restaurant"],
+      "Carte, coût matière et marge":["Mettre à jour le coût des recettes","Analyser la rentabilité de la carte","Tester un concept à petite échelle"],
       "Nouveaux concepts et temps forts":["Imaginer de nouveaux concepts","Tester un concept à petite échelle","Programmer une soirée"],
-      "Ambiance, musique et programmation":["Créer une playlist par moment","Imaginer l’ambiance lumineuse","Programmer une soirée"]
+      "Ambiance, musique et programmation":["Créer une playlist par moment","Imaginer l’ambiance lumineuse","Programmer une soirée"],
+      "Un petit outil à partir de mes fichiers Excel":["Construire un comparateur fournisseurs","Construire l’interrogateur de marges","Construire le briefing multi-sites"]
     };
     const intakeCategories = {
       "Performance des établissements":"Performance", "Fournisseurs, achats et factures":"Fournisseurs & achats",
       "Recrutement cuisine et salle":"Recrutement", "Stocks, commandes et préparation":"Stocks & préparation",
       "Organisation des équipes":"Équipes", "Carte, coût matière et marge":"Carte & marge",
-      "Nouveaux concepts et temps forts":"Concepts", "Ambiance, musique et programmation":"Ambiance & programmation"
+      "Nouveaux concepts et temps forts":"Concepts", "Ambiance, musique et programmation":"Ambiance & programmation",
+      "Un petit outil à partir de mes fichiers Excel":"__tools__"
     };
 
     const caseRequirements = {
@@ -548,7 +576,13 @@
       "Centraliser les demandes de maintenance":["Équipements et niveaux de priorité codifiés","Export tickets : site, équipement, symptôme, impact, date, statut, coût","6 à 12 mois"],
       "Évaluer réparer ou remplacer":["Horizon d’usage et coût d’indisponibilité définis","Historique pannes + factures + devis + consommation + garantie","Durée de vie de l’équipement"],
       "Construire un outil interne":["Workflow réel observé et propriétaire métier désigné","Note problème + exemples de fichiers + parcours actuel + règles + erreurs","Cas réels anonymisés et scénario cible"],
-      "Créer une base de procédures interrogeable":["Documents validés, versionnés et droits d’accès définis","Corpus PDF/Word + index des versions + propriétaires + dates","Seulement les versions en vigueur"]
+      "Créer une base de procédures interrogeable":["Documents validés, versionnés et droits d’accès définis","Corpus PDF/Word + index des versions + propriétaires + dates","Seulement les versions en vigueur"],
+      "Construire un comparateur fournisseurs":["Deux fichiers utilisent des références, unités ou descriptions exploitables","Deux mercuriales Excel/CSV + volumes achetés si disponibles","Tarifs en vigueur à la même période"],
+      "Construire l’interrogateur de marges":["Les articles vendus peuvent être reliés aux fiches techniques","Export ventes Excel + fiches techniques + prix d'achat datés","8 à 12 semaines et tarifs actuels"],
+      "Construire le briefing multi-sites":["Chaque établissement fournit un export de caisse régulier","Exports Excel/CSV par site + objectifs ou références","Une semaine et 8 semaines de comparaison"],
+      "Construire le suivi des recrutements cuisine":["Les étapes du recrutement et les responsables sont définis","Tableau actuel des candidatures ou modèle vierge","Campagnes en cours et suivi des premières semaines"],
+      "Construire l’assistant de commandes":["Stocks et ventes utilisent des unités compréhensibles","Excel de stock + ventes + contraintes fournisseurs","Dernier stock et 8 semaines de consommation"],
+      "Construire le mini-site recrutement cuisine":["Le poste, les horaires et les conditions sont validés","Photos autorisées + carte + journée type + conditions + contact","Version actuelle du poste et de l'établissement"]
     };
 
     function promptPackage(item) {
@@ -556,34 +590,91 @@
       return `À JOINDRE\n${specific[1]}\n\nCONTEXTE\nÉtablissement concerné, période analysée et décision à prendre.\n\nDEMANDE À CLAUDE\n${item.prompt}`;
     }
 
-    function catalogueCases() { return cases.filter(item => !excludedCases.has(item.t)); }
+    function catalogueCases() { return cases.filter(item => actionCases.has(item.t)); }
     function categoryCount(category) { return category === "Tous" ? catalogueCases().length : catalogueCases().filter(x => x.c === category).length; }
-    function renderMission(activeId = missions[0].id) {
-      const active = missions.find(mission => mission.id === activeId) || missions[0];
-      missionOptions.innerHTML = missions.map(mission => `<button class="mission-button ${mission.id === active.id ? "active" : ""}" data-mission="${mission.id}">${mission.label}</button>`).join("");
-      missionOutput.innerHTML = `<div><span class="eyebrow">Ce que Claude prépare</span><h3>${active.title}</h3><p>${active.text}</p><button class="mission-link" data-open="${active.use}">Voir le cas d’usage →</button></div><div class="mission-deliverables">${active.items.map(item => `<div class="mission-deliverable">✓ ${item}</div>`).join("")}<div class="mission-deliverable"><b>Avec Claude Code ensuite :</b> transformer cette méthode en outil réutilisable.</div></div>`;
-      missionOptions.querySelectorAll("button").forEach(button => button.addEventListener("click", () => renderMission(button.dataset.mission)));
-      missionOutput.querySelector("[data-open]").addEventListener("click", event => openCase(cases.find(item => item.t === event.currentTarget.dataset.open)));
+    function renderCodeTools() {
+      const tools = cases.filter(item => codeToolTitles.has(item.t));
+      codeToolGrid.innerHTML = tools.map(item => `<article class="card" tabindex="0" role="button" data-title="${item.t}"><div class="card-top"><span class="tag">${item.c}</span><span class="effort">Excel / CSV</span></div><h3>${item.t}</h3><p>${item.d}</p><div class="card-bottom"><span class="mode">Petit outil local</span><span class="arrow">↗</span></div></article>`).join("");
+      codeToolGrid.querySelectorAll(".card").forEach(card => {
+        const open = () => openCase(cases.find(item => item.t === card.dataset.title));
+        card.addEventListener("click", open);
+        card.addEventListener("keydown", event => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); open(); } });
+      });
     }
-    function renderVenues(activeName = venues[0].n) {
-      const active = venues.find(venue => venue.n === activeName) || venues[0];
-      venueList.innerHTML = venues.map(venue => `<button class="venue-button ${venue.n === active.n ? "active" : ""}" data-venue="${venue.n}">${venue.n}</button>`).join("");
-      venueFocus.innerHTML = `<div><span class="eyebrow">Exemple fictif · ${active.type}</span><h3>${active.n}</h3><p>${active.desc}</p></div><div class="venue-recos"><span class="eyebrow">Cas d’usage à explorer</span>${active.use.map(title => `<button class="venue-reco" data-open="${title}"><span>${title}</span><span>↗</span></button>`).join("")}</div>`;
-      venueList.querySelectorAll("button").forEach(button => button.addEventListener("click", () => renderVenues(button.dataset.venue)));
-      venueFocus.querySelectorAll("[data-open]").forEach(button => button.addEventListener("click", () => openCase(cases.find(item => item.t === button.dataset.open))));
+
+    function csvLine(line, delimiter) {
+      const values = []; let value = ""; let quoted = false;
+      for (let index = 0; index < line.length; index += 1) {
+        const char = line[index];
+        if (char === '"' && line[index + 1] === '"' && quoted) { value += '"'; index += 1; }
+        else if (char === '"') quoted = !quoted;
+        else if (char === delimiter && !quoted) { values.push(value.trim()); value = ""; }
+        else value += char;
+      }
+      values.push(value.trim()); return values;
     }
+    function cleanKey(value) { return String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, ""); }
+    function parseCsv(text) {
+      const lines = text.replace(/^\uFEFF/, "").split(/\r?\n/).filter(line => line.trim());
+      if (lines.length < 2) throw new Error("Le fichier doit contenir un en-tête et au moins une ligne.");
+      const delimiter = (lines[0].match(/;/g) || []).length >= (lines[0].match(/,/g) || []).length ? ";" : ",";
+      const headers = csvLine(lines[0], delimiter).map(cleanKey);
+      return lines.slice(1).map(line => {
+        const values = csvLine(line, delimiter); const row = {};
+        headers.forEach((header, index) => { row[header] = values[index] || ""; }); return row;
+      });
+    }
+    function rowValue(row, aliases) { const key = aliases.find(alias => Object.hasOwn(row, alias)); return key ? row[key] : ""; }
+    function numberValue(value) { const parsed = Number.parseFloat(String(value).replace(/\s/g, "").replace(",", ".").replace(/[^0-9.-]/g, "")); return Number.isFinite(parsed) ? parsed : null; }
+    function comparisonKey(row) {
+      const reference = rowValue(row, ["reference","ref","code","codearticle"]);
+      const article = rowValue(row, ["article","produit","libelle","designation"]);
+      return cleanKey(reference || article);
+    }
+    function articleName(row) { return rowValue(row, ["article","produit","libelle","designation"]) || rowValue(row, ["reference","ref","code","codearticle"]); }
+    function priceValue(row) { return numberValue(rowValue(row, ["prix","tarif","prixunitaire","pu","price"])); }
+    function safeText(value) { return String(value).replace(/[&<>"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[char]); }
+
+    document.getElementById("downloadSample").addEventListener("click", () => {
+      const sample = "reference;article;prix;conditionnement\nTOM01;Tomates concassées;2,35;boîte 2,5 kg\nFRI01;Frites surgelées;1,90;sac 2,5 kg\nHUI01;Huile de friture;3,20;bidon 10 L\n";
+      const link = document.createElement("a"); link.href = URL.createObjectURL(new Blob([sample], {type:"text/csv;charset=utf-8"})); link.download = "exemple-mercuriale.csv"; link.click(); URL.revokeObjectURL(link.href);
+    });
+    document.getElementById("runComparison").addEventListener("click", async () => {
+      const result = document.getElementById("comparisonResult");
+      const fileA = document.getElementById("supplierA").files[0]; const fileB = document.getElementById("supplierB").files[0];
+      if (!fileA || !fileB) { result.innerHTML = `<div class="lab-status">Ajoutez les deux fichiers CSV avant de lancer la comparaison.</div>`; result.classList.add("visible"); return; }
+      try {
+        const [rowsA, rowsB] = await Promise.all([fileA.text().then(parseCsv), fileB.text().then(parseCsv)]);
+        const indexB = new Map(rowsB.map(row => [comparisonKey(row), row]).filter(([key]) => key));
+        const comparisons = rowsA.map(rowA => {
+          const rowB = indexB.get(comparisonKey(rowA)); const priceA = priceValue(rowA); const priceB = rowB ? priceValue(rowB) : null;
+          if (!rowB || priceA === null || priceB === null) return null;
+          const delta = priceB - priceA; const percent = priceA ? (delta / priceA) * 100 : 0;
+          return {article:articleName(rowA),priceA,priceB,delta,percent,better:delta > 0 ? "A" : delta < 0 ? "B" : "Égal"};
+        }).filter(Boolean).sort((left, right) => Math.abs(right.percent) - Math.abs(left.percent));
+        const shown = comparisons.slice(0, 12);
+        if (!shown.length) throw new Error("Aucune référence commune avec un prix valide. Vérifiez les colonnes reference, article et prix.");
+        const prompt = `Voici le résultat d'une comparaison de deux mercuriales. Analyse les écarts les plus importants, demande-moi de vérifier les conditionnements et propose les lignes à négocier en priorité.\n\n${shown.map(row => `${row.article}: A ${row.priceA.toFixed(2)} €, B ${row.priceB.toFixed(2)} €, écart ${row.percent.toFixed(1)} %`).join("\n")}`;
+        result.innerHTML = `<div class="lab-status"><b>${comparisons.length} références communes comparées.</b> Résultats calculés localement. Vérifiez toujours unités, qualité et conditionnements.</div><table><thead><tr><th>Article</th><th>Prix A</th><th>Prix B</th><th>Écart</th><th>Avantage</th></tr></thead><tbody>${shown.map(row => `<tr><td>${safeText(row.article)}</td><td>${row.priceA.toFixed(2)} €</td><td>${row.priceB.toFixed(2)} €</td><td>${row.percent.toFixed(1)} %</td><td>${row.better}</td></tr>`).join("")}</tbody></table><div class="lab-actions"><button class="lab-run" id="copyComparisonPrompt">Copier le prompt d’analyse Claude</button></div>`;
+        result.classList.add("visible");
+        document.getElementById("copyComparisonPrompt").addEventListener("click", async event => { await navigator.clipboard.writeText(prompt); event.target.textContent = "Prompt copié ✓"; });
+      } catch (error) {
+        result.innerHTML = `<div class="lab-status"><b>Impossible de comparer ces fichiers.</b><br>${safeText(error instanceof Error ? error.message : "Format non reconnu")}</div>`; result.classList.add("visible");
+      }
+    });
     function renderNav() {
-      nav.innerHTML = categories.map(([name, icon]) => `<button class="nav-button ${name === selectedCategory ? "active" : ""}" data-category="${name}"><span class="nav-icon">${icon}</span><span>${name}</span><span class="nav-count">${categoryCount(name)}</span></button>`).join("");
+      nav.innerHTML = categories.filter(([name]) => name === "Tous" || categoryCount(name) > 0).map(([name, icon]) => `<button class="nav-button ${name === selectedCategory ? "active" : ""}" data-category="${name}"><span class="nav-icon">${icon}</span><span>${name}</span><span class="nav-count">${categoryCount(name)}</span></button>`).join("");
       nav.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => { selectedCategory = btn.dataset.category; renderNav(); renderCards(); document.getElementById("catalogue").scrollIntoView(); }));
     }
 
     function visibleCases() {
       return catalogueCases().filter(item => (selectedCategory === "Tous" || item.c === selectedCategory) && (selectedMode === "Tous" || (selectedMode === "Essentiels" ? essentialCases.has(item.t) : selectedMode === "Rapide" ? item.e === "Rapide" : item.m === selectedMode)));
     }
+    function displayTool(item) { return actionCases.has(item.t) && item.m === "Claude Code" ? "Claude + fichiers" : item.m; }
 
     function renderCards() {
       const list = visibleCases(); count.textContent = list.length;
-      grid.innerHTML = list.length ? list.map(item => `<article class="card" tabindex="0" role="button" data-title="${item.t}"><div class="card-top"><span class="tag">${item.c}</span><span class="effort">${item.e}</span></div><h3>${item.t}</h3><p>${item.d}</p><div class="card-bottom"><span class="mode">${item.m}</span><span class="arrow">↗</span></div></article>`).join("") : `<div class="empty">Aucun cas d'usage ne correspond à ce filtre.</div>`;
+      grid.innerHTML = list.length ? list.map(item => `<article class="card" tabindex="0" role="button" data-title="${item.t}"><div class="card-top"><span class="tag">${item.c}</span><span class="effort">${item.e}</span></div><h3>${item.t}</h3><p>${item.d}</p><div class="card-bottom"><span class="mode">${displayTool(item)}</span><span class="arrow">↗</span></div></article>`).join("") : `<div class="empty">Aucun cas d'usage ne correspond à ce filtre.</div>`;
       grid.querySelectorAll(".card").forEach(card => {
         const open = () => openCase(cases.find(x => x.t === card.dataset.title));
         card.addEventListener("click", open);
@@ -597,7 +688,7 @@
       const fullPrompt = promptPackage(item);
       document.getElementById("dialogCategory").textContent = item.c;
       document.getElementById("dialogTitle").textContent = item.t;
-      document.getElementById("dialogBody").innerHTML = `<p class="modal-summary">${item.d}</p><div class="facts"><div class="fact"><small>À utiliser avec</small><b>${item.m}</b></div><div class="fact"><small>Effort</small><b>${item.e}</b></div><div class="fact"><small>Intérêt</small><b>${item.v}</b></div></div><h3>Le minimum pour commencer</h3><div class="specific-need"><div class="need-grid"><div><small>Prérequis</small>${specific[0]}</div><div><small>À charger dans Claude</small>${specific[1]}</div></div></div><h3>Ce que Claude vous aide à obtenir</h3><p class="modal-summary">${item.d} Vous gardez la validation de la décision et pouvez demander à Claude de signaler ce qui lui manque.</p><h3>Prompt simple</h3><div class="prompt" id="promptText">${fullPrompt}</div><button class="copy" id="copyPrompt">Copier le prompt</button><h3>À garder en tête</h3><div class="guardrail">${item.g}</div>`;
+      document.getElementById("dialogBody").innerHTML = `<p class="modal-summary">${item.d}</p><div class="facts"><div class="fact"><small>À utiliser avec</small><b>${displayTool(item)}</b></div><div class="fact"><small>Effort</small><b>${item.e}</b></div><div class="fact"><small>Intérêt</small><b>${item.v}</b></div></div><h3>Le minimum pour commencer</h3><div class="specific-need"><div class="need-grid"><div><small>Prérequis</small>${specific[0]}</div><div><small>À charger dans Claude</small>${specific[1]}</div></div></div><h3>Ce que Claude vous aide à obtenir</h3><p class="modal-summary">${item.d} Vous gardez la validation de la décision et pouvez demander à Claude de signaler ce qui lui manque.</p><h3>Prompt simple</h3><div class="prompt" id="promptText">${fullPrompt}</div><button class="copy" id="copyPrompt">Copier le prompt</button><h3>À garder en tête</h3><div class="guardrail">${item.g}</div>`;
       document.getElementById("copyPrompt").addEventListener("click", async event => {
         try { await navigator.clipboard.writeText(fullPrompt); event.target.textContent = "Prompt copié ✓"; }
         catch { event.target.textContent = "Sélectionnez le texte ci-dessus"; }
@@ -665,7 +756,11 @@
         openCase(cases.find(item => item.t === button.dataset.reco));
       }));
       result.querySelector("[data-explore]").addEventListener("click", buttonEvent => {
-        selectedCategory = buttonEvent.currentTarget.dataset.explore;
+        const target = buttonEvent.currentTarget.dataset.explore;
+        if (target === "__tools__") {
+          intakeDialog.close(); document.getElementById("tools").scrollIntoView(); return;
+        }
+        selectedCategory = target;
         selectedMode = "Tous";
         document.querySelectorAll(".filter").forEach(filter => filter.classList.toggle("active", filter.dataset.mode === "Tous"));
         renderNav(); renderCards(); intakeDialog.close();
@@ -673,7 +768,7 @@
       });
     });
 
-    renderNav(); renderCards(); renderMission(); renderVenues();
+    renderNav(); renderCards(); renderCodeTools();
     try {
       if (!sessionStorage.getItem("hugo_intake_seen")) {
         sessionStorage.setItem("hugo_intake_seen", "1");
