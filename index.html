@@ -148,6 +148,16 @@
     .fact b { display: block; margin-top: 7px; font-size: 12px; }
     .modal-body h3 { font: 600 22px Baskerville, Georgia, serif; margin: 28px 0 12px; }
     .modal-body ol { padding-left: 20px; color: var(--muted); line-height: 1.7; font-size: 13px; }
+    .source-kit { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .source-box { border: 1px solid var(--line); border-radius: 14px; padding: 17px; background: #f8f5ed; }
+    .source-box strong { display: block; margin-bottom: 10px; color: var(--green); font-size: 12px; }
+    .source-box ul { margin: 0; padding-left: 17px; color: var(--muted); font-size: 11px; line-height: 1.65; }
+    .specific-need { border: 1px solid rgba(24,92,75,.25); background: var(--white); border-radius: 14px; padding: 18px; margin-bottom: 10px; }
+    .specific-need strong { color: var(--green); font-size: 13px; }
+    .need-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 14px; margin-top: 12px; }
+    .need-grid div { font-size: 11px; line-height: 1.55; color: var(--muted); }
+    .need-grid small { display: block; color: var(--ink); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
+    .format-note { margin-top: 10px; padding: 12px 14px; border-radius: 10px; background: var(--green-2); color: var(--green); font-size: 11px; line-height: 1.55; }
     .prompt { background: var(--ink); color: rgba(255,255,255,.8); border-radius: 14px; padding: 18px; font: 400 11px/1.65 "SFMono-Regular", Consolas, monospace; white-space: pre-wrap; }
     .copy { margin-top: 10px; border: 0; background: var(--orange); color: white; border-radius: 10px; padding: 11px 16px; cursor: pointer; font-weight: 700; }
     .guardrail { padding: 15px 18px; background: #fff4d5; border-left: 3px solid var(--yellow); border-radius: 0 10px 10px 0; font-size: 12px; line-height: 1.55; }
@@ -166,7 +176,7 @@
       .steps { grid-template-columns: repeat(2,1fr); }
     }
     @media (max-width: 620px) {
-      .usecase-grid, .facts { grid-template-columns: 1fr; }
+      .usecase-grid, .facts, .source-kit, .need-grid { grid-template-columns: 1fr; }
       .steps { grid-template-columns: 1fr; }
       .ask-box { grid-template-columns: 1fr; }
       .ask-box button { min-height: 48px; }
@@ -227,7 +237,7 @@
           <p class="method-intro">Ne cherchez pas à tout automatiser. Prenez une tâche fréquente, rendez les données lisibles, testez la recommandation puis mesurez le résultat.</p>
           <div class="steps">
             <div class="step"><span>01</span><h3>Décrire</h3><p>Quel travail prend du temps ? Quelle décision doit être prise ?</p></div>
-            <div class="step"><span>02</span><h3>Donner les sources</h3><p>Exports, factures, procédures, notes et contraintes connues.</p></div>
+            <div class="step"><span>02</span><h3>Donner les sources</h3><p>Joindre les fichiers indiqués dans la fiche, avec période, unités et contexte.</p></div>
             <div class="step"><span>03</span><h3>Faire vérifier</h3><p>Demander faits, hypothèses, données manquantes et niveau de confiance.</p></div>
             <div class="step"><span>04</span><h3>Mesurer</h3><p>Temps gagné, économies, incidents évités ou meilleure exécution.</p></div>
           </div>
@@ -308,6 +318,93 @@
     const count = document.getElementById("resultCount");
     const dialog = document.getElementById("detailDialog");
 
+    const sourceKits = {
+      "Performance": {
+        required:["Export de caisse Excel/CSV : date, établissement, service, CA, couverts, ticket moyen","Budget ou objectif et historique comparable (8 à 12 semaines minimum)","Calendrier des événements connus : fermetures, travaux, météo marquante, changement de carte"],
+        optional:["Planning et heures réellement travaillées","Synthèse des avis et incidents","Compte rendu des actions déjà testées"]
+      },
+      "Fournisseurs & achats": {
+        required:["Mercuriale ou catalogue fournisseur en Excel/PDF avec date de validité","Factures récentes et tarifs négociés","Référentiel articles : unité, poids, calibre, marque et conditionnement"],
+        optional:["Bons de commande et bons de livraison","Volumes achetés sur 6 à 12 mois","Conditions commerciales : franco, minimum, remise et jours de livraison"]
+      },
+      "Recrutement": {
+        required:["Fiche de poste ou description du besoin","Contexte de l'établissement, équipe, horaires et responsabilités","Critères de réussite attendus à 30, 60 et 90 jours"],
+        optional:["CV anonymisés pour l'analyse","Trame d'entretien actuelle","Valeurs, parcours d'intégration et réalités du poste"]
+      },
+      "Stocks & préparation": {
+        required:["Stocks datés en Excel/CSV : article, quantité, unité, site et date de comptage","Historique des ventes par article et service","Fiches techniques avec quantités, rendements et unités"],
+        optional:["Réservations et prévision de couverts","Délais, jours et minimums de commande","Durée de conservation et pertes observées"]
+      },
+      "Équipes": {
+        required:["Planning prévu et heures réalisées par rôle, sans données personnelles inutiles","Activité par service : couverts, CA et horaires","Règles opérationnelles d'effectif et contraintes connues"],
+        optional:["Absences et compétences disponibles, anonymisées","Incidents et retours des managers","Historique de productivité par service comparable"]
+      },
+      "Carte & marge": {
+        required:["Fiches techniques Excel : recette, ingrédient, quantité, unité et rendement","Prix d'achat datés par ingrédient","Export des ventes : article, quantité, prix et service"],
+        optional:["Inventaires et pertes","Temps ou complexité de préparation","Rôle de chaque produit dans le concept"]
+      },
+      "Concepts": {
+        required:["Note de contexte : lieu, capacité, clientèle observée et contraintes","Résultats actuels ou hypothèses économiques clairement identifiées","Carte, photos ou parcours client existant si le lieu fonctionne déjà"],
+        optional:["Avis clients et comptes rendus de visites","Analyse locale et exemples de concepts inspirants","Budget, calendrier et compétences disponibles"]
+      },
+      "Qualité & procédures": {
+        required:["Procédures actuelles ou notes terrain","Registre des incidents ou avis, avec dates et établissement","Règles internes et version des documents"],
+        optional:["Photos non sensibles","Plans d'action précédents","Références réglementaires validées par un expert"]
+      },
+      "Maintenance & outils": {
+        required:["Liste des équipements ou description précise du processus","Historique des demandes, pannes ou opérations","Contraintes : utilisateurs, budget, sécurité et délai"],
+        optional:["Devis, contrats et notices techniques","Captures des outils actuels","Coûts d'indisponibilité et responsables concernés"]
+      }
+    };
+
+    const caseRequirements = {
+      "Briefing opérationnel du matin":["Même heure de coupure et mêmes définitions chaque jour","Exports de la veille + réservations du jour + incidents ouverts","1 jour courant et 4 semaines comparables"],
+      "Revue hebdomadaire d’un restaurant":["Une référence et des objectifs validés","Excel hebdomadaire : CA, couverts, ticket, coût matière, heures + notes manager","Semaine analysée + 8 à 12 semaines"],
+      "Détecter une dérive":["Seuils d’alerte décidés par l’exploitation","Historique CSV par service, sans jours futurs + calendrier des changements","12 mois idéalement, 12 semaines minimum"],
+      "Préparer la réunion groupe":["Décisions et responsables de la réunion précédente","Comptes rendus, KPI par site et liste des actions ouvertes","Dernière réunion + période à examiner"],
+      "Registre des décisions et du ROI":["Une formule de gain explicite avant l’action","Journal Excel : décision, date, hypothèse, action, responsable, résultat","Depuis le début du pilote"],
+      "Comparer les tarifs fournisseurs":["Un référentiel commun d’unités et de conditionnements","Mercuriales Excel/PDF + volumes achetés + référentiel articles","Tarifs actuels et précédents"],
+      "Contrôler les factures":["Les quatre pièces portent une référence rapprochable","Commande + bon de livraison + accord tarifaire + facture","Chaque transaction contrôlée"],
+      "Préparer une négociation":["Objectif, marge de manœuvre et seuil de sortie","Historique achats/prix + incidents + contrat + alternatives réelles","6 à 12 mois"],
+      "Rationaliser le panel fournisseurs":["Familles d’achats et sites codifiés de la même façon","Grand livre achats Excel : fournisseur, article, site, quantité, montant","12 mois minimum"],
+      "Sourcer un produit ou un équipement":["Besoin, budget et critères éliminatoires validés","Cahier des charges + devis + notices techniques","Offres valides à la même date"],
+      "Définir un poste clé":["Le manager recruteur décrit les réalités du poste","Organisation actuelle + horaires + missions + objectifs 30/60/90","Situation actuelle et besoin futur"],
+      "Rédiger une offre attractive":["Conditions réelles du poste déjà arbitrées","Fiche de poste validée + éléments de culture et processus de candidature","Version en vigueur"],
+      "Préparer les entretiens":["Cinq compétences liées au poste et une notation commune","Fiche de poste + grille d’entretien existante + situations terrain","Avant le premier entretien"],
+      "Synthétiser les candidatures":["CV anonymisés et critères identiques pour tous","CV anonymisés + notes structurées + critères du poste","Campagne en cours uniquement"],
+      "Construire un parcours 30/60/90 jours":["Un tuteur et des points de suivi sont désignés","Fiche de poste + procédures + formations + personnes ressources","90 premiers jours"],
+      "Prévoir couverts et chiffre d’affaires":["Historique stable, horodaté et sans fuite du futur","CSV : date, site, service, couverts, CA + réservations et signaux connus","12 mois minimum, 24 recommandé"],
+      "Préparer les commandes":["Stock récent et unités fiables","Stock daté + ventes/consommation + délais et minimums fournisseur","Stock du jour + 8 semaines"],
+      "Planifier la mise en place":["Fiches techniques reliées aux articles vendus","Prévision + stock + recettes, rendements et durées de conservation","Service à venir + 8 services comparables"],
+      "Alerter sur une rupture":["Heure limite et stock critique définis","Stock courant + commandes en cours + demande prévue + solutions de dépannage","Temps réel ou dernier comptage"],
+      "Réallouer entre établissements":["Règles de transport, traçabilité et responsabilité validées","Stocks par site + distances + contraintes de conservation + besoins","Situation du jour"],
+      "Estimer le besoin par rôle":["Règles d’effectif et contraintes sociales validées","Prévision + planning + productivité par rôle et service","8 à 12 semaines comparables"],
+      "Analyser le staffing après service":["Heures prévues et réalisées disponibles","Planning anonymisé + pointage agrégé + activité + incidents","Service étudié + 8 comparables"],
+      "Préparer les consignes managers":["Le briefing et les décisions sont déjà validés","Briefing groupe + matrice responsables/sites + échéances","Journée ou semaine concernée"],
+      "Mettre à jour le coût des recettes":["Unités, pertes et rendements sont renseignés","Fiches techniques Excel + dernier tarif fournisseur par ingrédient","Tarifs en vigueur à la date du calcul"],
+      "Analyser la rentabilité de la carte":["Recettes et ventes utilisent les mêmes codes article","Ventes par produit + coûts recette + pertes + complexité","8 à 12 semaines représentatives"],
+      "Détecter les écarts théorique / réel":["Inventaires d’ouverture et fermeture comparables","Ventes + fiches techniques + achats + inventaires + pertes déclarées","Une période entre deux inventaires fiables"],
+      "Simuler une évolution de carte":["Une hypothèse et un objectif précis","Carte actuelle + ventes + coûts + nouvelle proposition + contraintes cuisine","Période actuelle + scénario futur"],
+      "Diagnostiquer un concept existant":["Une visite terrain et des entretiens équipes sont prévus","Note concept + KPI + carte + avis + photos non sensibles + parcours client","3 à 6 mois récents"],
+      "Clarifier le positionnement":["Clientèle et occasions réellement observées","Note concept + carte + verbatims clients + concurrence documentée","Données récentes et observations terrain"],
+      "Imaginer de nouveaux concepts":["Lieu, public, budget et contraintes sont cadrés","Brief contexte + étude locale + inspirations + enveloppe économique","Situation cible explicitée"],
+      "Tester un concept à petite échelle":["Une hypothèse falsifiable et un décideur à l’issue","Fiche concept + protocole test + données de référence + seuils","Avant, pendant et après le test"],
+      "Préparer le lancement":["Concept et budget ont franchi un jalon de validation","Business case + rétroplanning + fournisseurs + recrutement + procédures","Jusqu’à 8 semaines après ouverture"],
+      "Synthétiser les avis clients":["Sources, dates et biais de l’échantillon sont connus","Export CSV des avis : date, note, texte, site, canal","3 à 6 mois avec comparaison précédente"],
+      "Transformer une pratique en procédure":["La pratique réelle a été observée avec ceux qui l’exécutent","Notes terrain + procédure actuelle + exceptions + responsabilités","Version actuelle et date de révision"],
+      "Analyser les incidents":["Une typologie et un niveau de gravité communs","Registre incidents : date, site, type, impact, action, statut","6 à 12 mois"],
+      "Créer des fiches réflexes":["Référent métier, sécurité ou hygiène disponible pour valider","Procédures officielles + contacts + plan d’escalade + scénario","Documents à jour et datés"],
+      "Centraliser les demandes de maintenance":["Équipements et niveaux de priorité codifiés","Export tickets : site, équipement, symptôme, impact, date, statut, coût","6 à 12 mois"],
+      "Évaluer réparer ou remplacer":["Horizon d’usage et coût d’indisponibilité définis","Historique pannes + factures + devis + consommation + garantie","Durée de vie de l’équipement"],
+      "Construire un outil interne":["Workflow réel observé et propriétaire métier désigné","Note problème + exemples de fichiers + parcours actuel + règles + erreurs","Cas réels anonymisés et scénario cible"],
+      "Créer une base de procédures interrogeable":["Documents validés, versionnés et droits d’accès définis","Corpus PDF/Word + index des versions + propriétaires + dates","Seulement les versions en vigueur"]
+    };
+
+    function promptPackage(item, kit) {
+      const specific = caseRequirements[item.t];
+      return `PRÉREQUIS\n${specific[0]}\n\nDOCUMENTS À JOINDRE POUR CE CAS\n- ${specific[1]}\n- ${kit.required.join("\n- ")}\n\nPÉRIODE CONSEILLÉE\n${specific[2]}\n\nCONTEXTE À PRÉCISER\n- Établissement(s), objectif et décision attendue\n- Signification des colonnes, unités et données manquantes\n\nPROMPT\n${item.prompt}`;
+    }
+
     function categoryCount(category) { return category === "Tous" ? cases.length : cases.filter(x => x.c === category).length; }
     function renderNav() {
       nav.innerHTML = categories.map(([name, icon]) => `<button class="nav-button ${name === selectedCategory ? "active" : ""}" data-category="${name}"><span class="nav-icon">${icon}</span><span>${name}</span><span class="nav-count">${categoryCount(name)}</span></button>`).join("");
@@ -330,11 +427,14 @@
 
     function openCase(item) {
       if (!item) return;
+      const kit = sourceKits[item.c];
+      const specific = caseRequirements[item.t];
+      const fullPrompt = promptPackage(item, kit);
       document.getElementById("dialogCategory").textContent = item.c;
       document.getElementById("dialogTitle").textContent = item.t;
-      document.getElementById("dialogBody").innerHTML = `<p class="modal-summary">${item.d}</p><div class="facts"><div class="fact"><small>Outil conseillé</small><b>${item.m}</b></div><div class="fact"><small>Mise en place</small><b>${item.e}</b></div><div class="fact"><small>Valeur</small><b>${item.v}</b></div></div><h3>Comment le mettre en œuvre</h3><ol>${item.steps.map(s => `<li>${s}</li>`).join("")}</ol><h3>Prompt de départ</h3><div class="prompt" id="promptText">${item.prompt}</div><button class="copy" id="copyPrompt">Copier le prompt</button><h3>Point de vigilance</h3><div class="guardrail">${item.g}</div>`;
+      document.getElementById("dialogBody").innerHTML = `<p class="modal-summary">${item.d}</p><div class="facts"><div class="fact"><small>Outil conseillé</small><b>${item.m}</b></div><div class="fact"><small>Mise en place</small><b>${item.e}</b></div><div class="fact"><small>Valeur</small><b>${item.v}</b></div></div><h3>Prérequis de ce cas d’usage</h3><div class="specific-need"><strong>Ce qu’il faut avoir avant de commencer</strong><div class="need-grid"><div><small>Prérequis métier</small>${specific[0]}</div><div><small>Fichier clé à charger</small>${specific[1]}</div><div><small>Période conseillée</small>${specific[2]}</div><div><small>Résultat attendu</small>${item.d}</div></div></div><div class="source-kit"><div class="source-box"><strong>Autres fichiers indispensables</strong><ul>${kit.required.map(s => `<li>${s}</li>`).join("")}</ul></div><div class="source-box"><strong>Très utiles si disponibles</strong><ul>${kit.optional.map(s => `<li>${s}</li>`).join("")}</ul></div></div><div class="format-note"><b>Formats conseillés :</b> Excel ou CSV pour les tableaux, PDF natif pour les contrats et procédures, Word ou texte pour les notes. Indiquez toujours la période, les unités, la définition des colonnes et les données manquantes. Anonymisez les CV, plannings et informations personnelles.</div><h3>Comment le mettre en œuvre</h3><ol>${item.steps.map(s => `<li>${s}</li>`).join("")}</ol><h3>Prompt prêt à utiliser</h3><div class="prompt" id="promptText">${fullPrompt}</div><button class="copy" id="copyPrompt">Copier les prérequis + le prompt</button><h3>Point de vigilance</h3><div class="guardrail">${item.g}</div>`;
       document.getElementById("copyPrompt").addEventListener("click", async event => {
-        try { await navigator.clipboard.writeText(item.prompt); event.target.textContent = "Prompt copié ✓"; }
+        try { await navigator.clipboard.writeText(fullPrompt); event.target.textContent = "Kit et prompt copiés ✓"; }
         catch { event.target.textContent = "Sélectionnez le texte ci-dessus"; }
       });
       dialog.showModal();
