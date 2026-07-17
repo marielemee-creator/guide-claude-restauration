@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Guide interactif des usages de Claude pour les opérations d'un groupe de restaurants et de bars.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><circle cx=%2232%22 cy=%2232%22 r=%2230%22 fill=%22%23185c4b%22/><text x=%2232%22 y=%2241%22 text-anchor=%22middle%22 font-size=%2230%22 fill=%22white%22>B</text></svg>">
+  <title>Le Bureau — Conseiller IA des opérations</title>
+  <style>
+    :root {
+      --ink: #18231f;
+      --muted: #66716a;
+      --paper: #f3efe6;
+      --paper-2: #e9e3d6;
+      --white: #fffdf8;
+      --green: #185c4b;
+      --green-2: #dbe9df;
+      --orange: #e66b39;
+      --yellow: #efc95d;
+      --line: rgba(24, 35, 31, .14);
+      --shadow: 0 26px 70px rgba(33, 44, 38, .13);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 5%, rgba(239, 201, 93, .22), transparent 25rem),
+        radial-gradient(circle at 94% 92%, rgba(24, 92, 75, .12), transparent 30rem),
+        var(--paper);
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      min-height: 100vh;
+    }
+
+    button, input { font: inherit; }
+    button { color: inherit; }
+    button:focus-visible, input:focus-visible { outline: 3px solid rgba(230, 107, 57, .45); outline-offset: 2px; }
+    .app { min-height: 100vh; display: grid; grid-template-columns: 310px minmax(0, 1fr); }
+
+    .sidebar {
+      padding: 28px 22px;
+      border-right: 1px solid var(--line);
+      background: rgba(255, 253, 248, .65);
+      backdrop-filter: blur(18px);
+      position: sticky;
+      height: 100vh;
+      top: 0;
+      overflow: auto;
+      z-index: 3;
+    }
+
+    .brand { display: flex; gap: 12px; align-items: center; margin-bottom: 34px; }
+    .brand-mark {
+      width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center;
+      background: var(--green); color: white; font: 600 18px Baskerville, Georgia, serif;
+      box-shadow: inset 0 0 0 5px rgba(255,255,255,.12);
+    }
+    .brand strong { display: block; font: 600 22px Baskerville, Georgia, serif; }
+    .brand small { display: block; color: var(--muted); font-size: 10px; letter-spacing: .11em; text-transform: uppercase; }
+
+    .nav-label { font: 500 10px "SFMono-Regular", Consolas, monospace; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin: 26px 10px 9px; }
+    .nav-list { display: grid; gap: 5px; }
+    .nav-button {
+      border: 0; background: transparent; border-radius: 12px; min-height: 44px; width: 100%;
+      padding: 10px 12px; display: flex; align-items: center; gap: 11px; text-align: left; cursor: pointer;
+    }
+    .nav-button:hover, .nav-button.active { background: var(--white); box-shadow: 0 8px 24px rgba(34, 48, 40, .07); }
+    .nav-button.active { color: var(--green); font-weight: 700; }
+    .nav-icon { width: 25px; height: 25px; display: grid; place-items: center; border-radius: 8px; background: var(--paper-2); font-size: 13px; }
+    .nav-count { margin-left: auto; font: 500 10px "SFMono-Regular", Consolas, monospace; color: var(--muted); }
+    .sidebar-note { margin-top: 28px; padding: 16px; background: var(--green); border-radius: 16px; color: #fff; }
+    .sidebar-note b { font: 600 18px Baskerville, Georgia, serif; }
+    .sidebar-note p { margin: 7px 0 0; font-size: 12px; line-height: 1.55; color: rgba(255,255,255,.75); }
+
+    main { min-width: 0; padding: 28px clamp(22px, 4vw, 68px) 70px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 54px; }
+    .eyebrow { font: 500 11px "SFMono-Regular", Consolas, monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--green); }
+    .status { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #45a078; box-shadow: 0 0 0 5px rgba(69,160,120,.13); }
+
+    .hero { max-width: 1080px; margin: 0 auto 42px; }
+    h1 { font: 600 clamp(43px, 6vw, 78px)/.96 Baskerville, Georgia, serif; letter-spacing: -.04em; max-width: 900px; margin: 12px 0 24px; }
+    .hero-copy { max-width: 700px; color: var(--muted); font-size: clamp(15px, 1.5vw, 18px); line-height: 1.65; }
+
+    .ask-box {
+      margin-top: 34px; background: var(--white); border: 1px solid var(--line); border-radius: 20px;
+      display: grid; grid-template-columns: 1fr auto; padding: 8px; box-shadow: var(--shadow);
+    }
+    .ask-box input { border: 0; background: transparent; padding: 16px 18px; min-width: 0; color: var(--ink); }
+    .ask-box input::placeholder { color: #929a95; }
+    .ask-box button { border: 0; background: var(--orange); color: #fff; border-radius: 14px; padding: 0 22px; cursor: pointer; font-weight: 700; min-height: 50px; }
+    .ask-box button:hover { background: #cf562a; }
+    .suggestions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 13px; }
+    .chip { border: 1px solid var(--line); background: rgba(255,255,255,.5); border-radius: 999px; padding: 8px 12px; font-size: 11px; cursor: pointer; }
+    .chip:hover { background: var(--white); border-color: rgba(24,92,75,.35); }
+
+    .answer { display: none; margin-top: 18px; border-left: 3px solid var(--orange); padding: 16px 18px; background: rgba(255,253,248,.75); border-radius: 0 14px 14px 0; line-height: 1.6; }
+    .answer.visible { display: block; animation: rise .35s ease both; }
+    .answer strong { color: var(--green); }
+    .answer-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+
+    .workspace { max-width: 1080px; margin: auto; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin: 42px 0 20px; }
+    h2 { font: 600 clamp(28px, 4vw, 42px) Baskerville, Georgia, serif; margin: 0; letter-spacing: -.02em; }
+    .section-head p { margin: 0; color: var(--muted); font-size: 13px; }
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .filter { border: 1px solid var(--line); background: transparent; border-radius: 999px; padding: 9px 14px; cursor: pointer; font-size: 12px; }
+    .filter.active { color: white; background: var(--ink); border-color: var(--ink); }
+
+    .usecase-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
+    .card {
+      border: 1px solid var(--line); background: rgba(255,253,248,.72); border-radius: 18px; padding: 20px;
+      cursor: pointer; min-height: 230px; display: flex; flex-direction: column; transition: transform .2s, box-shadow .2s, background .2s;
+    }
+    .card:hover { transform: translateY(-4px); background: var(--white); box-shadow: 0 20px 44px rgba(38,48,42,.1); }
+    .card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .tag { font: 500 9px "SFMono-Regular", Consolas, monospace; text-transform: uppercase; letter-spacing: .08em; color: var(--green); }
+    .effort { font-size: 10px; color: var(--muted); }
+    .card h3 { font: 600 23px/1.05 Baskerville, Georgia, serif; margin: 24px 0 11px; }
+    .card p { margin: 0 0 20px; font-size: 12px; line-height: 1.55; color: var(--muted); }
+    .card-bottom { margin-top: auto; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line); padding-top: 14px; }
+    .mode { font-size: 10px; font-weight: 700; }
+    .arrow { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--green-2); color: var(--green); }
+    .empty { grid-column: 1/-1; text-align: center; padding: 60px; color: var(--muted); border: 1px dashed var(--line); border-radius: 18px; }
+
+    .method { margin-top: 60px; background: var(--ink); color: white; border-radius: 26px; padding: clamp(28px, 5vw, 58px); overflow: hidden; position: relative; }
+    .method::after { content: ""; position: absolute; width: 340px; height: 340px; border-radius: 50%; background: var(--orange); filter: blur(1px); opacity: .11; right: -170px; top: -170px; }
+    .method h2 { max-width: 620px; }
+    .method-intro { color: rgba(255,255,255,.65); max-width: 650px; line-height: 1.6; }
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,.14); margin-top: 32px; border: 1px solid rgba(255,255,255,.14); }
+    .step { background: var(--ink); padding: 22px; min-height: 190px; }
+    .step span { font: 500 11px "SFMono-Regular", Consolas, monospace; color: var(--yellow); }
+    .step h3 { font: 600 21px Baskerville, Georgia, serif; margin: 28px 0 10px; }
+    .step p { color: rgba(255,255,255,.6); font-size: 11px; line-height: 1.55; margin: 0; }
+
+    dialog { width: min(780px, calc(100vw - 24px)); max-height: calc(100vh - 24px); border: 0; border-radius: 24px; padding: 0; color: var(--ink); background: var(--white); box-shadow: 0 35px 100px rgba(0,0,0,.28); }
+    dialog::backdrop { background: rgba(14, 24, 20, .65); backdrop-filter: blur(7px); }
+    .modal-head { padding: 28px 32px 22px; border-bottom: 1px solid var(--line); display: flex; gap: 24px; justify-content: space-between; }
+    .modal-head h2 { margin-top: 8px; }
+    .close { border: 1px solid var(--line); background: transparent; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; flex: none; }
+    .modal-body { padding: 28px 32px 34px; overflow: auto; }
+    .modal-summary { font-size: 15px; line-height: 1.65; color: var(--muted); margin-top: 0; }
+    .facts { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 25px 0; }
+    .fact { background: var(--paper); padding: 15px; border-radius: 12px; }
+    .fact small { display: block; color: var(--muted); font-size: 9px; text-transform: uppercase; letter-spacing: .1em; }
+    .fact b { display: block; margin-top: 7px; font-size: 12px; }
+    .modal-body h3 { font: 600 22px Baskerville, Georgia, serif; margin: 28px 0 12px; }
+    .modal-body ol { padding-left: 20px; color: var(--muted); line-height: 1.7; font-size: 13px; }
+    .prompt { background: var(--ink); color: rgba(255,255,255,.8); border-radius: 14px; padding: 18px; font: 400 11px/1.65 "SFMono-Regular", Consolas, monospace; white-space: pre-wrap; }
+    .copy { margin-top: 10px; border: 0; background: var(--orange); color: white; border-radius: 10px; padding: 11px 16px; cursor: pointer; font-weight: 700; }
+    .guardrail { padding: 15px 18px; background: #fff4d5; border-left: 3px solid var(--yellow); border-radius: 0 10px 10px 0; font-size: 12px; line-height: 1.55; }
+
+    footer { max-width: 1080px; margin: 55px auto 0; padding-top: 22px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 10px; }
+    @keyframes rise { from { opacity: 0; transform: translateY(7px); } }
+
+    @media (max-width: 980px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { height: auto; position: static; border-right: 0; border-bottom: 1px solid var(--line); padding: 18px 20px; }
+      .brand { margin: 0; }
+      .nav-label, .nav-list, .sidebar-note { display: none; }
+      main { padding-top: 22px; }
+      .topbar { margin-bottom: 36px; }
+      .usecase-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .steps { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 620px) {
+      .usecase-grid, .facts { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
+      .ask-box { grid-template-columns: 1fr; }
+      .ask-box button { min-height: 48px; }
+      .topbar .status { display: none; }
+      h1 { font-size: 45px; }
+      .card { min-height: 205px; }
+      .modal-head, .modal-body { padding-left: 22px; padding-right: 22px; }
+      footer { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; animation: none !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" aria-label="Catégories">
+      <div class="brand"><div class="brand-mark">B</div><div><strong>Le Bureau</strong><small>Conseiller opérations</small></div></div>
+      <div class="nav-label">Explorer</div>
+      <nav class="nav-list" id="categoryNav"></nav>
+      <div class="sidebar-note"><b>Une règle simple</b><p>Claude prépare, compare et recommande. Le responsable conserve la décision, surtout pour l'humain, les achats et les engagements.</p></div>
+    </aside>
+
+    <main>
+      <div class="topbar">
+        <span class="eyebrow">Guide interactif · Groupe multi-établissements</span>
+        <span class="status"><i class="status-dot"></i> Démonstration locale — aucune donnée envoyée</span>
+      </div>
+
+      <section class="hero">
+        <span class="eyebrow">Votre conseiller IA opérationnel</span>
+        <h1>Qu’est-ce que Claude peut vous faire gagner aujourd’hui&nbsp;?</h1>
+        <p class="hero-copy">Décrivez une difficulté, explorez les cas d’usage et obtenez une méthode prête à appliquer. Des fournisseurs au recrutement, de la performance aux nouveaux concepts.</p>
+        <form class="ask-box" id="askForm">
+          <input id="askInput" aria-label="Votre question" autocomplete="off" placeholder="Ex. Je perds trop de temps à comparer les tarifs fournisseurs…">
+          <button type="submit">Demander au conseiller →</button>
+        </form>
+        <div class="suggestions" aria-label="Questions suggérées">
+          <button class="chip" data-question="Comment mieux recruter un responsable de salle ?">Recruter un responsable de salle</button>
+          <button class="chip" data-question="Pourquoi un restaurant décroche depuis un mois ?">Comprendre une baisse de performance</button>
+          <button class="chip" data-question="Comment comparer mes fournisseurs ?">Comparer les fournisseurs</button>
+          <button class="chip" data-question="Comment tester un nouveau concept ?">Tester un nouveau concept</button>
+        </div>
+        <div class="answer" id="answer" aria-live="polite"></div>
+      </section>
+
+      <section class="workspace" id="catalogue">
+        <div class="section-head"><div><span class="eyebrow">La bibliothèque</span><h2>Tous les cas d’usage</h2></div><p><span id="resultCount">0</span> fiches pratiques</p></div>
+        <div class="filters" id="filters">
+          <button class="filter active" data-mode="Tous">Tous</button>
+          <button class="filter" data-mode="Claude">Claude</button>
+          <button class="filter" data-mode="Claude Code">Claude Code</button>
+          <button class="filter" data-mode="Rapide">Mise en place rapide</button>
+        </div>
+        <div class="usecase-grid" id="usecaseGrid"></div>
+
+        <section class="method">
+          <span class="eyebrow" style="color:var(--yellow)">Bien démarrer</span>
+          <h2>Une IA utile commence par un problème mesurable.</h2>
+          <p class="method-intro">Ne cherchez pas à tout automatiser. Prenez une tâche fréquente, rendez les données lisibles, testez la recommandation puis mesurez le résultat.</p>
+          <div class="steps">
+            <div class="step"><span>01</span><h3>Décrire</h3><p>Quel travail prend du temps ? Quelle décision doit être prise ?</p></div>
+            <div class="step"><span>02</span><h3>Donner les sources</h3><p>Exports, factures, procédures, notes et contraintes connues.</p></div>
+            <div class="step"><span>03</span><h3>Faire vérifier</h3><p>Demander faits, hypothèses, données manquantes et niveau de confiance.</p></div>
+            <div class="step"><span>04</span><h3>Mesurer</h3><p>Temps gagné, économies, incidents évités ou meilleure exécution.</p></div>
+          </div>
+        </section>
+      </section>
+
+      <footer><span>Prototype pédagogique — groupe fictif, aucune donnée opérationnelle réelle.</span><span>Claude assiste la décision, il ne la remplace pas.</span></footer>
+    </main>
+  </div>
+
+  <dialog id="detailDialog" aria-labelledby="dialogTitle">
+    <div class="modal-head"><div><span class="eyebrow" id="dialogCategory"></span><h2 id="dialogTitle"></h2></div><button class="close" id="closeDialog" aria-label="Fermer">✕</button></div>
+    <div class="modal-body" id="dialogBody"></div>
+  </dialog>
+
+  <script>
+    const categories = [
+      ["Tous", "◎"], ["Performance", "↗"], ["Fournisseurs & achats", "◇"], ["Recrutement", "+"],
+      ["Stocks & préparation", "▦"], ["Équipes", "♙"], ["Carte & marge", "◫"],
+      ["Concepts", "✦"], ["Qualité & procédures", "✓"], ["Maintenance & outils", "⚙"]
+    ];
+
+    const cases = [
+      {c:"Performance",t:"Briefing opérationnel du matin",d:"Consolider ventes, réservations, météo, incidents et décisions urgentes en trois priorités.",m:"Claude Code",e:"Intermédiaire",v:"Temps et anticipation",steps:["Rassembler les exports disponibles et définir l'heure de coupure.","Comparer avec les services réellement comparables.","Faire ressortir changements, risques, actions, échéances et confiance.","Valider les décisions avec les responsables de site."],prompt:"Voici les données des établissements pour aujourd'hui. Produis un briefing opérationnel avec trois décisions maximum par service. Pour chacune : changement observé, sources, action, responsable, heure limite, gain ou risque et niveau de confiance. N'invente aucune donnée manquante.",g:"Ne pas présenter une corrélation comme une cause certaine."},
+      {c:"Performance",t:"Revue hebdomadaire d’un restaurant",d:"Transformer les KPI en diagnostic court, questions à vérifier et plan d’action mesurable.",m:"Claude",e:"Rapide",v:"Décisions plus nettes",steps:["Fournir la semaine, la référence et les événements connus.","Séparer fréquentation, ticket, marge, équipe et expérience client.","Demander les causes plausibles et les preuves manquantes.","Limiter le plan à trois actions mesurables."],prompt:"Analyse cette revue hebdomadaire. Distingue faits, hypothèses et informations manquantes. Explique si l'écart vient surtout des couverts, du ticket, du mix, du coût matière ou de l'organisation. Propose trois actions maximum avec responsable, échéance et indicateur.",g:"Comparer l'établissement à lui-même avant de le classer face aux autres."},
+      {c:"Performance",t:"Détecter une dérive",d:"Repérer tôt une baisse durable des couverts, du ticket ou de la productivité.",m:"Claude Code",e:"Avancé",v:"Risque évité",steps:["Définir les seuils avec l'exploitation.","Calculer les références historiques sans fuite future.","Détecter les écarts persistants, pas un simple accident.","Créer une alerte avec action et date limite."],prompt:"À partir de cet historique, signale uniquement les dérives persistantes. Donne l'ampleur, la période, la référence, les facteurs connus, les hypothèses à vérifier et la prochaine action. Abstien-toi si les données sont insuffisantes.",g:"Une alerte doit être actionnable et explicable, jamais seulement anxiogène."},
+      {c:"Performance",t:"Préparer la réunion groupe",d:"Créer un ordre du jour orienté décisions et suivre les engagements de la semaine précédente.",m:"Claude",e:"Rapide",v:"1 à 2 h gagnées",steps:["Fournir comptes rendus, chiffres et décisions précédentes.","Regrouper par enjeux plutôt que par document.","Identifier les arbitrages nécessaires.","Produire actions, responsables et échéances."],prompt:"Prépare la réunion opérationnelle groupe à partir de ces documents. Commence par les décisions en retard, puis les écarts significatifs et enfin les arbitrages. Termine par un tableau action, responsable, échéance, preuve attendue.",g:"Faire valider le compte rendu avant diffusion."},
+      {c:"Performance",t:"Registre des décisions et du ROI",d:"Suivre ce qui a été décidé, réellement appliqué et effectivement obtenu.",m:"Claude Code",e:"Intermédiaire",v:"Exécution et apprentissage",steps:["Enregistrer la recommandation et ses hypothèses.","Conserver validation, modification ou refus.","Mesurer séparément gain estimé et résultat observé.","Réutiliser les apprentissages dans les décisions suivantes."],prompt:"Structure cette décision en précisant problème, preuves, hypothèses, action, propriétaire, échéance, gain estimé, formule de calcul et résultat à mesurer. Ne transforme jamais une estimation en gain constaté.",g:"Toujours distinguer estimé, évité et réellement observé."},
+
+      {c:"Fournisseurs & achats",t:"Comparer les tarifs fournisseurs",d:"Normaliser unités et conditionnements avant de comparer prix, services et contraintes.",m:"Claude Code",e:"Intermédiaire",v:"Économies vérifiables",steps:["Importer les mercuriales et factures.","Normaliser poids, volume, calibre, marque et conditionnement.","Rapprocher uniquement les articles comparables.","Chiffrer les écarts et préparer les arbitrages."],prompt:"Compare ces tarifs fournisseur. Normalise les unités et ne rapproche que les produits réellement comparables. Pour chaque écart : référence, conditionnement, prix unitaire, volume historique, impact estimé, contraintes et information à vérifier.",g:"Le produit le moins cher n'est pas nécessairement le meilleur coût complet."},
+      {c:"Fournisseurs & achats",t:"Contrôler les factures",d:"Rapprocher commande, livraison, tarif négocié et facture pour détecter les écarts.",m:"Claude Code",e:"Intermédiaire",v:"Avoirs et erreurs évités",steps:["Collecter commande, bon de livraison, accord tarifaire et facture.","Rapprocher les lignes et tolérances.","Classer prix, quantité, remise, frais et doublons.","Préparer une réclamation factuelle à valider."],prompt:"Contrôle cette facture contre le bon de commande, la livraison et le tarif négocié. Liste uniquement les écarts prouvables, leur valeur, la pièce justificative et la formulation d'une demande de vérification au fournisseur.",g:"Claude prépare la réclamation ; une personne vérifie avant envoi."},
+      {c:"Fournisseurs & achats",t:"Préparer une négociation",d:"Construire une argumentation à partir des volumes, hausses, incidents et alternatives.",m:"Claude",e:"Rapide",v:"Meilleures conditions",steps:["Fournir historique d'achats, prix et qualité de service.","Identifier les leviers crédibles.","Définir objectif, seuil acceptable et repli.","Préparer questions et concessions possibles."],prompt:"Prépare cette négociation fournisseur. Résume volumes, évolution des prix, incidents, dépendances et alternatives. Propose objectif, arguments étayés, questions, concessions possibles, seuil de sortie et points à ne pas affirmer sans preuve.",g:"Ne pas inventer d'offre concurrente ou de volume futur."},
+      {c:"Fournisseurs & achats",t:"Rationaliser le panel fournisseurs",d:"Repérer achats fragmentés, dépendances et possibilités de mutualisation entre sites.",m:"Claude Code",e:"Avancé",v:"Pouvoir d'achat",steps:["Cartographier dépenses par site, famille et fournisseur.","Détecter doublons et concentration excessive.","Simuler consolidation et scénarios de secours.","Tester sur une famille avant généralisation."],prompt:"Analyse la répartition des achats. Identifie fragmentation, doublons, dépendance et opportunités de mutualisation. Pour chaque option, chiffre l'impact potentiel et indique les risques de qualité, livraison et continuité.",g:"Conserver des solutions de secours pour les familles critiques."},
+      {c:"Fournisseurs & achats",t:"Sourcer un produit ou un équipement",d:"Formaliser le besoin, comparer les réponses et organiser un test terrain.",m:"Claude",e:"Rapide",v:"Choix mieux documenté",steps:["Définir usages, contraintes et budget.","Créer le cahier des charges.","Comparer les réponses selon une grille commune.","Préparer un protocole d'essai."],prompt:"Transforme ce besoin en cahier des charges fournisseur. Sépare critères indispensables, souhaitables et éliminatoires. Ajoute une grille d'évaluation, les questions à poser et un protocole de test avant engagement.",g:"Vérifier les données commerciales et contractuelles auprès des sources."},
+
+      {c:"Recrutement",t:"Définir un poste clé",d:"Clarifier le besoin réel pour un chef, un second ou un responsable de salle.",m:"Claude",e:"Rapide",v:"Candidatures plus pertinentes",steps:["Décrire le contexte et l'équipe actuelle.","Séparer compétences indispensables et apprenables.","Définir autonomie et situations réelles.","Fixer les critères de réussite à 30, 60 et 90 jours."],prompt:"Aide-moi à cadrer ce poste en restauration. Décris mission, contexte, responsabilités, compétences indispensables, compétences apprenables, contraintes réelles et critères de réussite à 30/60/90 jours. Signale les critères inutiles ou potentiellement discriminatoires.",g:"N'utiliser que des critères directement liés au poste."},
+      {c:"Recrutement",t:"Rédiger une offre attractive",d:"Présenter sincèrement le poste, le concept, le rythme et les perspectives.",m:"Claude",e:"Rapide",v:"Temps et attractivité",steps:["Fournir les réalités du poste.","Choisir un ton cohérent avec l'établissement.","Rendre conditions et attentes lisibles.","Relire pour l'inclusion et la précision."],prompt:"Rédige une offre de recrutement claire et attractive à partir de cette fiche de poste. Reste factuel sur les horaires, responsabilités, conditions et perspectives. Évite les clichés et tout critère discriminatoire. Termine par un processus de candidature simple.",g:"Ne pas embellir les conditions au point de créer une mauvaise attente."},
+      {c:"Recrutement",t:"Préparer les entretiens",d:"Créer une trame commune, des mises en situation et une grille de preuves.",m:"Claude",e:"Rapide",v:"Sélection plus cohérente",steps:["Définir cinq compétences clés.","Créer les mêmes questions socles pour tous.","Ajouter deux situations proches du terrain.","Noter des preuves, pas une impression générale."],prompt:"Crée une trame d'entretien structurée pour ce poste. Pour chaque compétence : question comportementale, relance, mise en situation, signaux positifs, signaux à vérifier et échelle de notation fondée sur des preuves.",g:"La décision finale reste humaine et collégiale lorsque possible."},
+      {c:"Recrutement",t:"Synthétiser les candidatures",d:"Comparer les preuves au besoin du poste sans automatiser la décision d’embauche.",m:"Claude",e:"Rapide",v:"Lecture plus rapide",steps:["Retirer les informations personnelles non pertinentes.","Comparer aux critères publiés.","Séparer preuve, déclaration et information manquante.","Préparer les questions complémentaires."],prompt:"Compare ces candidatures uniquement aux critères explicites du poste. Pour chacune : preuves pertinentes, déclarations non vérifiées, informations manquantes et questions de relance. N'établis pas de classement automatique et ignore les caractéristiques protégées.",g:"Ne jamais confier à l'IA seule la sélection ou le rejet."},
+      {c:"Recrutement",t:"Construire un parcours 30/60/90 jours",d:"Transformer l’intégration en objectifs progressifs et points de suivi concrets.",m:"Claude",e:"Rapide",v:"Prise de poste sécurisée",steps:["Lister les savoirs et relations essentiels.","Définir les objectifs progressifs.","Prévoir observations et feedbacks réguliers.","Mesurer l'intégration sans surveillance disproportionnée."],prompt:"Construis un plan d'intégration 30/60/90 jours pour ce poste. Inclus découvertes, formations, personnes à rencontrer, situations à maîtriser, livrables et points de feedback. Garde des objectifs réalistes et observables.",g:"Le plan soutient la personne ; il ne doit pas devenir un dispositif intrusif."},
+
+      {c:"Stocks & préparation",t:"Prévoir couverts et chiffre d’affaires",d:"Produire une fourchette par service, ses facteurs et une confiance explicite.",m:"Claude Code",e:"Avancé",v:"Anticipation",steps:["Créer une référence simple sur les mêmes services passés.","Utiliser uniquement les informations connues à l'heure de décision.","Tester chronologiquement sans fuite future.","Afficher une fourchette et savoir s'abstenir."],prompt:"Construis une prévision explicable à partir de ces historiques et signaux connus. Affiche référence, estimation, fourchette, facteurs, date de coupure et confiance. Abstention obligatoire si l'historique ou la qualité est insuffisant.",g:"Un LLM ne doit pas être le moteur numérique de prévision."},
+      {c:"Stocks & préparation",t:"Préparer les commandes",d:"Proposer des quantités à partir du stock, de la consommation et des contraintes de livraison.",m:"Claude Code",e:"Avancé",v:"Moins de ruptures et surplus",steps:["Normaliser stocks et unités.","Estimer la demande avec une fourchette.","Appliquer minimums, délais et durée de conservation.","Faire valider chaque commande."],prompt:"Propose une commande à partir du stock constaté, de la consommation prévue, de la fourchette d'incertitude et des contraintes fournisseur. Justifie chaque quantité et signale toute donnée de stock douteuse.",g:"Aucune commande n'est envoyée automatiquement."},
+      {c:"Stocks & préparation",t:"Planifier la mise en place",d:"Convertir la prévision en quantités préparées, avec heure limite et risque de perte.",m:"Claude Code",e:"Intermédiaire",v:"Production mieux calibrée",steps:["Relier les ventes aux fiches techniques.","Estimer les besoins bas, central et haut.","Déduire le stock utilisable.","Donner l'heure limite et le plan de rattrapage."],prompt:"Transforme cette prévision en plan de préparation. Pour chaque préparation : stock, besoin bas/central/haut, quantité conseillée, heure limite, risque de rupture, risque de perte et action de rattrapage.",g:"Les règles critiques doivent être déterministes et testables."},
+      {c:"Stocks & préparation",t:"Alerter sur une rupture",d:"Détecter les produits critiques et proposer dépannage, substitution ou transfert.",m:"Claude Code",e:"Intermédiaire",v:"Ventes et service protégés",steps:["Identifier les références critiques.","Comparer stock et demande probable.","Chercher les options réalisables.","Alerter avant la dernière heure utile."],prompt:"Identifie les risques de rupture réellement actionnables. Pour chacun : service, stock, besoin estimé, écart, confiance, options, coût, responsable et heure limite de décision.",g:"Ne pas masquer une donnée de stock manquante par une valeur de secours."},
+      {c:"Stocks & préparation",t:"Réallouer entre établissements",d:"Proposer un transfert lorsque le coût est inférieur au risque évité.",m:"Claude Code",e:"Avancé",v:"Réseau multi-sites",steps:["Détecter rupture et surplus compatibles.","Vérifier distance, conservation et responsabilité.","Comparer coût du transfert et risque évité.","Tracer l'acceptation et le résultat."],prompt:"Évalue un transfert inter-établissements. Vérifie quantité, conservation, transport, délai, coût, impact sur le site donneur et risque évité. Propose uniquement les transferts réalisables avant l'heure limite.",g:"Respecter les règles de traçabilité et de sécurité alimentaire."},
+
+      {c:"Équipes",t:"Estimer le besoin par rôle",d:"Traduire l’activité prévue en besoin cuisine, salle, bar et plonge.",m:"Claude Code",e:"Avancé",v:"Productivité et qualité",steps:["Formaliser les règles d'effectif existantes.","Relier volume, complexité et configuration.","Tester les scénarios bas et haut.","Faire arbitrer le manager."],prompt:"À partir de la prévision et des règles fournies, estime le besoin par rôle. Montre hypothèses, fourchette, contraintes, risque de sous-effectif et coût du sureffectif. Ne produis pas un planning juridiquement complet.",g:"Les contraintes sociales et humaines priment sur l'optimisation."},
+      {c:"Équipes",t:"Analyser le staffing après service",d:"Comprendre les tensions et sureffectifs sans réduire la qualité à un ratio.",m:"Claude",e:"Rapide",v:"Règles mieux calibrées",steps:["Rapprocher planifié, réalisé et activité.","Comparer aux services similaires.","Ajouter incidents et retours terrain.","Réviser les règles si le motif se répète."],prompt:"Analyse ce service en rapprochant activité, heures planifiées, heures réalisées, incidents et qualité. Distingue problème ponctuel et tendance. Propose les règles à tester au prochain service comparable.",g:"Un ratio faible peut cacher une surcharge ou une qualité dégradée."},
+      {c:"Équipes",t:"Préparer les consignes managers",d:"Décliner le briefing groupe en message court propre à chaque établissement.",m:"Claude",e:"Rapide",v:"Clarté d’exécution",steps:["Partir du briefing validé.","Filtrer ce qui concerne chaque site.","Nommer action, responsable et échéance.","Demander confirmation ou obstacle."],prompt:"Transforme ce briefing validé en consigne courte pour chaque manager. Une action par ligne, avec raison, responsable, échéance et mode de confirmation. N'ajoute aucune décision nouvelle.",g:"Le message doit rester précis et respectueux de l'autonomie locale."},
+
+      {c:"Carte & marge",t:"Mettre à jour le coût des recettes",d:"Recalculer coût par portion et impact des hausses à partir des prix fournisseurs.",m:"Claude Code",e:"Intermédiaire",v:"Marge maîtrisée",steps:["Normaliser fiches techniques et rendements.","Relier chaque ingrédient au bon tarif.","Calculer le coût par portion daté.","Expliquer les ingrédients responsables de l'écart."],prompt:"Recalcule le coût matière de ces recettes. Affiche quantités, rendements, pertes, prix source, date, coût par portion, évolution et principaux contributeurs. Signale les unités ou données incohérentes.",g:"Chaque chiffre doit pouvoir être relié à une source et une date."},
+      {c:"Carte & marge",t:"Analyser la rentabilité de la carte",d:"Croiser popularité, marge, complexité, temps et rôle dans l’attractivité.",m:"Claude Code",e:"Intermédiaire",v:"Carte plus performante",steps:["Calculer ventes et marge théorique.","Ajouter complexité et pertes.","Interroger la fonction stratégique des produits.","Proposer tests plutôt que suppressions immédiates."],prompt:"Analyse la carte selon volume, chiffre d'affaires, marge, pertes, complexité et rôle dans le concept. Classe les produits à pousser, retravailler, simplifier ou tester, avec les preuves et risques de chaque option.",g:"Un produit peu margé peut rester essentiel à l'attractivité."},
+      {c:"Carte & marge",t:"Détecter les écarts théorique / réel",d:"Rapprocher ventes, recettes, achats et inventaires pour cibler les investigations.",m:"Claude Code",e:"Avancé",v:"Pertes réduites",steps:["Calculer la consommation théorique.","Rapprocher achats et inventaires.","Quantifier les écarts significatifs.","Chercher d'abord les erreurs de donnée et de processus."],prompt:"Compare consommation théorique et réelle. Quantifie les écarts et propose un ordre d'investigation : unités, inventaire, fiches, pertes, offerts, saisie ou portions. Ne formule aucune accusation individuelle.",g:"Un écart est un signal à vérifier, jamais une preuve de fraude."},
+      {c:"Carte & marge",t:"Simuler une évolution de carte",d:"Évaluer prix, portion, ingrédient ou retrait avant de modifier l’offre.",m:"Claude",e:"Rapide",v:"Décision mieux préparée",steps:["Définir le changement et son objectif.","Chiffrer coût et contraintes.","Identifier les effets secondaires.","Concevoir un test limité."],prompt:"Évalue ce changement de carte. Analyse cohérence concept, coût matière, prix, production, fournisseurs, expérience client et effet possible sur le mix. Propose un test, ses indicateurs et les critères d'arrêt.",g:"Présenter les résultats comme scénarios, pas comme certitudes."},
+
+      {c:"Concepts",t:"Diagnostiquer un concept existant",d:"Évaluer promesse, offre, expérience, opération, économie et capacité à durer.",m:"Claude",e:"Rapide",v:"Vision structurée",steps:["Rassembler données, visite terrain et retours équipes.","Évaluer six dimensions du concept.","Identifier les contradictions majeures.","Prioriser deux expériences à conduire."],prompt:"Diagnostique ce concept selon promesse client, offre, expérience, fluidité opérationnelle, économie unitaire et réplicabilité. Distingue faits, perceptions et hypothèses. Propose deux tests prioritaires.",g:"L'analyse documentaire ne remplace pas l'observation terrain."},
+      {c:"Concepts",t:"Clarifier le positionnement",d:"Formuler pour qui est le lieu, pour quelle occasion et pourquoi le choisir.",m:"Claude",e:"Rapide",v:"Concept plus lisible",steps:["Décrire les clientèles réellement observées.","Identifier l'occasion principale.","Formuler la différence crédible.","Tester la compréhension en quelques secondes."],prompt:"Aide-moi à clarifier ce positionnement sans jargon. Formule public, occasion, promesse, preuve, produit ou moment signature et raisons de croire. Propose trois formulations réellement différentes et leurs risques.",g:"Ne pas inventer un besoin client sans preuve ou test."},
+      {c:"Concepts",t:"Imaginer de nouveaux concepts",d:"Produire plusieurs territoires différenciés avec économie et contraintes visibles.",m:"Claude",e:"Rapide",v:"Options mieux cadrées",steps:["Définir lieu, public et contraintes.","Explorer des directions vraiment différentes.","Documenter promesse, offre et fonctionnement.","Évaluer désirabilité, faisabilité et viabilité."],prompt:"Imagine trois concepts de restauration ou bar nettement différents pour ce contexte. Pour chacun : public, occasion, promesse, offre signature, niveau de prix à tester, service, équipe, fournisseurs, économie hypothétique, risques et preuve à obtenir.",g:"Les chiffres proposés restent des hypothèses jusqu'au test."},
+      {c:"Concepts",t:"Tester un concept à petite échelle",d:"Concevoir une expérimentation réversible avant un investissement important.",m:"Claude",e:"Rapide",v:"Risque d’investissement réduit",steps:["Écrire l'hypothèse à tester.","Choisir le test le plus petit mais probant.","Définir seuils et facteurs perturbateurs.","Décider poursuivre, modifier ou arrêter."],prompt:"Conçois un test peu coûteux pour cette idée : hypothèse, format, durée, population, indicateur principal, volume minimum, seuil de réussite, facteurs perturbateurs et décisions possibles à l'issue.",g:"Éviter de confondre curiosité initiale et demande durable."},
+      {c:"Concepts",t:"Préparer le lancement",d:"Orchestrer rétroplanning, fournisseurs, recrutement, formation, carte et suivi.",m:"Claude Code",e:"Intermédiaire",v:"Lancement maîtrisé",steps:["Lister les dépendances et décisions irréversibles.","Construire le rétroplanning.","Préparer scénarios de risque.","Suivre les indicateurs des premières semaines."],prompt:"Construis un plan de lancement pour ce concept. Inclue dépendances, décisions, achats, fournisseurs, recrutement, formation, procédures, carte, communication, risques, responsables et jalons de validation.",g:"Aucun engagement contractuel n'est automatisé."},
+
+      {c:"Qualité & procédures",t:"Synthétiser les avis clients",d:"Classer les retours par thème, fréquence, évolution et gravité.",m:"Claude",e:"Rapide",v:"Expérience améliorée",steps:["Rassembler les avis sur une période comparable.","Classer sans perdre le contexte.","Repérer les motifs récurrents.","Relier aux observations terrain avant d'agir."],prompt:"Analyse ces retours clients par thème, fréquence, évolution et gravité. Donne quelques exemples courts, les limites de l'échantillon, les hypothèses opérationnelles et les vérifications terrain nécessaires.",g:"Les avis en ligne ne représentent pas tous les clients."},
+      {c:"Qualité & procédures",t:"Transformer une pratique en procédure",d:"Formaliser les étapes, responsabilités, contrôles et réactions aux écarts.",m:"Claude",e:"Rapide",v:"Pratiques homogènes",steps:["Faire raconter la pratique par les équipes.","Décrire la version réelle avant la version cible.","Définir points de contrôle et exceptions.","Tester la procédure avec un nouvel utilisateur."],prompt:"Transforme ces notes en procédure opérationnelle : objectif, périmètre, prérequis, étapes, responsabilités, points de contrôle, exceptions, conduite en cas d'écart et version courte affichable.",g:"La procédure doit être validée par les personnes qui l'exécutent."},
+      {c:"Qualité & procédures",t:"Analyser les incidents",d:"Consolider les incidents et suivre les actions correctives sans masquer les limites.",m:"Claude Code",e:"Intermédiaire",v:"Récurrence réduite",steps:["Normaliser les déclarations.","Distinguer gravité, fréquence et impact.","Identifier les motifs récurrents.","Suivre action, responsable, échéance et preuve."],prompt:"Structure ces incidents par type, gravité, fréquence, établissement, impact et statut. Repère les récurrences, propose les causes à investiguer et un plan correctif traçable.",g:"Préserver la confidentialité et limiter les données personnelles."},
+      {c:"Qualité & procédures",t:"Créer des fiches réflexes",d:"Préparer des réponses simples aux pannes, ruptures, absences ou rappels produit.",m:"Claude",e:"Rapide",v:"Réaction plus sûre",steps:["Lister les scénarios critiques.","Identifier la première action sûre.","Définir escalade et contacts.","Tester la fiche lors d'un exercice."],prompt:"Crée une fiche réflexe pour ce scénario. Indique premiers gestes, interdictions, vérifications, escalade, communications, traçabilité, conditions de reprise et points nécessitant une validation experte.",g:"Les sujets sanitaires, sécurité ou juridiques exigent une validation compétente."},
+
+      {c:"Maintenance & outils",t:"Centraliser les demandes de maintenance",d:"Transformer les messages libres en tickets qualifiés et priorisés.",m:"Claude Code",e:"Intermédiaire",v:"Interventions plus rapides",steps:["Créer un formulaire court et mobile.","Qualifier équipement, symptôme et impact.","Prioriser sécurité et continuité.","Suivre prestataire, délai et résultat."],prompt:"Transforme cette demande en ticket : site, équipement, symptôme, début, impact, vérifications déjà faites, preuves, priorité proposée, prestataire, prochaine action et délai.",g:"Une urgence de sécurité ne doit jamais attendre l'analyse de l'IA."},
+      {c:"Maintenance & outils",t:"Évaluer réparer ou remplacer",d:"Comparer pannes, indisponibilité, énergie et investissement sur une base documentée.",m:"Claude",e:"Rapide",v:"Investissement éclairé",steps:["Rassembler âge, pannes et coûts.","Estimer indisponibilité et contournements.","Comparer plusieurs horizons.","Documenter les hypothèses."],prompt:"Compare réparation et remplacement de cet équipement. Utilise coût des pannes, indisponibilité, maintenance, énergie, investissement, garantie et horizon d'usage. Montre les hypothèses et fais une analyse de sensibilité.",g:"Vérifier les données techniques auprès des fabricants et prestataires."},
+      {c:"Maintenance & outils",t:"Construire un outil interne",d:"Transformer un workflow validé en application simple et maintenable avec Claude Code.",m:"Claude Code",e:"Avancé",v:"Automatisation durable",steps:["Observer le processus réel.","Définir le résultat et les validations humaines.","Prototyper avec données fictives.","Tester, documenter et mesurer l'adoption."],prompt:"Aide-moi à spécifier un outil interne pour ce processus. Décris utilisateurs, problème, données, parcours, décisions, permissions, erreurs, critères d'acceptation, sécurité, mesure d'usage et version minimale testable.",g:"Ne connecter des données réelles qu'après une phase dédiée de sécurité."},
+      {c:"Maintenance & outils",t:"Créer une base de procédures interrogeable",d:"Permettre aux managers de trouver une réponse sourcée dans les documents validés.",m:"Claude Code",e:"Intermédiaire",v:"Accès rapide au savoir",steps:["Nettoyer et versionner les procédures.","Définir droits et sources autorisées.","Répondre avec citation et date de version.","Prévoir « je ne sais pas » et escalade."],prompt:"Conçois une base documentaire interrogeable. Chaque réponse doit citer la procédure, sa version et le passage source, signaler les conflits et s'abstenir lorsque l'information n'est pas présente.",g:"Une réponse sans source ne doit pas être présentée comme une procédure officielle."}
+    ];
+
+    let selectedCategory = "Tous";
+    let selectedMode = "Tous";
+    const nav = document.getElementById("categoryNav");
+    const grid = document.getElementById("usecaseGrid");
+    const count = document.getElementById("resultCount");
+    const dialog = document.getElementById("detailDialog");
+
+    function categoryCount(category) { return category === "Tous" ? cases.length : cases.filter(x => x.c === category).length; }
+    function renderNav() {
+      nav.innerHTML = categories.map(([name, icon]) => `<button class="nav-button ${name === selectedCategory ? "active" : ""}" data-category="${name}"><span class="nav-icon">${icon}</span><span>${name}</span><span class="nav-count">${categoryCount(name)}</span></button>`).join("");
+      nav.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => { selectedCategory = btn.dataset.category; renderNav(); renderCards(); document.getElementById("catalogue").scrollIntoView(); }));
+    }
+
+    function visibleCases() {
+      return cases.filter(item => (selectedCategory === "Tous" || item.c === selectedCategory) && (selectedMode === "Tous" || (selectedMode === "Rapide" ? item.e === "Rapide" : item.m === selectedMode)));
+    }
+
+    function renderCards() {
+      const list = visibleCases(); count.textContent = list.length;
+      grid.innerHTML = list.length ? list.map(item => `<article class="card" tabindex="0" role="button" data-title="${item.t}"><div class="card-top"><span class="tag">${item.c}</span><span class="effort">${item.e}</span></div><h3>${item.t}</h3><p>${item.d}</p><div class="card-bottom"><span class="mode">${item.m}</span><span class="arrow">↗</span></div></article>`).join("") : `<div class="empty">Aucun cas d'usage ne correspond à ce filtre.</div>`;
+      grid.querySelectorAll(".card").forEach(card => {
+        const open = () => openCase(cases.find(x => x.t === card.dataset.title));
+        card.addEventListener("click", open);
+        card.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
+      });
+    }
+
+    function openCase(item) {
+      if (!item) return;
+      document.getElementById("dialogCategory").textContent = item.c;
+      document.getElementById("dialogTitle").textContent = item.t;
+      document.getElementById("dialogBody").innerHTML = `<p class="modal-summary">${item.d}</p><div class="facts"><div class="fact"><small>Outil conseillé</small><b>${item.m}</b></div><div class="fact"><small>Mise en place</small><b>${item.e}</b></div><div class="fact"><small>Valeur</small><b>${item.v}</b></div></div><h3>Comment le mettre en œuvre</h3><ol>${item.steps.map(s => `<li>${s}</li>`).join("")}</ol><h3>Prompt de départ</h3><div class="prompt" id="promptText">${item.prompt}</div><button class="copy" id="copyPrompt">Copier le prompt</button><h3>Point de vigilance</h3><div class="guardrail">${item.g}</div>`;
+      document.getElementById("copyPrompt").addEventListener("click", async event => {
+        try { await navigator.clipboard.writeText(item.prompt); event.target.textContent = "Prompt copié ✓"; }
+        catch { event.target.textContent = "Sélectionnez le texte ci-dessus"; }
+      });
+      dialog.showModal();
+    }
+
+    document.getElementById("closeDialog").addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
+    document.getElementById("filters").querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
+      selectedMode = btn.dataset.mode;
+      document.querySelectorAll(".filter").forEach(x => x.classList.toggle("active", x === btn));
+      renderCards();
+    }));
+
+    const keywords = {
+      "Recrutement":["recrut","candidat","cuisin","chef","salle","embauch","entretien","poste"],
+      "Fournisseurs & achats":["fournisseur","facture","achat","tarif","prix","commande","négoci","mercuriale"],
+      "Performance":["performance","baisse","chiffre","vente","restaurant","kpi","décroche","réunion","pilotage"],
+      "Concepts":["concept","nouveau","idée","positionnement","tester","lancement","offre"],
+      "Stocks & préparation":["stock","rupture","préparation","prévoir","couverts","transfert"],
+      "Carte & marge":["carte","marge","recette","coût matière","portion","rentabilité"],
+      "Équipes":["équipe","staff","planning","effectif","manager","heures"],
+      "Qualité & procédures":["avis","incident","procédure","qualité","client","hygiène"],
+      "Maintenance & outils":["outil","maintenance","panne","équipement","application","procédures"]
+    };
+
+    function advise(question) {
+      const q = question.toLowerCase();
+      let best = "Performance", score = 0;
+      Object.entries(keywords).forEach(([cat, words]) => { const s = words.filter(w => q.includes(w)).length; if (s > score) { score = s; best = cat; } });
+      const matches = cases.filter(x => x.c === best).slice(0,3);
+      const answer = document.getElementById("answer");
+      answer.innerHTML = `<strong>Je commencerais par la catégorie « ${best} ».</strong><br>Votre question correspond à ${matches.length} démarches concrètes. Commencez par une tâche fréquente avec des sources disponibles, puis mesurez le résultat avant d'automatiser.<div class="answer-actions">${matches.map(x => `<button class="chip" data-open="${x.t}">${x.t}</button>`).join("")}</div>`;
+      answer.classList.add("visible");
+      answer.querySelectorAll("[data-open]").forEach(btn => btn.addEventListener("click", () => openCase(cases.find(x => x.t === btn.dataset.open))));
+    }
+
+    document.getElementById("askForm").addEventListener("submit", event => { event.preventDefault(); const q = document.getElementById("askInput").value.trim(); if (q) advise(q); });
+    document.querySelectorAll("[data-question]").forEach(btn => btn.addEventListener("click", () => { document.getElementById("askInput").value = btn.dataset.question; advise(btn.dataset.question); }));
+
+    renderNav(); renderCards();
+  </script>
+</body>
+</html>
