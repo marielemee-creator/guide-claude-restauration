@@ -201,6 +201,11 @@
     .mail-result { display: none; border-top: 1px solid var(--line); padding-top: 18px; }
     .mail-result.visible { display: block; }
     .mail-result p { color: var(--muted); font-size: 12px; line-height: 1.55; }
+    .result-recos { display: grid; gap: 7px; margin: 12px 0; }
+    .result-reco { border: 1px solid var(--line); background: var(--paper); border-radius: 10px; min-height: 42px; padding: 10px 12px; cursor: pointer; text-align: left; font-size: 11px; font-weight: 700; }
+    .result-reco:hover { color: var(--green); border-color: rgba(24,92,75,.35); }
+    .result-footer { display: flex; gap: 8px; flex-wrap: wrap; }
+    .result-explore { border: 1px solid var(--line); color: var(--green); background: white; border-radius: 11px; padding: 11px 14px; cursor: pointer; font-weight: 700; font-size: 11px; }
     .diagnostic-trigger { border: 0; background: var(--green); color: white; border-radius: 999px; padding: 9px 14px; cursor: pointer; font-size: 11px; font-weight: 700; }
 
     footer { max-width: 1080px; margin: 55px auto 0; padding-top: 22px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 10px; }
@@ -368,7 +373,7 @@
     const missions = [
       {id:"recrutement",label:"Je n’arrive pas à recruter ou garder les cuisiniers",title:"Rendre le poste cuisine clair et désirable",text:"Présenter honnêtement une cuisine de tapas simple et répétitive, sans la dévaloriser : rythme, qualité attendue, autonomie, équipe et possibilités d’évolution.",items:["Une annonce qui montre la vraie journée de travail","Une trame d’entretien centrée sur le terrain","Un plan d’intégration et de fidélisation sur les premières semaines"],use:"Faire comprendre un poste cuisine"},
       {id:"temps-fort",label:"Je prépare la Fête de la musique ou une grosse soirée",title:"Créer un temps fort exploitable",text:"Passer d’une idée créative à une soirée cohérente avec le lieu, l’équipe, la carte et le budget.",items:["Trois concepts adaptés au lieu","Playlist, lumière et déroulé","Équipe, offre courte, risques et critères de réussite"],use:"Programmer une soirée"},
-      {id:"performance",label:"Un établissement fonctionne moins bien",title:"Comprendre avant d’agir",text:"Distinguer un problème de fréquentation, de ticket, de marge, d’équipe ou d’expérience client.",items:["Les écarts réellement significatifs","Les causes à vérifier sur le terrain","Trois actions maximum avec échéance"],use:"Revue hebdomadaire d’un restaurant"},
+      {id:"performance",label:"Je dois mieux piloter la performance du groupe",title:"Comparer les sites sans perdre leur spécificité",text:"Distinguer les problèmes de fréquentation, ticket, marge, équipe ou expérience client, puis prioriser les établissements à accompagner.",items:["Une lecture homogène mais adaptée aux concepts","Les écarts significatifs et les causes à vérifier","Trois décisions groupe avec responsables et échéances"],use:"Briefing opérationnel du matin"},
       {id:"concept",label:"Je veux améliorer ou inventer un concept",title:"Tester une idée sans tout bouleverser",text:"Clarifier la promesse, imaginer plusieurs pistes et organiser un test réversible avant d’investir.",items:["Trois territoires de concept distincts","Une fiche offre, ambiance et fonctionnement","Un test court avec seuil de réussite"],use:"Imaginer de nouveaux concepts"}
     ];
 
@@ -490,6 +495,12 @@
       "Carte, coût matière et marge":["Mettre à jour le coût des recettes","Analyser la rentabilité de la carte","Simuler une évolution de carte"],
       "Nouveaux concepts et temps forts":["Imaginer de nouveaux concepts","Tester un concept à petite échelle","Programmer une soirée"],
       "Ambiance, musique et programmation":["Créer une playlist par moment","Imaginer l’ambiance lumineuse","Programmer une soirée"]
+    };
+    const intakeCategories = {
+      "Performance des établissements":"Performance", "Fournisseurs, achats et factures":"Fournisseurs & achats",
+      "Recrutement cuisine et salle":"Recrutement", "Stocks, commandes et préparation":"Stocks & préparation",
+      "Organisation des équipes":"Équipes", "Carte, coût matière et marge":"Carte & marge",
+      "Nouveaux concepts et temps forts":"Concepts", "Ambiance, musique et programmation":"Ambiance & programmation"
     };
 
     const caseRequirements = {
@@ -647,8 +658,19 @@
       const subject = encodeURIComponent(`Diagnostic Claude — ${pain}`);
       const body = encodeURIComponent(summary);
       const result = document.getElementById("mailResult");
-      result.innerHTML = `<span class="eyebrow">Vos pistes prioritaires</span><p>${recos.map((title, index) => `${index + 1}. ${title}`).join("<br>")}</p><p>Le bouton ci-dessous ouvre votre messagerie avec les réponses préremplies. Vérifiez-les puis envoyez l’email à Marie.</p><a href="mailto:marie_lemee@hotmail.com?subject=${subject}&body=${body}">Envoyer mon diagnostic à Marie →</a>`;
+      result.innerHTML = `<span class="eyebrow">Vos pistes prioritaires</span><div class="result-recos">${recos.map(title => `<button type="button" class="result-reco" data-reco="${title}">${title} →</button>`).join("")}</div><p>Explorez une fiche maintenant, ou envoyez le diagnostic prérempli à Marie pour choisir ensemble les sujets à creuser.</p><div class="result-footer"><button type="button" class="result-explore" data-explore="${intakeCategories[pain]}">Voir toute la catégorie</button><a href="mailto:marie_lemee@hotmail.com?subject=${subject}&body=${body}">Envoyer à Marie →</a></div>`;
       result.classList.add("visible");
+      result.querySelectorAll("[data-reco]").forEach(button => button.addEventListener("click", () => {
+        intakeDialog.close();
+        openCase(cases.find(item => item.t === button.dataset.reco));
+      }));
+      result.querySelector("[data-explore]").addEventListener("click", buttonEvent => {
+        selectedCategory = buttonEvent.currentTarget.dataset.explore;
+        selectedMode = "Tous";
+        document.querySelectorAll(".filter").forEach(filter => filter.classList.toggle("active", filter.dataset.mode === "Tous"));
+        renderNav(); renderCards(); intakeDialog.close();
+        document.getElementById("catalogue").scrollIntoView();
+      });
     });
 
     renderNav(); renderCards(); renderMission(); renderVenues();
