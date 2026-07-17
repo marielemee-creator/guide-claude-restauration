@@ -71,8 +71,9 @@
     .nav-button.active { color: var(--green); font-weight: 700; }
     .nav-icon { width: 25px; height: 25px; display: grid; place-items: center; border-radius: 8px; background: var(--paper-2); font-size: 13px; }
     .nav-count { margin-left: auto; font: 500 10px "SFMono-Regular", Consolas, monospace; color: var(--muted); }
-    .tech-nav-link { margin-top: 24px; min-height: 46px; padding: 11px 13px; border: 1px solid var(--line); border-radius: 13px; background: var(--paper); color: var(--green); display: flex; align-items: center; gap: 10px; text-decoration: none; font-size: 11px; font-weight: 800; }
-    .tech-nav-link:hover { background: var(--green-2); border-color: rgba(18,107,85,.25); }
+    .tech-nav-link { margin-top: 26px; min-height: 58px; padding: 13px 15px; border: 1px solid rgba(18,107,85,.2); border-radius: 15px; background: var(--green-2); color: var(--green); display: flex; align-items: center; gap: 12px; text-decoration: none; font-size: 13px; line-height: 1.25; font-weight: 800; box-shadow: 0 8px 22px rgba(18,43,34,.06); }
+    .tech-nav-link span { width: 31px; height: 31px; flex: none; display: grid; place-items: center; border-radius: 10px; background: var(--white); font-size: 15px; }
+    .tech-nav-link:hover { background: #d1ecdf; border-color: rgba(18,107,85,.35); transform: translateY(-1px); }
 
     main { min-width: 0; padding: 28px clamp(22px, 4vw, 68px) 70px; }
     .topbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 54px; }
@@ -203,6 +204,46 @@
     .technical-head { position: relative; z-index: 1; display: grid; grid-template-columns: 1.2fr .8fr; gap: 30px; align-items: end; margin-bottom: 28px; }
     .technical-head h2 { max-width: 650px; }
     .technical-head p { margin: 0; color: rgba(255,255,255,.68); font-size: 13px; line-height: 1.65; }
+    .starter-guide { position: relative; z-index: 1; margin-bottom: 22px; padding: 18px; border-radius: 17px; background: var(--white); color: var(--ink); }
+    .starter-guide-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 14px; }
+    .starter-guide-head h3 { margin: 4px 0 0; font-size: 24px; letter-spacing: -.03em; }
+    .starter-guide-head p { max-width: 410px; margin: 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .starter-tools { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+    .starter-tool { padding: 14px; border-radius: 12px; background: var(--paper); border: 1px solid var(--line); }
+    .starter-tool b { display: block; margin-bottom: 6px; font-size: 13px; }
+    .starter-tool p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .starter-tool.recommended { background: var(--green-2); border-color: rgba(18,107,85,.2); }
+    .starter-tool small { display: inline-block; margin-bottom: 8px; color: var(--green); font: 600 9px "SFMono-Regular", Consolas, monospace; text-transform: uppercase; letter-spacing: .06em; }
+    .plain-terms { display: grid; grid-template-columns: repeat(4,1fr); gap: 7px; margin-top: 10px; }
+    .plain-term { padding: 10px 11px; border-radius: 10px; background: #f8faf9; border: 1px solid var(--line); font-size: 10px; line-height: 1.4; color: var(--muted); }
+    .plain-term b { display: block; color: var(--ink); font-size: 11px; }
+    .starter-prompt { margin-top: 10px; padding: 13px 14px; border-radius: 11px; background: var(--ink); color: rgba(255,255,255,.82); font: 500 10px/1.55 "SFMono-Regular", Consolas, monospace; }
+    .starter-copy { margin-top: 9px; border: 0; border-radius: 10px; min-height: 42px; padding: 10px 13px; background: var(--orange); color: white; cursor: pointer; font-size: 11px; font-weight: 800; }
+    .starter-reflexes { display: grid; grid-template-columns: repeat(4,1fr); gap: 7px; margin-top: 10px; }
+    .starter-reflex { padding: 10px 11px; border-radius: 10px; background: #fff8e8; color: #6e5a24; font-size: 10px; line-height: 1.4; }
+    .starter-reflex b { display: block; margin-bottom: 3px; color: var(--ink); font-size: 11px; }
+    .project-explainer { margin-top: 10px; border-radius: 12px; background: #eef4f1; border: 1px solid var(--line); overflow: hidden; }
+    .project-explainer summary, .setup-onboarding summary { list-style: none; min-height: 50px; padding: 13px 15px; display: flex; align-items: center; cursor: pointer; color: var(--ink); font-size: 13px; font-weight: 800; }
+    .project-explainer summary::-webkit-details-marker, .setup-onboarding summary::-webkit-details-marker { display: none; }
+    .project-explainer summary::after, .setup-onboarding summary::after { content: "+"; margin-left: auto; color: var(--green); font-size: 18px; }
+    .project-explainer[open] summary::after, .setup-onboarding[open] summary::after { content: "−"; }
+    .starter-detail-body { padding: 0 15px 15px; }
+    .starter-detail-body > p { margin: 0 0 11px; color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .project-types { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .project-type { padding: 12px; border-radius: 10px; background: var(--white); }
+    .project-type b { display: block; margin-bottom: 5px; font-size: 12px; }
+    .project-type p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
+    .project-benefits { margin-top: 8px; color: var(--green); font-size: 10px; font-weight: 700; line-height: 1.5; }
+    .setup-onboarding { margin-top: 8px; border-radius: 12px; background: #fff; border: 1px solid var(--line); overflow: hidden; }
+    .setup-steps { display: grid; grid-template-columns: repeat(5,1fr); gap: 7px; }
+    .setup-step { padding: 11px; border-radius: 10px; background: var(--paper); color: var(--muted); font-size: 10px; line-height: 1.4; }
+    .setup-step span { display: block; margin-bottom: 7px; color: var(--green); font: 700 9px "SFMono-Regular", Consolas, monospace; }
+    .setup-step b { display: block; margin-bottom: 3px; color: var(--ink); font-size: 11px; }
+    .setup-notes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+    .setup-note { padding: 12px; border-radius: 10px; background: #f8faf9; color: var(--muted); font-size: 10px; line-height: 1.5; }
+    .setup-note b { display: block; margin-bottom: 5px; color: var(--ink); font-size: 11px; }
+    .download-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+    .download-links a { border: 1px solid var(--line); border-radius: 999px; padding: 7px 10px; color: var(--green); text-decoration: none; font-size: 9px; font-weight: 700; }
     .practice-list { position: relative; z-index: 1; display: grid; gap: 9px; }
     .practice { border: 1px solid rgba(255,255,255,.14); border-radius: 15px; background: rgba(255,255,255,.07); overflow: hidden; }
     .practice[open] { background: rgba(255,255,255,.11); }
@@ -363,6 +404,24 @@
       .technical-kit { margin-top: 42px; padding: 22px 16px; border-radius: 20px; }
       .technical-head { gap: 12px; margin-bottom: 22px; }
       .technical-head p { font-size: 15px; }
+      .starter-guide { padding: 15px; }
+      .starter-guide-head { display: block; }
+      .starter-guide-head h3 { font-size: 25px; }
+      .starter-guide-head p { margin-top: 8px; font-size: 14px; }
+      .starter-tools, .plain-terms, .starter-reflexes { grid-template-columns: 1fr; }
+      .starter-tool b { font-size: 16px; }
+      .starter-tool p, .plain-term, .starter-reflex { font-size: 14px; }
+      .plain-term b, .starter-reflex b { font-size: 14px; }
+      .starter-prompt { font-size: 12px; }
+      .starter-copy { width: 100%; min-height: 48px; font-size: 14px; }
+      .project-types { grid-template-columns: 1fr; }
+      .project-explainer summary, .setup-onboarding summary { min-height: 58px; font-size: 16px; }
+      .starter-detail-body > p, .project-type p, .project-benefits { font-size: 14px; }
+      .project-type b { font-size: 15px; }
+      .setup-steps, .setup-notes { grid-template-columns: 1fr; }
+      .setup-step, .setup-note { font-size: 14px; }
+      .setup-step b, .setup-note b { font-size: 15px; }
+      .download-links a { font-size: 12px; min-height: 42px; display: inline-flex; align-items: center; }
       .practice summary { min-height: 64px; padding: 14px; gap: 10px; font-size: 15px; line-height: 1.3; }
       .practice-number { font-size: 10px; }
       .practice-body { padding: 0 14px 18px; font-size: 14px; line-height: 1.6; }
@@ -472,11 +531,66 @@
             <p>Une méthode simple pour créer un mini-outil, le partager sans perdre le travail et permettre à un agent de le reprendre sans tout réexpliquer.</p>
           </div>
 
+          <div class="starter-guide">
+            <div class="starter-guide-head"><div><span class="eyebrow">Je ne suis pas développeur</span><h3>Vous pouvez simplement parler à l’agent.</h3></div><p>Décrivez le résultat en français, montrez le dossier concerné et laissez l’agent préparer les fichiers, lancer les vérifications et vous demander les validations importantes.</p></div>
+            <div class="starter-tools">
+              <div class="starter-tool"><small>Pour une tâche ponctuelle</small><b>Claude</b><p>Analyser un Excel ou un PDF, comparer, rédiger ou préparer une décision dans une conversation.</p></div>
+              <div class="starter-tool recommended"><small>Pour construire · recommandé</small><b>Claude Code ou Codex</b><p>Travailler directement dans un dossier, créer un microsite ou un mini-outil, tester le résultat et le sauvegarder sur GitHub.</p></div>
+              <div class="starter-tool"><small>Le plus important</small><b>Un seul agent suffit</b><p>Choisissez Claude Code ou Codex selon votre accès. Il n’est pas nécessaire d’utiliser les deux ni de savoir coder.</p></div>
+            </div>
+            <div class="plain-terms">
+              <div class="plain-term"><b>Dossier projet</b>L’endroit où vivent tous les fichiers de l’outil.</div>
+              <div class="plain-term"><b>Git</b>L’historique qui permet de revenir en arrière.</div>
+              <div class="plain-term"><b>GitHub</b>La copie en ligne, partageable et sauvegardée.</div>
+              <div class="plain-term"><b>Commit + push</b>Enregistrer une version, puis l’envoyer sur GitHub.</div>
+            </div>
+            <div class="starter-reflexes" aria-label="Quatre réflexes essentiels">
+              <div class="starter-reflex"><b>1 · Partir d’une copie</b>Tester avec des fichiers fictifs ou anonymisés avant les données réelles.</div>
+              <div class="starter-reflex"><b>2 · Limiter l’accès</b>Donner seulement le dossier et les services nécessaires au projet.</div>
+              <div class="starter-reflex"><b>3 · Lire avant d’accepter</b>Demander une explication simple lorsqu’une autorisation ou une action externe est proposée.</div>
+              <div class="starter-reflex"><b>4 · Vérifier le résultat</b>Faire tester, relire les changements, puis contrôler GitHub et le site publié.</div>
+            </div>
+            <details class="project-explainer">
+              <summary>Pourquoi créer un projet plutôt qu’un chat isolé&nbsp;?</summary>
+              <div class="starter-detail-body"><p>Le projet devient la maison du sujet. On y garde le contexte durable ; chaque nouvelle conversation peut alors traiter une tâche précise sans tout mélanger.</p>
+              <div class="project-types">
+                <div class="project-type"><b>Projet dans Claude</b><p>Créez un espace « Opérations restaurants », ajoutez les documents de référence et les instructions communes, puis ouvrez un chat différent pour chaque analyse. Une information n’est réutilisée entre les chats que si elle figure dans les connaissances ou instructions du projet.</p></div>
+                <div class="project-type"><b>Projet dans Claude Code ou Codex</b><p>Ouvrez un dossier dédié à l’outil. Il contient les fichiers, les règles <code>CLAUDE.md</code> ou <code>AGENTS.md</code>, les tests et l’historique Git. L’agent peut reprendre le travail là où il s’est arrêté.</p></div>
+              </div>
+              <div class="project-benefits">Un sujet = un projet · des règles stables · moins de fichiers oubliés · retour en arrière possible · transmission plus simple</div></div>
+            </details>
+            <details class="setup-onboarding">
+              <summary>Installer et démarrer sans terminal</summary>
+              <div class="starter-detail-body"><p>Pour un profil non développeur, commencez par l’application Codex. Node.js, Python et les connecteurs ne sont pas des prérequis systématiques.</p>
+              <div class="setup-steps">
+                <div class="setup-step"><span>01</span><b>Télécharger Codex</b>Installer l’application officielle puis se connecter avec son compte ChatGPT.</div>
+                <div class="setup-step"><span>02</span><b>Créer un dossier</b>Un dossier par projet, même vide au départ : « comparateur-fournisseurs » par exemple.</div>
+                <div class="setup-step"><span>03</span><b>Ouvrir le projet</b>Sélectionner ce dossier dans Codex et conserver les permissions recommandées.</div>
+                <div class="setup-step"><span>04</span><b>Parler à l’agent</b>Copier la première demande ci-dessous. L’agent inspecte, explique et propose les actions.</div>
+                <div class="setup-step"><span>05</span><b>Connecter au besoin</b>Ajouter GitHub pour publier ; Drive ou Gmail seulement si le cas d’usage l’exige.</div>
+              </div>
+              <div class="setup-notes">
+                <div class="setup-note"><b>Connecteurs : pas « tout connecter »</b>Un fichier Excel local peut simplement être placé dans le dossier. Pour Drive, Gmail ou GitHub, utilisez le connecteur officiel, choisissez le minimum de droits et commencez si possible par un dossier ou dépôt de test.</div>
+                <div class="setup-note"><b>Node.js, Python, Git : seulement si nécessaire</b>Demandez à l’agent de vérifier ce qui est déjà installé et d’expliquer l’utilité de chaque outil. Node.js sert souvent aux sites web, Python aux traitements de données et Git à l’historique. Installez uniquement depuis les sources officielles.</div>
+              </div>
+              <div class="download-links">
+                <a href="https://openai.com/codex/get-started/" target="_blank" rel="noopener noreferrer">Télécharger et démarrer Codex ↗</a>
+                <a href="https://claude.ai/download" target="_blank" rel="noopener noreferrer">Télécharger Claude Desktop ↗</a>
+                <a href="https://nodejs.org/en/download" target="_blank" rel="noopener noreferrer">Node.js — si demandé ↗</a>
+                <a href="https://www.python.org/downloads/" target="_blank" rel="noopener noreferrer">Python — si demandé ↗</a>
+                <a href="https://git-scm.com/downloads" target="_blank" rel="noopener noreferrer">Git — si demandé ↗</a>
+              </div></div>
+            </details>
+            <div class="starter-prompt" id="starterPrompt">Je ne suis pas développeur. Aide-moi à créer ce projet en travaillant directement dans ce dossier. Commence par inspecter l’existant sans rien supprimer. Explique-moi simplement ton plan, crée Git et le dépôt GitHub si nécessaire, puis construis par petites étapes. Avant toute action sensible, demande ma validation. À la fin, teste le résultat, montre-moi ce qui a changé et propose le commit et le push.</div>
+            <button class="starter-copy" type="button" id="copyStarterPrompt">Copier ma première demande</button>
+          </div>
+
           <div class="practice-list">
             <details class="practice">
               <summary><span class="practice-number">01</span>Créer le projet et son dépôt GitHub</summary>
               <div class="practice-body">
-                <p>Créez un dossier dédié, ajoutez d’abord un <strong>.gitignore</strong> et un <strong>.env.example</strong>, puis demandez à Claude Code ou Codex d’initialiser Git. Sur GitHub, partez en privé ; rendez public uniquement un prototype fictif destiné à être partagé.</p>
+                <p>Vous n’avez pas besoin de taper les commandes ci-dessous. Ouvrez le dossier dans Claude Code ou Codex et dites : <strong>« Initialise Git proprement, crée le dépôt GitHub en privé et explique-moi chaque validation. »</strong> L’agent ajoutera d’abord un <strong>.gitignore</strong> et un <strong>.env.example</strong>.</p>
+                <p><strong>Ce que l’agent fera en arrière-plan :</strong></p>
                 <pre class="tech-code">git init
 git add .
 git commit -m "Initial project"
@@ -543,6 +657,9 @@ Terminé quand : tests, comportement visible et livrable vérifiable.</pre>
           </div>
 
           <div class="practice-links" aria-label="Documentation officielle">
+            <a href="https://docs.anthropic.com/en/docs/claude-code/getting-started" target="_blank" rel="noopener noreferrer">Démarrer avec Claude Code ↗</a>
+            <a href="https://support.anthropic.com/fr/articles/9517075-qu-est-ce-que-les-projets" target="_blank" rel="noopener noreferrer">Comprendre les projets Claude ↗</a>
+            <a href="https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan" target="_blank" rel="noopener noreferrer">Démarrer avec Codex ↗</a>
             <a href="https://learn.chatgpt.com/guides/best-practices" target="_blank" rel="noopener noreferrer">Bonnes pratiques Codex ↗</a>
             <a href="https://learn.chatgpt.com/docs/agent-configuration/agents-md" target="_blank" rel="noopener noreferrer">Guide AGENTS.md ↗</a>
             <a href="https://learn.chatgpt.com/docs/build-skills" target="_blank" rel="noopener noreferrer">Créer un skill Codex ↗</a>
@@ -988,6 +1105,10 @@ Terminé quand : tests, comportement visible et livrable vérifiable.</pre>
     document.getElementById("askForm").addEventListener("submit", event => { event.preventDefault(); const q = document.getElementById("askInput").value.trim(); if (q) advise(q); });
     document.querySelectorAll("[data-question]").forEach(btn => btn.addEventListener("click", () => { document.getElementById("askInput").value = btn.dataset.question; advise(btn.dataset.question); }));
     document.getElementById("openFieldInbox").addEventListener("click", () => openCase(cases.find(item => item.t === "Construire la boîte de réception des restaurants")));
+    document.getElementById("copyStarterPrompt").addEventListener("click", async event => {
+      try { await navigator.clipboard.writeText(document.getElementById("starterPrompt").textContent); event.target.textContent = "Demande copiée ✓"; }
+      catch { event.target.textContent = "Sélectionnez le texte juste au-dessus"; }
+    });
 
     function openIntake() {
       document.getElementById("mailResult").classList.remove("visible");
