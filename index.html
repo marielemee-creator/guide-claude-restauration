@@ -748,8 +748,9 @@
       const summary = `Diagnostic Le Bureau de Hugo\n\nSujet prioritaire : ${pain}\nFréquence : ${frequency}\nMéthode actuelle : ${method}\nImpact : ${impact}\nExemple : ${example}\n\nCas d'usage recommandés :\n- ${recos.join("\n- ")}`;
       const subject = encodeURIComponent(`Diagnostic Claude — ${pain}`);
       const body = encodeURIComponent(summary);
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=marie_lemee%40hotmail.com&su=${subject}&body=${body}`;
       const result = document.getElementById("mailResult");
-      result.innerHTML = `<span class="eyebrow">Vos pistes prioritaires</span><div class="result-recos">${recos.map(title => `<button type="button" class="result-reco" data-reco="${title}">${title} →</button>`).join("")}</div><p>Explorez une fiche maintenant, ou envoyez le diagnostic prérempli à Marie pour choisir ensemble les sujets à creuser.</p><div class="result-footer"><button type="button" class="result-explore" data-explore="${intakeCategories[pain]}">Voir toute la catégorie</button><a href="mailto:marie_lemee@hotmail.com?subject=${subject}&body=${body}">Envoyer à Marie →</a></div>`;
+      result.innerHTML = `<span class="eyebrow">Vos pistes prioritaires</span><div class="result-recos">${recos.map(title => `<button type="button" class="result-reco" data-reco="${title}">${title} →</button>`).join("")}</div><p>Explorez une fiche maintenant, ou ouvrez Gmail avec le diagnostic déjà rempli pour choisir avec Marie les sujets à creuser.</p><div class="result-footer"><button type="button" class="result-explore" data-explore="${intakeCategories[pain]}">Voir toute la catégorie</button><a href="${gmailUrl}" target="_blank" rel="noopener noreferrer">Ouvrir dans Gmail →</a></div>`;
       result.classList.add("visible");
       result.querySelectorAll("[data-reco]").forEach(button => button.addEventListener("click", () => {
         intakeDialog.close();
