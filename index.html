@@ -125,6 +125,19 @@
     .arrow { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--green-2); color: var(--green); }
     .empty { grid-column: 1/-1; text-align: center; padding: 60px; color: var(--muted); border: 1px dashed var(--line); border-radius: 18px; }
 
+    .venue-panel { margin: 44px auto 58px; max-width: 1080px; border: 1px solid var(--line); border-radius: 24px; background: rgba(255,253,248,.72); padding: clamp(22px,4vw,38px); }
+    .venue-panel-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; }
+    .venue-panel-head p { color: var(--muted); max-width: 560px; font-size: 12px; line-height: 1.55; margin: 0; }
+    .venue-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+    .venue-button { border: 1px solid var(--line); background: var(--white); border-radius: 999px; padding: 9px 13px; cursor: pointer; font-size: 11px; }
+    .venue-button:hover, .venue-button.active { color: white; background: var(--green); border-color: var(--green); }
+    .venue-focus { margin-top: 20px; display: grid; grid-template-columns: .8fr 1.2fr; gap: 20px; padding: 22px; background: var(--paper); border-radius: 16px; }
+    .venue-focus h3 { font: 600 27px Baskerville, Georgia, serif; margin: 4px 0 8px; }
+    .venue-focus p { color: var(--muted); font-size: 12px; line-height: 1.55; margin: 0; }
+    .venue-recos { display: grid; gap: 7px; }
+    .venue-reco { border: 0; background: var(--white); border-radius: 11px; min-height: 44px; padding: 10px 13px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; text-align: left; font-size: 11px; font-weight: 700; }
+    .venue-reco:hover { color: var(--green); box-shadow: 0 8px 20px rgba(33,44,38,.08); }
+
     .method { margin-top: 60px; background: var(--ink); color: white; border-radius: 26px; padding: clamp(28px, 5vw, 58px); overflow: hidden; position: relative; }
     .method::after { content: ""; position: absolute; width: 340px; height: 340px; border-radius: 50%; background: var(--orange); filter: blur(1px); opacity: .11; right: -170px; top: -170px; }
     .method h2 { max-width: 620px; }
@@ -176,7 +189,9 @@
       .steps { grid-template-columns: repeat(2,1fr); }
     }
     @media (max-width: 620px) {
-      .usecase-grid, .facts, .source-kit, .need-grid { grid-template-columns: 1fr; }
+      .usecase-grid, .facts, .source-kit, .need-grid, .venue-focus { grid-template-columns: 1fr; }
+      .venue-panel-head { display: block; }
+      .venue-panel-head p { margin-top: 10px; }
       .steps { grid-template-columns: 1fr; }
       .ask-box { grid-template-columns: 1fr; }
       .ask-box button { min-height: 48px; }
@@ -221,6 +236,12 @@
         <div class="answer" id="answer" aria-live="polite"></div>
       </section>
 
+      <section class="venue-panel" id="venues">
+        <div class="venue-panel-head"><div><span class="eyebrow">Votre terrain opérationnel</span><h2>Partir d’un établissement</h2></div><p>Chaque lieu a son rythme et ses priorités. Les profils ci-dessous s’appuient sur le positionnement public des enseignes ; les recommandations associées sont des exemples fictifs à adapter avec les données internes.</p></div>
+        <div class="venue-list" id="venueList" aria-label="Établissements"></div>
+        <div class="venue-focus" id="venueFocus" aria-live="polite"></div>
+      </section>
+
       <section class="workspace" id="catalogue">
         <div class="section-head"><div><span class="eyebrow">La bibliothèque</span><h2>Tous les cas d’usage</h2></div><p><span id="resultCount">0</span> fiches pratiques</p></div>
         <div class="filters" id="filters">
@@ -260,6 +281,21 @@
       ["Concepts", "✦"], ["Qualité & procédures", "✓"], ["Maintenance & outils", "⚙"]
     ];
 
+    const venues = [
+      {n:"Les Grands Gamins",type:"Restaurant-bar et lieu de vie",desc:"Cuisine, brunch, terrasse et activité de bar : un terrain complet pour travailler fréquentation, carte et équipe.",use:["Revue hebdomadaire d’un restaurant","Analyser la rentabilité de la carte","Préparer les entretiens"]},
+      {n:"Le Caliente",type:"Bar à tapas, cocktails et programmation",desc:"Plusieurs moments dans la journée, restauration à partager et soirées animées.",use:["Prévoir couverts et chiffre d’affaires","Préparer les commandes","Analyser le staffing après service"]},
+      {n:"Le Grand Bain",type:"Bistrot le midi, bar d’ambiance le soir",desc:"Un concept récent dont il faut suivre séparément le déjeuner, l’apéritif, la soirée et la montée en compétence de l’équipe.",use:["Tester un concept à petite échelle","Détecter une dérive","Définir un poste clé"]},
+      {n:"Delirium Café",type:"Pub à forte spécialisation bière",desc:"Large assortiment, groupes, terrasse et animation : priorité aux stocks boissons et aux pics d’activité.",use:["Alerter sur une rupture","Préparer les commandes","Prévoir couverts et chiffre d’affaires"]},
+      {n:"Little Delirium Café",type:"Bar-restaurant de grande capacité",desc:"Groupes, restauration, retransmissions et longue amplitude d’ouverture demandent une équipe cuisine et salle bien calibrée.",use:["Estimer le besoin par rôle","Préparer les entretiens","Analyser le staffing après service"]},
+      {n:"Le Sketch",type:"Bar lounge et activité de soirée",desc:"Cocktails, petite restauration et ambiance évolutive entre après-midi et nuit.",use:["Analyser la rentabilité de la carte","Préparer les consignes managers","Synthétiser les avis clients"]},
+      {n:"Les Innocents",type:"Bar et petite restauration",desc:"Format compact où la simplicité de carte, la rotation des produits et la polyvalence comptent fortement.",use:["Mettre à jour le coût des recettes","Planifier la mise en place","Estimer le besoin par rôle"]},
+      {n:"La Place",type:"Bar festif et privatisable",desc:"Événements, cocktails et soirées : le planning et la rentabilité par événement sont centraux.",use:["Briefing opérationnel du matin","Analyser le staffing après service","Registre des décisions et du ROI"]},
+      {n:"Le Webb Ellis",type:"Pub et lieu de retransmission",desc:"Activité très dépendante du calendrier sportif et des pics de fréquentation.",use:["Prévoir couverts et chiffre d’affaires","Alerter sur une rupture","Préparer les consignes managers"]},
+      {n:"Le Délicatessen",type:"Club et établissement de nuit",desc:"Forte concentration d’activité sur quelques créneaux, avec enjeux d’équipe, recrutement terrain, incidents et programmation.",use:["Estimer le besoin par rôle","Préparer les entretiens","Analyser les incidents"]},
+      {n:"L’Espace",type:"Établissement de nuit",desc:"Pilotage des soirées, capacité, équipes et maintenance ; activité actuelle à confirmer en interne.",use:["Analyser les incidents","Centraliser les demandes de maintenance","Analyser le staffing après service"]},
+      {n:"Le Satori",type:"Club de nuit",desc:"Ouverture concentrée en fin de semaine, programmation et exploitation nocturne ; périmètre à confirmer en interne.",use:["Analyser le staffing après service","Analyser les incidents","Évaluer réparer ou remplacer"]}
+    ];
+
     const cases = [
       {c:"Performance",t:"Briefing opérationnel du matin",d:"Consolider ventes, réservations, météo, incidents et décisions urgentes en trois priorités.",m:"Claude Code",e:"Intermédiaire",v:"Temps et anticipation",steps:["Rassembler les exports disponibles et définir l'heure de coupure.","Comparer avec les services réellement comparables.","Faire ressortir changements, risques, actions, échéances et confiance.","Valider les décisions avec les responsables de site."],prompt:"Voici les données des établissements pour aujourd'hui. Produis un briefing opérationnel avec trois décisions maximum par service. Pour chacune : changement observé, sources, action, responsable, heure limite, gain ou risque et niveau de confiance. N'invente aucune donnée manquante.",g:"Ne pas présenter une corrélation comme une cause certaine."},
       {c:"Performance",t:"Revue hebdomadaire d’un restaurant",d:"Transformer les KPI en diagnostic court, questions à vérifier et plan d’action mesurable.",m:"Claude",e:"Rapide",v:"Décisions plus nettes",steps:["Fournir la semaine, la référence et les événements connus.","Séparer fréquentation, ticket, marge, équipe et expérience client.","Demander les causes plausibles et les preuves manquantes.","Limiter le plan à trois actions mesurables."],prompt:"Analyse cette revue hebdomadaire. Distingue faits, hypothèses et informations manquantes. Explique si l'écart vient surtout des couverts, du ticket, du mix, du coût matière ou de l'organisation. Propose trois actions maximum avec responsable, échéance et indicateur.",g:"Comparer l'établissement à lui-même avant de le classer face aux autres."},
@@ -277,7 +313,7 @@
       {c:"Recrutement",t:"Rédiger une offre attractive",d:"Présenter sincèrement le poste, le concept, le rythme et les perspectives.",m:"Claude",e:"Rapide",v:"Temps et attractivité",steps:["Fournir les réalités du poste.","Choisir un ton cohérent avec l'établissement.","Rendre conditions et attentes lisibles.","Relire pour l'inclusion et la précision."],prompt:"Rédige une offre de recrutement claire et attractive à partir de cette fiche de poste. Reste factuel sur les horaires, responsabilités, conditions et perspectives. Évite les clichés et tout critère discriminatoire. Termine par un processus de candidature simple.",g:"Ne pas embellir les conditions au point de créer une mauvaise attente."},
       {c:"Recrutement",t:"Préparer les entretiens",d:"Créer une trame commune, des mises en situation et une grille de preuves.",m:"Claude",e:"Rapide",v:"Sélection plus cohérente",steps:["Définir cinq compétences clés.","Créer les mêmes questions socles pour tous.","Ajouter deux situations proches du terrain.","Noter des preuves, pas une impression générale."],prompt:"Crée une trame d'entretien structurée pour ce poste. Pour chaque compétence : question comportementale, relance, mise en situation, signaux positifs, signaux à vérifier et échelle de notation fondée sur des preuves.",g:"La décision finale reste humaine et collégiale lorsque possible."},
       {c:"Recrutement",t:"Synthétiser les candidatures",d:"Comparer les preuves au besoin du poste sans automatiser la décision d’embauche.",m:"Claude",e:"Rapide",v:"Lecture plus rapide",steps:["Retirer les informations personnelles non pertinentes.","Comparer aux critères publiés.","Séparer preuve, déclaration et information manquante.","Préparer les questions complémentaires."],prompt:"Compare ces candidatures uniquement aux critères explicites du poste. Pour chacune : preuves pertinentes, déclarations non vérifiées, informations manquantes et questions de relance. N'établis pas de classement automatique et ignore les caractéristiques protégées.",g:"Ne jamais confier à l'IA seule la sélection ou le rejet."},
-      {c:"Recrutement",t:"Construire un parcours 30/60/90 jours",d:"Transformer l’intégration en objectifs progressifs et points de suivi concrets.",m:"Claude",e:"Rapide",v:"Prise de poste sécurisée",steps:["Lister les savoirs et relations essentiels.","Définir les objectifs progressifs.","Prévoir observations et feedbacks réguliers.","Mesurer l'intégration sans surveillance disproportionnée."],prompt:"Construis un plan d'intégration 30/60/90 jours pour ce poste. Inclus découvertes, formations, personnes à rencontrer, situations à maîtriser, livrables et points de feedback. Garde des objectifs réalistes et observables.",g:"Le plan soutient la personne ; il ne doit pas devenir un dispositif intrusif."},
+      {c:"Recrutement",t:"Intégrer un chef ou un responsable de salle",d:"Préparer une prise de poste terrain centrée sur la carte, l’équipe, le service et les premières responsabilités.",m:"Claude",e:"Rapide",v:"Prise de poste sécurisée",steps:["Lister les savoirs et relations essentiels.","Définir les objectifs progressifs.","Prévoir observations et feedbacks réguliers.","Mesurer l'intégration sans surveillance disproportionnée."],prompt:"Construis un plan d'intégration terrain pour ce chef ou responsable de salle. Organise les premières semaines autour du concept, de la carte, des fournisseurs, de l'équipe, des procédures de service et des décisions qu'il devra progressivement prendre.",g:"Rester centré sur la réussite opérationnelle du poste, pas sur l'administration RH."},
 
       {c:"Stocks & préparation",t:"Prévoir couverts et chiffre d’affaires",d:"Produire une fourchette par service, ses facteurs et une confiance explicite.",m:"Claude Code",e:"Avancé",v:"Anticipation",steps:["Créer une référence simple sur les mêmes services passés.","Utiliser uniquement les informations connues à l'heure de décision.","Tester chronologiquement sans fuite future.","Afficher une fourchette et savoir s'abstenir."],prompt:"Construis une prévision explicable à partir de ces historiques et signaux connus. Affiche référence, estimation, fourchette, facteurs, date de coupure et confiance. Abstention obligatoire si l'historique ou la qualité est insuffisant.",g:"Un LLM ne doit pas être le moteur numérique de prévision."},
       {c:"Stocks & préparation",t:"Préparer les commandes",d:"Proposer des quantités à partir du stock, de la consommation et des contraintes de livraison.",m:"Claude Code",e:"Avancé",v:"Moins de ruptures et surplus",steps:["Normaliser stocks et unités.","Estimer la demande avec une fourchette.","Appliquer minimums, délais et durée de conservation.","Faire valider chaque commande."],prompt:"Propose une commande à partir du stock constaté, de la consommation prévue, de la fourchette d'incertitude et des contraintes fournisseur. Justifie chaque quantité et signale toute donnée de stock douteuse.",g:"Aucune commande n'est envoyée automatiquement."},
@@ -317,6 +353,8 @@
     const grid = document.getElementById("usecaseGrid");
     const count = document.getElementById("resultCount");
     const dialog = document.getElementById("detailDialog");
+    const venueList = document.getElementById("venueList");
+    const venueFocus = document.getElementById("venueFocus");
 
     const sourceKits = {
       "Performance": {
@@ -372,7 +410,7 @@
       "Rédiger une offre attractive":["Conditions réelles du poste déjà arbitrées","Fiche de poste validée + éléments de culture et processus de candidature","Version en vigueur"],
       "Préparer les entretiens":["Cinq compétences liées au poste et une notation commune","Fiche de poste + grille d’entretien existante + situations terrain","Avant le premier entretien"],
       "Synthétiser les candidatures":["CV anonymisés et critères identiques pour tous","CV anonymisés + notes structurées + critères du poste","Campagne en cours uniquement"],
-      "Construire un parcours 30/60/90 jours":["Un tuteur et des points de suivi sont désignés","Fiche de poste + procédures + formations + personnes ressources","90 premiers jours"],
+      "Intégrer un chef ou un responsable de salle":["Un manager terrain et des points de suivi sont désignés","Fiche de poste + carte + fournisseurs + procédures cuisine ou salle","Premières semaines de prise de poste"],
       "Prévoir couverts et chiffre d’affaires":["Historique stable, horodaté et sans fuite du futur","CSV : date, site, service, couverts, CA + réservations et signaux connus","12 mois minimum, 24 recommandé"],
       "Préparer les commandes":["Stock récent et unités fiables","Stock daté + ventes/consommation + délais et minimums fournisseur","Stock du jour + 8 semaines"],
       "Planifier la mise en place":["Fiches techniques reliées aux articles vendus","Prévision + stock + recettes, rendements et durées de conservation","Service à venir + 8 services comparables"],
@@ -406,6 +444,13 @@
     }
 
     function categoryCount(category) { return category === "Tous" ? cases.length : cases.filter(x => x.c === category).length; }
+    function renderVenues(activeName = venues[0].n) {
+      const active = venues.find(venue => venue.n === activeName) || venues[0];
+      venueList.innerHTML = venues.map(venue => `<button class="venue-button ${venue.n === active.n ? "active" : ""}" data-venue="${venue.n}">${venue.n}</button>`).join("");
+      venueFocus.innerHTML = `<div><span class="eyebrow">Exemple fictif · ${active.type}</span><h3>${active.n}</h3><p>${active.desc}</p></div><div class="venue-recos"><span class="eyebrow">Cas d’usage à explorer</span>${active.use.map(title => `<button class="venue-reco" data-open="${title}"><span>${title}</span><span>↗</span></button>`).join("")}</div>`;
+      venueList.querySelectorAll("button").forEach(button => button.addEventListener("click", () => renderVenues(button.dataset.venue)));
+      venueFocus.querySelectorAll("[data-open]").forEach(button => button.addEventListener("click", () => openCase(cases.find(item => item.t === button.dataset.open))));
+    }
     function renderNav() {
       nav.innerHTML = categories.map(([name, icon]) => `<button class="nav-button ${name === selectedCategory ? "active" : ""}" data-category="${name}"><span class="nav-icon">${icon}</span><span>${name}</span><span class="nav-count">${categoryCount(name)}</span></button>`).join("");
       nav.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => { selectedCategory = btn.dataset.category; renderNav(); renderCards(); document.getElementById("catalogue").scrollIntoView(); }));
@@ -473,7 +518,7 @@
     document.getElementById("askForm").addEventListener("submit", event => { event.preventDefault(); const q = document.getElementById("askInput").value.trim(); if (q) advise(q); });
     document.querySelectorAll("[data-question]").forEach(btn => btn.addEventListener("click", () => { document.getElementById("askInput").value = btn.dataset.question; advise(btn.dataset.question); }));
 
-    renderNav(); renderCards();
+    renderNav(); renderCards(); renderVenues();
   </script>
 </body>
 </html>
