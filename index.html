@@ -245,7 +245,8 @@
       <section class="workspace" id="catalogue">
         <div class="section-head"><div><span class="eyebrow">La bibliothèque</span><h2>Tous les cas d’usage</h2></div><p><span id="resultCount">0</span> fiches pratiques</p></div>
         <div class="filters" id="filters">
-          <button class="filter active" data-mode="Tous">Tous</button>
+          <button class="filter active" data-mode="Essentiels">Essentiels</button>
+          <button class="filter" data-mode="Tous">Tous les cas</button>
           <button class="filter" data-mode="Claude">Claude</button>
           <button class="filter" data-mode="Claude Code">Claude Code</button>
           <button class="filter" data-mode="Rapide">Mise en place rapide</button>
@@ -295,6 +296,16 @@
       {n:"L’Espace",type:"Établissement de nuit",desc:"Pilotage des soirées, capacité, équipes et maintenance ; activité actuelle à confirmer en interne.",use:["Analyser les incidents","Centraliser les demandes de maintenance","Analyser le staffing après service"]},
       {n:"Le Satori",type:"Club de nuit",desc:"Ouverture concentrée en fin de semaine, programmation et exploitation nocturne ; périmètre à confirmer en interne.",use:["Analyser le staffing après service","Analyser les incidents","Évaluer réparer ou remplacer"]}
     ];
+
+    const essentialCases = new Set([
+      "Briefing opérationnel du matin", "Revue hebdomadaire d’un restaurant", "Détecter une dérive",
+      "Comparer les tarifs fournisseurs", "Contrôler les factures", "Préparer une négociation",
+      "Prévoir couverts et chiffre d’affaires", "Préparer les commandes", "Planifier la mise en place",
+      "Estimer le besoin par rôle", "Analyser le staffing après service", "Mettre à jour le coût des recettes",
+      "Analyser la rentabilité de la carte", "Définir un poste clé", "Préparer les entretiens",
+      "Intégrer un chef ou un responsable de salle", "Diagnostiquer un concept existant",
+      "Tester un concept à petite échelle", "Synthétiser les avis clients", "Analyser les incidents"
+    ]);
 
     const cases = [
       {c:"Performance",t:"Briefing opérationnel du matin",d:"Consolider ventes, réservations, météo, incidents et décisions urgentes en trois priorités.",m:"Claude Code",e:"Intermédiaire",v:"Temps et anticipation",steps:["Rassembler les exports disponibles et définir l'heure de coupure.","Comparer avec les services réellement comparables.","Faire ressortir changements, risques, actions, échéances et confiance.","Valider les décisions avec les responsables de site."],prompt:"Voici les données des établissements pour aujourd'hui. Produis un briefing opérationnel avec trois décisions maximum par service. Pour chacune : changement observé, sources, action, responsable, heure limite, gain ou risque et niveau de confiance. N'invente aucune donnée manquante.",g:"Ne pas présenter une corrélation comme une cause certaine."},
@@ -348,7 +359,7 @@
     ];
 
     let selectedCategory = "Tous";
-    let selectedMode = "Tous";
+    let selectedMode = "Essentiels";
     const nav = document.getElementById("categoryNav");
     const grid = document.getElementById("usecaseGrid");
     const count = document.getElementById("resultCount");
@@ -457,7 +468,7 @@
     }
 
     function visibleCases() {
-      return cases.filter(item => (selectedCategory === "Tous" || item.c === selectedCategory) && (selectedMode === "Tous" || (selectedMode === "Rapide" ? item.e === "Rapide" : item.m === selectedMode)));
+      return cases.filter(item => (selectedCategory === "Tous" || item.c === selectedCategory) && (selectedMode === "Tous" || (selectedMode === "Essentiels" ? essentialCases.has(item.t) : selectedMode === "Rapide" ? item.e === "Rapide" : item.m === selectedMode)));
     }
 
     function renderCards() {
