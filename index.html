@@ -400,9 +400,9 @@
       "Créer une base de procédures interrogeable":["Documents validés, versionnés et droits d’accès définis","Corpus PDF/Word + index des versions + propriétaires + dates","Seulement les versions en vigueur"]
     };
 
-    function promptPackage(item, kit) {
+    function promptPackage(item) {
       const specific = caseRequirements[item.t];
-      return `PRÉREQUIS\n${specific[0]}\n\nDOCUMENTS À JOINDRE POUR CE CAS\n- ${specific[1]}\n- ${kit.required.join("\n- ")}\n\nPÉRIODE CONSEILLÉE\n${specific[2]}\n\nCONTEXTE À PRÉCISER\n- Établissement(s), objectif et décision attendue\n- Signification des colonnes, unités et données manquantes\n\nPROMPT\n${item.prompt}`;
+      return `À JOINDRE\n${specific[1]}\n\nCONTEXTE\nÉtablissement concerné, période analysée et décision à prendre.\n\nDEMANDE À CLAUDE\n${item.prompt}`;
     }
 
     function categoryCount(category) { return category === "Tous" ? cases.length : cases.filter(x => x.c === category).length; }
@@ -427,14 +427,13 @@
 
     function openCase(item) {
       if (!item) return;
-      const kit = sourceKits[item.c];
       const specific = caseRequirements[item.t];
-      const fullPrompt = promptPackage(item, kit);
+      const fullPrompt = promptPackage(item);
       document.getElementById("dialogCategory").textContent = item.c;
       document.getElementById("dialogTitle").textContent = item.t;
-      document.getElementById("dialogBody").innerHTML = `<p class="modal-summary">${item.d}</p><div class="facts"><div class="fact"><small>Outil conseillé</small><b>${item.m}</b></div><div class="fact"><small>Mise en place</small><b>${item.e}</b></div><div class="fact"><small>Valeur</small><b>${item.v}</b></div></div><h3>Prérequis de ce cas d’usage</h3><div class="specific-need"><strong>Ce qu’il faut avoir avant de commencer</strong><div class="need-grid"><div><small>Prérequis métier</small>${specific[0]}</div><div><small>Fichier clé à charger</small>${specific[1]}</div><div><small>Période conseillée</small>${specific[2]}</div><div><small>Résultat attendu</small>${item.d}</div></div></div><div class="source-kit"><div class="source-box"><strong>Autres fichiers indispensables</strong><ul>${kit.required.map(s => `<li>${s}</li>`).join("")}</ul></div><div class="source-box"><strong>Très utiles si disponibles</strong><ul>${kit.optional.map(s => `<li>${s}</li>`).join("")}</ul></div></div><div class="format-note"><b>Formats conseillés :</b> Excel ou CSV pour les tableaux, PDF natif pour les contrats et procédures, Word ou texte pour les notes. Indiquez toujours la période, les unités, la définition des colonnes et les données manquantes. Anonymisez les CV, plannings et informations personnelles.</div><h3>Comment le mettre en œuvre</h3><ol>${item.steps.map(s => `<li>${s}</li>`).join("")}</ol><h3>Prompt prêt à utiliser</h3><div class="prompt" id="promptText">${fullPrompt}</div><button class="copy" id="copyPrompt">Copier les prérequis + le prompt</button><h3>Point de vigilance</h3><div class="guardrail">${item.g}</div>`;
+      document.getElementById("dialogBody").innerHTML = `<p class="modal-summary">${item.d}</p><div class="facts"><div class="fact"><small>À utiliser avec</small><b>${item.m}</b></div><div class="fact"><small>Effort</small><b>${item.e}</b></div><div class="fact"><small>Intérêt</small><b>${item.v}</b></div></div><h3>Le minimum pour commencer</h3><div class="specific-need"><div class="need-grid"><div><small>Prérequis</small>${specific[0]}</div><div><small>À charger dans Claude</small>${specific[1]}</div></div></div><h3>Ce que Claude vous aide à obtenir</h3><p class="modal-summary">${item.d} Vous gardez la validation de la décision et pouvez demander à Claude de signaler ce qui lui manque.</p><h3>Prompt simple</h3><div class="prompt" id="promptText">${fullPrompt}</div><button class="copy" id="copyPrompt">Copier le prompt</button><h3>À garder en tête</h3><div class="guardrail">${item.g}</div>`;
       document.getElementById("copyPrompt").addEventListener("click", async event => {
-        try { await navigator.clipboard.writeText(fullPrompt); event.target.textContent = "Kit et prompt copiés ✓"; }
+        try { await navigator.clipboard.writeText(fullPrompt); event.target.textContent = "Prompt copié ✓"; }
         catch { event.target.textContent = "Sélectionnez le texte ci-dessus"; }
       });
       dialog.showModal();
