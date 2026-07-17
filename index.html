@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Guide interactif des usages de Claude pour les opérations d'un groupe de restaurants et de bars.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><circle cx=%2232%22 cy=%2232%22 r=%2230%22 fill=%22%23185c4b%22/><text x=%2232%22 y=%2241%22 text-anchor=%22middle%22 font-size=%2230%22 fill=%22white%22>B</text></svg>">
+  <link rel="icon" type="image/png" href="./assets/hugo-rugbyman.png">
   <title>Le Bureau de Hugo — Conseiller IA des opérations</title>
   <style>
     :root {
@@ -53,10 +53,11 @@
 
     .brand { display: flex; gap: 12px; align-items: center; margin-bottom: 34px; }
     .brand-mark {
-      width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center;
-      background: var(--green); color: white; font: 600 18px Baskerville, Georgia, serif;
-      box-shadow: inset 0 0 0 5px rgba(255,255,255,.12);
+      width: 58px; height: 58px; border-radius: 50%; flex: none; overflow: hidden;
+      background: var(--white); border: 2px solid var(--green);
+      box-shadow: 0 8px 22px rgba(24,92,75,.18);
     }
+    .brand-mark img { width: 100%; height: 100%; display: block; object-fit: cover; }
     .brand strong { display: block; font: 600 22px Baskerville, Georgia, serif; }
     .brand small { display: block; color: var(--muted); font-size: 10px; letter-spacing: .11em; text-transform: uppercase; }
 
@@ -128,6 +129,17 @@
     .venue-panel { margin: 44px auto 58px; max-width: 1080px; border: 1px solid var(--line); border-radius: 24px; background: rgba(255,253,248,.72); padding: clamp(22px,4vw,38px); }
     .venue-panel-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; }
     .venue-panel-head p { color: var(--muted); max-width: 560px; font-size: 12px; line-height: 1.55; margin: 0; }
+    .connected-flow { margin-top: 22px; padding: 20px; border-radius: 18px; background: var(--ink); color: white; }
+    .connected-flow-head { display: flex; align-items: start; justify-content: space-between; gap: 18px; }
+    .connected-flow h3 { font: 600 25px Baskerville, Georgia, serif; margin: 4px 0 7px; }
+    .connected-flow p { margin: 0; color: rgba(255,255,255,.66); font-size: 11px; line-height: 1.55; max-width: 630px; }
+    .connected-badge { flex: none; border: 1px solid rgba(255,255,255,.2); border-radius: 999px; padding: 7px 10px; color: var(--yellow); font: 500 9px "SFMono-Regular", Consolas, monospace; text-transform: uppercase; letter-spacing: .08em; }
+    .flow-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 18px; }
+    .flow-step { min-height: 108px; padding: 13px; border-radius: 12px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.09); }
+    .flow-step small { color: var(--yellow); font: 500 9px "SFMono-Regular", Consolas, monospace; }
+    .flow-step b { display: block; margin: 13px 0 6px; font-size: 12px; }
+    .flow-step span { display: block; color: rgba(255,255,255,.58); font-size: 10px; line-height: 1.45; }
+    .flow-action { margin-top: 13px; border: 0; border-radius: 10px; padding: 11px 14px; background: var(--orange); color: white; cursor: pointer; font-size: 11px; font-weight: 700; }
     .venue-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
     .venue-button { border: 1px solid var(--line); background: var(--white); border-radius: 999px; padding: 9px 13px; cursor: pointer; font-size: 11px; }
     .venue-button:hover, .venue-button.active { color: white; background: var(--green); border-color: var(--green); }
@@ -207,25 +219,6 @@
     .result-footer { display: flex; gap: 8px; flex-wrap: wrap; }
     .result-explore { border: 1px solid var(--line); color: var(--green); background: white; border-radius: 11px; padding: 11px 14px; cursor: pointer; font-weight: 700; font-size: 11px; }
     .diagnostic-trigger { border: 0; background: var(--green); color: white; border-radius: 999px; padding: 9px 14px; cursor: pointer; font-size: 11px; font-weight: 700; }
-    .file-lab { margin-top: 18px; border: 1px dashed rgba(24,92,75,.35); border-radius: 18px; padding: 22px; background: var(--green-2); }
-    .file-lab-head { display: flex; justify-content: space-between; gap: 18px; align-items: start; }
-    .file-lab h3 { font: 600 24px Baskerville, Georgia, serif; margin: 4px 0 7px; }
-    .file-lab p { color: var(--muted); font-size: 11px; line-height: 1.55; margin: 0; }
-    .file-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
-    .file-input { background: var(--white); border-radius: 12px; padding: 14px; }
-    .file-input label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 8px; }
-    .file-input input { width: 100%; font-size: 10px; }
-    .lab-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-    .lab-actions button { border: 0; border-radius: 10px; padding: 11px 14px; cursor: pointer; font-size: 11px; font-weight: 700; }
-    .lab-run { background: var(--orange); color: white; }
-    .lab-sample { background: var(--white); color: var(--green); }
-    .lab-result { display: none; margin-top: 16px; background: var(--white); border-radius: 13px; padding: 16px; overflow: auto; }
-    .lab-result.visible { display: block; }
-    .lab-result table { width: 100%; border-collapse: collapse; font-size: 10px; }
-    .lab-result th, .lab-result td { padding: 8px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
-    .lab-result th { color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
-    .lab-status { font-size: 11px; line-height: 1.55; margin-bottom: 10px; }
-
     footer { max-width: 1080px; margin: 55px auto 0; padding-top: 22px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 10px; }
     @keyframes rise { from { opacity: 0; transform: translateY(7px); } }
 
@@ -240,8 +233,9 @@
       .steps { grid-template-columns: repeat(2,1fr); }
     }
     @media (max-width: 620px) {
-      .usecase-grid, .facts, .source-kit, .need-grid, .venue-focus, .mission-output, .file-inputs { grid-template-columns: 1fr; }
-      .file-lab-head { display: block; }
+      .usecase-grid, .facts, .source-kit, .need-grid, .venue-focus, .mission-output, .flow-steps { grid-template-columns: 1fr; }
+      .connected-flow-head { display: block; }
+      .connected-badge { display: inline-block; margin-top: 12px; }
       .mission-options { grid-template-columns: repeat(2,1fr); }
       .venue-panel-head { display: block; }
       .venue-panel-head p { margin-top: 10px; }
@@ -261,7 +255,7 @@
 <body>
   <div class="app">
     <aside class="sidebar" aria-label="Catégories">
-      <div class="brand"><div class="brand-mark">H</div><div><strong>Le Bureau de Hugo</strong><small>Responsable opérationnel</small></div></div>
+      <div class="brand"><div class="brand-mark"><img src="./assets/hugo-rugbyman.png" alt=""></div><div><strong>Le Bureau de Hugo</strong><small>Responsable opérationnel</small></div></div>
       <div class="nav-label">Explorer</div>
       <nav class="nav-list" id="categoryNav"></nav>
       <div class="sidebar-note"><b>Une règle simple</b><p>Claude prépare, compare et recommande. Le responsable conserve la décision, surtout pour l'humain, les achats et les engagements.</p></div>
@@ -276,13 +270,13 @@
       <section class="hero">
         <span class="eyebrow">Votre conseiller IA opérationnel</span>
         <h1>Qu’est-ce que Claude peut vous faire gagner aujourd’hui&nbsp;?</h1>
-        <p class="hero-copy">Décrivez une difficulté, explorez les cas d’usage et obtenez une méthode prête à appliquer. Des fournisseurs au recrutement, de la performance aux nouveaux concepts.</p>
+        <p class="hero-copy">Décrivez une difficulté et obtenez une méthode prête à appliquer. Remontées des restaurants, fournisseurs, marges, stocks, concepts ou recrutement cuisine&nbsp;: on part des fichiers et outils déjà utilisés.</p>
         <form class="ask-box" id="askForm">
           <input id="askInput" aria-label="Votre question" autocomplete="off" placeholder="Ex. Je perds trop de temps à comparer les tarifs fournisseurs…">
           <button type="submit">Demander au conseiller →</button>
         </form>
         <div class="suggestions" aria-label="Questions suggérées">
-          <button class="chip" data-question="Comment mieux recruter un responsable de salle ?">Recruter un responsable de salle</button>
+          <button class="chip" data-question="Comment recevoir les informations importantes de tous les restaurants sans relancer chacun ?">Recevoir les remontées des restaurants</button>
           <button class="chip" data-question="Pourquoi un restaurant décroche depuis un mois ?">Comprendre une baisse de performance</button>
           <button class="chip" data-question="Comment comparer mes fournisseurs ?">Comparer les fournisseurs</button>
           <button class="chip" data-question="Comment tester un nouveau concept ?">Tester un nouveau concept</button>
@@ -291,14 +285,18 @@
       </section>
 
       <section class="venue-panel" id="tools">
-        <div class="venue-panel-head"><div><span class="eyebrow">Avec Claude Code</span><h2>Six micro-outils utiles.</h2></div><p>Petites applications locales ou micro-sites construits autour des Excel et documents déjà disponibles. Un problème précis, quelques fichiers et un résultat vérifiable.</p></div>
-        <div class="usecase-grid" id="codeToolGrid" style="margin-top:24px"></div>
-        <div class="file-lab">
-          <div class="file-lab-head"><div><span class="eyebrow">Prototype fonctionnel</span><h3>Testez le comparateur fournisseurs.</h3><p>Exportez deux tableaux Excel au format CSV avec les colonnes <b>reference</b>, <b>article</b>, <b>prix</b> et, si possible, <b>conditionnement</b>. Le calcul se fait uniquement dans votre navigateur.</p></div><span class="tag">Aucun fichier envoyé</span></div>
-          <div class="file-inputs"><div class="file-input"><label for="supplierA">Fournisseur A · CSV</label><input id="supplierA" type="file" accept=".csv,text/csv"></div><div class="file-input"><label for="supplierB">Fournisseur B · CSV</label><input id="supplierB" type="file" accept=".csv,text/csv"></div></div>
-          <div class="lab-actions"><button class="lab-run" id="runComparison">Comparer les fichiers →</button><button class="lab-sample" id="downloadSample">Télécharger un exemple CSV</button></div>
-          <div class="lab-result" id="comparisonResult" aria-live="polite"></div>
+        <div class="venue-panel-head"><div><span class="eyebrow">Avec Claude Code</span><h2>Six micro-outils vraiment utiles.</h2></div><p>Des outils simples autour de Google Drive, Sheets et des exports Excel déjà disponibles. Un problème précis, peu de saisie et un résultat vérifiable.</p></div>
+        <div class="connected-flow">
+          <div class="connected-flow-head"><div><span class="eyebrow" style="color:var(--yellow)">Le circuit connecté le plus simple</span><h3>Une boîte de réception pour tous les restaurants.</h3><p>Chaque manager remplit un formulaire mobile d’une minute. Les réponses alimentent un Google Sheet et Hugo reçoit un digest priorisé, sans déployer de nouveau logiciel métier.</p></div><span class="connected-badge">Google Workspace · sans API métier</span></div>
+          <div class="flow-steps">
+            <div class="flow-step"><small>01</small><b>Le restaurant signale</b><span>Site, sujet, impact, heure limite et photo ou lien facultatif.</span></div>
+            <div class="flow-step"><small>02</small><b>Sheets centralise</b><span>Une ligne datée par remontée dans un tableau Drive partagé.</span></div>
+            <div class="flow-step"><small>03</small><b>Les règles distribuent</b><span>Apps Script applique les priorités et envoie seulement les alertes prévues.</span></div>
+            <div class="flow-step"><small>04</small><b>Hugo décide</b><span>Il reçoit le digest et peut charger le Sheet dans Claude pour le synthétiser.</span></div>
+          </div>
+          <button class="flow-action" type="button" id="openFieldInbox">Voir comment le construire →</button>
         </div>
+        <div class="usecase-grid" id="codeToolGrid" style="margin-top:24px"></div>
       </section>
 
       <section class="workspace" id="catalogue">
@@ -334,11 +332,11 @@
   <dialog id="intakeDialog" class="intake-dialog" aria-labelledby="intakeTitle">
     <div class="intake-intro"><span class="eyebrow">5 questions · 2 minutes</span><h2 id="intakeTitle">Où Claude peut-il vraiment vous aider&nbsp;?</h2><p>Ce court diagnostic permet de faire ressortir les cas d’usage à creuser en priorité. Aucune réponse n’est stockée sur ce site.</p></div>
     <form class="intake-form" id="intakeForm">
-      <div class="field"><label for="mainPain">Quel sujet vous pose le plus de difficultés aujourd’hui&nbsp;?</label><select id="mainPain" required><option value="">Choisir un sujet</option><option>Performance des établissements</option><option>Fournisseurs, achats et factures</option><option>Recrutement cuisine et salle</option><option>Stocks, commandes et préparation</option><option>Organisation des équipes</option><option>Carte, coût matière et marge</option><option>Nouveaux concepts et temps forts</option><option>Ambiance, musique et programmation</option><option>Un petit outil à partir de mes fichiers Excel</option></select></div>
+      <div class="field"><label for="mainPain">Quel sujet vous pose le plus de difficultés aujourd’hui&nbsp;?</label><select id="mainPain" required><option value="">Choisir un sujet</option><option>Remontées des restaurants et incidents</option><option>Performance des établissements</option><option>Fournisseurs, achats et factures</option><option>Trouver des cuisiniers qualifiés et fiables</option><option>Stocks, commandes et préparation</option><option>Organisation des équipes</option><option>Carte, coût matière et marge</option><option>Nouveaux concepts et temps forts</option><option>Ambiance, musique et programmation</option><option>Un petit outil à partir de mes fichiers Excel</option></select></div>
       <div class="field"><label for="frequency">À quelle fréquence ce sujet revient-il&nbsp;?</label><select id="frequency" required><option value="">Choisir une fréquence</option><option>Tous les jours</option><option>Chaque semaine</option><option>Chaque mois</option><option>Quelques fois par an</option></select></div>
       <div class="field"><label for="currentMethod">Comment le traitez-vous aujourd’hui&nbsp;?</label><select id="currentMethod" required><option value="">Choisir une réponse</option><option>Excel ou exports de caisse</option><option>Emails, WhatsApp et notes</option><option>Un logiciel métier</option><option>Principalement de mémoire et à l’intuition</option><option>Plusieurs outils difficiles à rapprocher</option></select></div>
       <div class="field"><label for="impact">Quel est l’impact principal&nbsp;?</label><select id="impact" required><option value="">Choisir un impact</option><option>Beaucoup de temps perdu</option><option>Coûts ou marge mal maîtrisés</option><option>Décisions prises trop tard</option><option>Difficulté à recruter ou organiser l’équipe</option><option>Expérience client ou ambiance irrégulière</option><option>Manque de visibilité entre les établissements</option></select></div>
-      <div class="field"><label for="example">Un exemple concret ou une idée que vous aimeriez tester</label><textarea id="example" placeholder="Ex. préparer plus vite les entretiens cuisine, imaginer la Fête de la musique, comparer les prix fournisseurs…"></textarea></div>
+      <div class="field"><label for="example">Un exemple concret ou une idée que vous aimeriez tester</label><textarea id="example" placeholder="Ex. recevoir les alertes des restaurants, comparer les prix fournisseurs, trouver des cuisiniers expérimentés…"></textarea></div>
       <div class="intake-actions"><button type="button" class="secondary-action" id="closeIntake">Explorer sans répondre</button><button type="submit" class="primary-action">Voir mes priorités →</button></div>
       <div class="mail-result" id="mailResult" aria-live="polite"></div>
     </form>
@@ -351,60 +349,26 @@
       ["Concepts", "✦"], ["Ambiance & programmation", "♫"], ["Qualité & procédures", "✓"], ["Maintenance & outils", "⚙"]
     ];
 
-    const venues = [
-      {n:"Les Grands Gamins",type:"Restaurant-bar et lieu de vie",desc:"Cuisine, brunch, terrasse et activité de bar : un terrain complet pour travailler fréquentation, carte et équipe.",use:["Revue hebdomadaire d’un restaurant","Faire comprendre un poste cuisine","Préparer les entretiens"]},
-      {n:"Le Caliente",type:"Bar à tapas, cocktails et programmation",desc:"Plusieurs moments dans la journée, restauration à partager et soirées animées.",use:["Créer une playlist par moment","Préparer les commandes","Programmer une soirée"]},
-      {n:"Le Grand Bain",type:"Bistrot le midi, bar d’ambiance le soir",desc:"Un concept récent dont il faut suivre séparément le déjeuner, l’apéritif, la soirée et la montée en compétence de l’équipe.",use:["Imaginer l’ambiance lumineuse","Tester un concept à petite échelle","Définir un poste clé"]},
-      {n:"Delirium Café",type:"Pub à forte spécialisation bière",desc:"Large assortiment, groupes, terrasse et animation : priorité aux stocks boissons et aux pics d’activité.",use:["Alerter sur une rupture","Préparer les commandes","Prévoir couverts et chiffre d’affaires"]},
-      {n:"Little Delirium Café",type:"Bar-restaurant de grande capacité",desc:"Groupes, restauration, retransmissions et longue amplitude d’ouverture demandent une équipe cuisine et salle bien calibrée.",use:["Estimer le besoin par rôle","Fidéliser une équipe cuisine","Analyser le staffing après service"]},
-      {n:"Le Sketch",type:"Bar lounge et activité de soirée",desc:"Cocktails, petite restauration et ambiance évolutive entre après-midi et nuit.",use:["Créer une playlist par moment","Imaginer l’ambiance lumineuse","Synthétiser les avis clients"]},
-      {n:"Les Innocents",type:"Bar et petite restauration",desc:"Format compact où la simplicité de carte, la rotation des produits et la polyvalence comptent fortement.",use:["Mettre à jour le coût des recettes","Planifier la mise en place","Estimer le besoin par rôle"]},
-      {n:"La Place",type:"Bar festif et privatisable",desc:"Événements, cocktails et soirées : le planning, l’ambiance et la rentabilité par événement sont centraux.",use:["Programmer une soirée","Créer une playlist par moment","Registre des décisions et du ROI"]},
-      {n:"Le Webb Ellis",type:"Pub et lieu de retransmission",desc:"Activité très dépendante du calendrier sportif et des pics de fréquentation.",use:["Prévoir couverts et chiffre d’affaires","Alerter sur une rupture","Préparer les consignes managers"]},
-      {n:"Le Délicatessen",type:"Club et établissement de nuit",desc:"Forte concentration d’activité sur quelques créneaux, avec enjeux d’équipe, recrutement terrain, incidents et programmation.",use:["Programmer une soirée","Créer une playlist par moment","Analyser les incidents"]},
-      {n:"L’Espace",type:"Établissement de nuit",desc:"Pilotage des soirées, capacité, équipes et maintenance ; activité actuelle à confirmer en interne.",use:["Analyser les incidents","Centraliser les demandes de maintenance","Analyser le staffing après service"]},
-      {n:"Le Satori",type:"Club de nuit",desc:"Ouverture concentrée en fin de semaine, programmation et exploitation nocturne ; périmètre à confirmer en interne.",use:["Analyser le staffing après service","Analyser les incidents","Évaluer réparer ou remplacer"]}
-    ];
-
-    const essentialCases = new Set([
-      "Briefing opérationnel du matin", "Revue hebdomadaire d’un restaurant", "Détecter une dérive",
-      "Comparer les tarifs fournisseurs", "Contrôler les factures", "Préparer une négociation",
-      "Prévoir couverts et chiffre d’affaires", "Préparer les commandes", "Planifier la mise en place",
-      "Estimer le besoin par rôle", "Analyser le staffing après service", "Mettre à jour le coût des recettes",
-      "Analyser la rentabilité de la carte", "Définir un poste clé", "Préparer les entretiens",
-      "Faire comprendre un poste cuisine", "Fidéliser une équipe cuisine", "Intégrer un chef ou un responsable de salle", "Diagnostiquer un concept existant",
-      "Tester un concept à petite échelle", "Créer une playlist par moment", "Imaginer l’ambiance lumineuse",
-      "Synthétiser les avis clients", "Analyser les incidents"
-    ]);
-
     const actionCases = new Set([
-      "Briefing opérationnel du matin", "Revue hebdomadaire d’un restaurant", "Détecter une dérive",
+      "Briefing opérationnel du matin", "Revue hebdomadaire d’un restaurant", "Détecter une dérive", "Trier les remontées des restaurants",
       "Comparer les tarifs fournisseurs", "Contrôler les factures", "Préparer une négociation",
-      "Définir un poste clé", "Préparer les entretiens", "Faire comprendre un poste cuisine",
-      "Fidéliser une équipe cuisine", "Intégrer un chef ou un responsable de salle",
+      "Trouver des cuisiniers qualifiés et fiables", "Préparer les entretiens et essais cuisine",
       "Préparer les commandes", "Planifier la mise en place", "Alerter sur une rupture",
       "Estimer le besoin par rôle", "Mettre à jour le coût des recettes", "Analyser la rentabilité de la carte",
       "Imaginer de nouveaux concepts", "Tester un concept à petite échelle", "Créer une playlist par moment",
-      "Imaginer l’ambiance lumineuse", "Programmer une soirée"
+      "Imaginer l’ambiance lumineuse", "Programmer une soirée", "Analyser les incidents", "Centraliser les demandes de maintenance"
     ]);
     const codeToolTitles = new Set([
       "Construire un comparateur fournisseurs", "Construire l’interrogateur de marges",
-      "Construire le briefing multi-sites", "Construire le suivi des recrutements cuisine",
-      "Construire l’assistant de commandes", "Construire le mini-site recrutement cuisine"
+      "Construire la boîte de réception des restaurants", "Construire le briefing multi-sites",
+      "Construire le vivier cuisine et le suivi des essais", "Construire l’assistant de commandes"
     ]);
-
-    const missions = [
-      {id:"recrutement",label:"Je n’arrive pas à recruter ou garder les cuisiniers",title:"Rendre le poste cuisine clair et désirable",text:"Présenter honnêtement une cuisine de tapas simple et répétitive, sans la dévaloriser : rythme, qualité attendue, autonomie, équipe et possibilités d’évolution.",items:["Une annonce qui montre la vraie journée de travail","Une trame d’entretien centrée sur le terrain","Un plan d’intégration et de fidélisation sur les premières semaines"],use:"Faire comprendre un poste cuisine"},
-      {id:"temps-fort",label:"Je prépare la Fête de la musique ou une grosse soirée",title:"Créer un temps fort exploitable",text:"Passer d’une idée créative à une soirée cohérente avec le lieu, l’équipe, la carte et le budget.",items:["Trois concepts adaptés au lieu","Playlist, lumière et déroulé","Équipe, offre courte, risques et critères de réussite"],use:"Programmer une soirée"},
-      {id:"performance",label:"Je dois mieux piloter la performance du groupe",title:"Comparer les sites sans perdre leur spécificité",text:"Distinguer les problèmes de fréquentation, ticket, marge, équipe ou expérience client, puis prioriser les établissements à accompagner.",items:["Une lecture homogène mais adaptée aux concepts","Les écarts significatifs et les causes à vérifier","Trois décisions groupe avec responsables et échéances"],use:"Briefing opérationnel du matin"},
-      {id:"concept",label:"Je veux améliorer ou inventer un concept",title:"Tester une idée sans tout bouleverser",text:"Clarifier la promesse, imaginer plusieurs pistes et organiser un test réversible avant d’investir.",items:["Trois territoires de concept distincts","Une fiche offre, ambiance et fonctionnement","Un test court avec seuil de réussite"],use:"Imaginer de nouveaux concepts"}
-    ];
 
     const cases = [
       {c:"Performance",t:"Briefing opérationnel du matin",d:"Consolider ventes, réservations, météo, incidents et décisions urgentes en trois priorités.",m:"Claude Code",e:"Intermédiaire",v:"Temps et anticipation",steps:["Rassembler les exports disponibles et définir l'heure de coupure.","Comparer avec les services réellement comparables.","Faire ressortir changements, risques, actions, échéances et confiance.","Valider les décisions avec les responsables de site."],prompt:"Voici les données des établissements pour aujourd'hui. Produis un briefing opérationnel avec trois décisions maximum par service. Pour chacune : changement observé, sources, action, responsable, heure limite, gain ou risque et niveau de confiance. N'invente aucune donnée manquante.",g:"Ne pas présenter une corrélation comme une cause certaine."},
       {c:"Performance",t:"Revue hebdomadaire d’un restaurant",d:"Transformer les KPI en diagnostic court, questions à vérifier et plan d’action mesurable.",m:"Claude",e:"Rapide",v:"Décisions plus nettes",steps:["Fournir la semaine, la référence et les événements connus.","Séparer fréquentation, ticket, marge, équipe et expérience client.","Demander les causes plausibles et les preuves manquantes.","Limiter le plan à trois actions mesurables."],prompt:"Analyse cette revue hebdomadaire. Distingue faits, hypothèses et informations manquantes. Explique si l'écart vient surtout des couverts, du ticket, du mix, du coût matière ou de l'organisation. Propose trois actions maximum avec responsable, échéance et indicateur.",g:"Comparer l'établissement à lui-même avant de le classer face aux autres."},
       {c:"Performance",t:"Détecter une dérive",d:"Repérer tôt une baisse durable des couverts, du ticket ou de la productivité.",m:"Claude Code",e:"Avancé",v:"Risque évité",steps:["Définir les seuils avec l'exploitation.","Calculer les références historiques sans fuite future.","Détecter les écarts persistants, pas un simple accident.","Créer une alerte avec action et date limite."],prompt:"À partir de cet historique, signale uniquement les dérives persistantes. Donne l'ampleur, la période, la référence, les facteurs connus, les hypothèses à vérifier et la prochaine action. Abstien-toi si les données sont insuffisantes.",g:"Une alerte doit être actionnable et explicable, jamais seulement anxiogène."},
-      {c:"Performance",t:"Préparer la réunion groupe",d:"Créer un ordre du jour orienté décisions et suivre les engagements de la semaine précédente.",m:"Claude",e:"Rapide",v:"1 à 2 h gagnées",steps:["Fournir comptes rendus, chiffres et décisions précédentes.","Regrouper par enjeux plutôt que par document.","Identifier les arbitrages nécessaires.","Produire actions, responsables et échéances."],prompt:"Prépare la réunion opérationnelle groupe à partir de ces documents. Commence par les décisions en retard, puis les écarts significatifs et enfin les arbitrages. Termine par un tableau action, responsable, échéance, preuve attendue.",g:"Faire valider le compte rendu avant diffusion."},
+      {c:"Performance",t:"Trier les remontées des restaurants",d:"Transformer les messages, notes ou lignes d’un Google Sheet en urgences, décisions et sujets à suivre.",m:"Claude",e:"Rapide",v:"Moins de relances et d’oubli",steps:["Rassembler les remontées dans un format commun.","Distinguer information, décision et urgence.","Regrouper les doublons et demander ce qui manque.","Nommer responsable, prochaine action et heure limite."],prompt:"Trie ces remontées terrain. Pour chacune, indique établissement, sujet, impact, urgence justifiée, information manquante, prochaine action, responsable proposé et heure limite. Regroupe les doublons. N'invente pas la gravité et isole immédiatement les sujets de sécurité.",g:"Le niveau d’urgence repose sur des règles validées ; une urgence de sécurité suit toujours le circuit humain prévu."},
       {c:"Performance",t:"Registre des décisions et du ROI",d:"Suivre ce qui a été décidé, réellement appliqué et effectivement obtenu.",m:"Claude Code",e:"Intermédiaire",v:"Exécution et apprentissage",steps:["Enregistrer la recommandation et ses hypothèses.","Conserver validation, modification ou refus.","Mesurer séparément gain estimé et résultat observé.","Réutiliser les apprentissages dans les décisions suivantes."],prompt:"Structure cette décision en précisant problème, preuves, hypothèses, action, propriétaire, échéance, gain estimé, formule de calcul et résultat à mesurer. Ne transforme jamais une estimation en gain constaté.",g:"Toujours distinguer estimé, évité et réellement observé."},
 
       {c:"Fournisseurs & achats",t:"Comparer les tarifs fournisseurs",d:"Normaliser unités et conditionnements avant de comparer prix, services et contraintes.",m:"Claude Code",e:"Intermédiaire",v:"Économies vérifiables",steps:["Importer les mercuriales et factures.","Normaliser poids, volume, calibre, marque et conditionnement.","Rapprocher uniquement les articles comparables.","Chiffrer les écarts et préparer les arbitrages."],prompt:"Compare ces tarifs fournisseur. Normalise les unités et ne rapproche que les produits réellement comparables. Pour chaque écart : référence, conditionnement, prix unitaire, volume historique, impact estimé, contraintes et information à vérifier.",g:"Le produit le moins cher n'est pas nécessairement le meilleur coût complet."},
@@ -413,9 +377,9 @@
       {c:"Fournisseurs & achats",t:"Rationaliser le panel fournisseurs",d:"Repérer achats fragmentés, dépendances et possibilités de mutualisation entre sites.",m:"Claude Code",e:"Avancé",v:"Pouvoir d'achat",steps:["Cartographier dépenses par site, famille et fournisseur.","Détecter doublons et concentration excessive.","Simuler consolidation et scénarios de secours.","Tester sur une famille avant généralisation."],prompt:"Analyse la répartition des achats. Identifie fragmentation, doublons, dépendance et opportunités de mutualisation. Pour chaque option, chiffre l'impact potentiel et indique les risques de qualité, livraison et continuité.",g:"Conserver des solutions de secours pour les familles critiques."},
       {c:"Fournisseurs & achats",t:"Sourcer un produit ou un équipement",d:"Formaliser le besoin, comparer les réponses et organiser un test terrain.",m:"Claude",e:"Rapide",v:"Choix mieux documenté",steps:["Définir usages, contraintes et budget.","Créer le cahier des charges.","Comparer les réponses selon une grille commune.","Préparer un protocole d'essai."],prompt:"Transforme ce besoin en cahier des charges fournisseur. Sépare critères indispensables, souhaitables et éliminatoires. Ajoute une grille d'évaluation, les questions à poser et un protocole de test avant engagement.",g:"Vérifier les données commerciales et contractuelles auprès des sources."},
 
-      {c:"Recrutement",t:"Définir un poste clé",d:"Clarifier le besoin réel pour un chef, un second ou un responsable de salle.",m:"Claude",e:"Rapide",v:"Candidatures plus pertinentes",steps:["Décrire le contexte et l'équipe actuelle.","Séparer compétences indispensables et apprenables.","Définir autonomie et situations réelles.","Fixer les critères de réussite à 30, 60 et 90 jours."],prompt:"Aide-moi à cadrer ce poste en restauration. Décris mission, contexte, responsabilités, compétences indispensables, compétences apprenables, contraintes réelles et critères de réussite à 30/60/90 jours. Signale les critères inutiles ou potentiellement discriminatoires.",g:"N'utiliser que des critères directement liés au poste."},
+      {c:"Recrutement",t:"Trouver des cuisiniers qualifiés et fiables",d:"Cibler les bons viviers, activer la cooptation et suivre les candidatures sans perdre les profils prometteurs.",m:"Claude",e:"Rapide",v:"Sourcing plus ciblé",steps:["Définir les compétences réellement indispensables.","Lister les canaux locaux et partenariats à tester.","Préparer des messages adaptés à chaque vivier.","Suivre réponse, entretien, essai et références."],prompt:"À partir de ce besoin cuisine, construis un plan de sourcing local sur quatre semaines. Distingue compétences indispensables et apprenables, puis propose les viviers à activer : cooptation, écoles, anciens saisonniers, réseaux professionnels et candidatures directes. Pour chaque canal : message, responsable, volume cible et indicateur. La fiabilité doit être vérifiée par des faits liés au poste, jamais supposée.",g:"Claude peut organiser le sourcing ; il ne peut ni garantir la fiabilité d’une personne ni automatiser une décision d’embauche."},
       {c:"Recrutement",t:"Rédiger une offre attractive",d:"Présenter sincèrement le poste, le concept, le rythme et les perspectives.",m:"Claude",e:"Rapide",v:"Temps et attractivité",steps:["Fournir les réalités du poste.","Choisir un ton cohérent avec l'établissement.","Rendre conditions et attentes lisibles.","Relire pour l'inclusion et la précision."],prompt:"Rédige une offre de recrutement claire et attractive à partir de cette fiche de poste. Reste factuel sur les horaires, responsabilités, conditions et perspectives. Évite les clichés et tout critère discriminatoire. Termine par un processus de candidature simple.",g:"Ne pas embellir les conditions au point de créer une mauvaise attente."},
-      {c:"Recrutement",t:"Préparer les entretiens",d:"Créer une trame commune, des mises en situation et une grille de preuves.",m:"Claude",e:"Rapide",v:"Sélection plus cohérente",steps:["Définir cinq compétences clés.","Créer les mêmes questions socles pour tous.","Ajouter deux situations proches du terrain.","Noter des preuves, pas une impression générale."],prompt:"Crée une trame d'entretien structurée pour ce poste. Pour chaque compétence : question comportementale, relance, mise en situation, signaux positifs, signaux à vérifier et échelle de notation fondée sur des preuves.",g:"La décision finale reste humaine et collégiale lorsque possible."},
+      {c:"Recrutement",t:"Préparer les entretiens et essais cuisine",d:"Vérifier rapidement technique, organisation, ponctualité et comportement sur des situations proches du service réel.",m:"Claude",e:"Rapide",v:"Décisions mieux étayées",steps:["Choisir les compétences observables du poste.","Préparer les mêmes questions socles.","Construire un essai court, légal et représentatif.","Noter des faits et organiser les vérifications utiles."],prompt:"Crée une trame d'entretien et une grille d'essai cuisine pour ce poste. Évalue uniquement des critères observables et liés au travail : bases techniques, hygiène, organisation, communication, réaction au rythme et respect des consignes. Ajoute les questions de références autorisées et une grille de preuves commune à tous les candidats.",g:"L’essai doit respecter le droit applicable, être encadré et ne jamais servir de travail gratuit."},
       {c:"Recrutement",t:"Synthétiser les candidatures",d:"Comparer les preuves au besoin du poste sans automatiser la décision d’embauche.",m:"Claude",e:"Rapide",v:"Lecture plus rapide",steps:["Retirer les informations personnelles non pertinentes.","Comparer aux critères publiés.","Séparer preuve, déclaration et information manquante.","Préparer les questions complémentaires."],prompt:"Compare ces candidatures uniquement aux critères explicites du poste. Pour chacune : preuves pertinentes, déclarations non vérifiées, informations manquantes et questions de relance. N'établis pas de classement automatique et ignore les caractéristiques protégées.",g:"Ne jamais confier à l'IA seule la sélection ou le rejet."},
       {c:"Recrutement",t:"Intégrer un chef ou un responsable de salle",d:"Préparer une prise de poste terrain centrée sur la carte, l’équipe, le service et les premières responsabilités.",m:"Claude",e:"Rapide",v:"Prise de poste sécurisée",steps:["Lister les savoirs et relations essentiels.","Définir les objectifs progressifs.","Prévoir observations et feedbacks réguliers.","Mesurer l'intégration sans surveillance disproportionnée."],prompt:"Construis un plan d'intégration terrain pour ce chef ou responsable de salle. Organise les premières semaines autour du concept, de la carte, des fournisseurs, de l'équipe, des procédures de service et des décisions qu'il devra progressivement prendre.",g:"Rester centré sur la réussite opérationnelle du poste, pas sur l'administration RH."},
       {c:"Recrutement",t:"Faire comprendre un poste cuisine",d:"Montrer concrètement la réalité d’une cuisine de tapas : préparation, répétition, coup de feu, qualité et travail d’équipe.",m:"Claude",e:"Rapide",v:"Candidats mieux informés",steps:["Décrire une journée réelle.","Montrer les gestes et le rythme.","Assumer les tâches répétitives.","Expliquer ce qui rend le poste intéressant."],prompt:"À partir de cette carte et de l'organisation réelle, décris honnêtement une journée type en cuisine. Explique la mise en place, les préparations répétitives, le coup de feu, le rangement, les standards de qualité, l'autonomie et le travail d'équipe. Produis ensuite une version courte pour une annonce et une trame à présenter en entretien.",g:"Ne pas embellir le poste : une attente réaliste améliore le recrutement et la fidélisation."},
@@ -458,9 +422,9 @@
       {c:"Fournisseurs & achats",t:"Construire un comparateur fournisseurs",d:"Déposer deux mercuriales Excel et obtenir les écarts réellement comparables par article et conditionnement.",m:"Claude Code",e:"Intermédiaire",v:"Comparaison en quelques minutes",steps:["Importer Excel ou CSV.","Faire correspondre les articles.","Normaliser unités et conditionnements.","Exporter les économies potentielles à vérifier."],prompt:"Construis une petite application locale qui importe deux mercuriales Excel ou CSV, propose le rapprochement des articles, normalise les prix à l'unité et exporte les écarts. Les rapprochements incertains doivent être validés manuellement.",g:"Aucun tarif n'est comparable sans contrôler qualité, unité, marque et conditionnement."},
       {c:"Carte & marge",t:"Construire l’interrogateur de marges",d:"Poser une question simple aux exports de ventes et aux fiches techniques : où perd-on de la marge et pourquoi ?",m:"Claude Code",e:"Intermédiaire",v:"Marges lisibles sans refaire Excel",steps:["Importer ventes et fiches techniques.","Vérifier les codes articles.","Calculer coût et marge théoriques.","Permettre des questions en langage courant."],prompt:"Construis une application locale qui rapproche un export de ventes Excel, les fiches techniques et les derniers prix d'achat. Elle doit répondre à des questions comme : quels plats ont perdu de la marge, quels ingrédients expliquent l'écart et quelles données manquent ?",g:"Toujours afficher la date des prix et distinguer marge théorique et marge réellement observée."},
       {c:"Performance",t:"Construire le briefing multi-sites",d:"Déposer les exports de caisse des établissements et produire chaque semaine une page de priorités groupe.",m:"Claude Code",e:"Intermédiaire",v:"Pilotage groupe plus rapide",steps:["Importer les exports par site.","Uniformiser les colonnes.","Comparer chaque lieu à sa propre référence.","Sortir trois décisions maximum."],prompt:"Construis un outil local qui importe les exports Excel hebdomadaires de plusieurs établissements et génère une synthèse groupe : changements, écarts, questions à vérifier et trois décisions maximum avec responsables et échéances.",g:"Ne pas comparer brutalement un restaurant, un pub et un club ; conserver des références adaptées au concept."},
-      {c:"Recrutement",t:"Construire le suivi des recrutements cuisine",d:"Suivre les candidatures, entretiens, essais et premières semaines dans un petit tableau partagé et lisible.",m:"Claude Code",e:"Intermédiaire",v:"Moins de candidats perdus",steps:["Importer ou saisir les candidatures.","Suivre les prochaines actions.","Conserver les critères du poste.","Prévoir les points d'intégration terrain."],prompt:"Construis une application locale simple pour suivre les recrutements cuisine et salle : poste, établissement, statut, prochaine action, critères métier, notes d'entretien et points d'intégration. Prévoir anonymisation, accès limité et suppression des données à échéance.",g:"L'outil organise le processus ; il ne classe ni ne rejette automatiquement les candidats."},
+      {c:"Recrutement",t:"Construire le vivier cuisine et le suivi des essais",d:"Un tableau partagé pour ne perdre aucun bon profil et suivre source, disponibilité, entretien, essai et prochaine action.",m:"Claude Code",e:"Intermédiaire",v:"Sourcing mieux suivi",steps:["Définir les quelques champs utiles.","Importer le tableau existant ou partir d’un Google Sheet.","Afficher les relances et essais à venir.","Limiter les données personnelles et leur durée de conservation."],prompt:"Construis un outil simple à partir d'un Google Sheet pour suivre le vivier cuisine : source, poste, disponibilité, compétences vérifiées, statut, essai, prochaine action et responsable. Ajoute une vue des relances en retard. Ne classe ni ne rejette automatiquement les personnes et prévois une suppression à échéance.",g:"L'outil suit des étapes et des preuves professionnelles ; il ne prédit pas la fiabilité d'une personne."},
       {c:"Stocks & préparation",t:"Construire l’assistant de commandes",d:"Importer stock, ventes et contraintes fournisseurs pour préparer une proposition de commande modifiable.",m:"Claude Code",e:"Intermédiaire",v:"Commandes plus rapides",steps:["Importer stock et ventes Excel.","Lire délais et minimums.","Calculer une proposition expliquée.","Valider ou modifier chaque ligne."],prompt:"Construis une application locale qui importe stock, ventes récentes et contraintes fournisseurs depuis Excel. Elle propose une commande par fournisseur, explique chaque quantité et permet de modifier ou refuser chaque ligne avant export.",g:"L'outil ne transmet jamais automatiquement une commande au fournisseur."},
-      {c:"Recrutement",t:"Construire le mini-site recrutement cuisine",d:"Présenter un poste cuisine tel qu’il est vraiment et permettre aux candidats de comprendre le rythme avant de postuler.",m:"Claude Code",e:"Intermédiaire",v:"Candidats mieux qualifiés",steps:["Décrire la journée réelle.","Montrer le lieu, l'équipe et la carte.","Répondre aux questions fréquentes.","Proposer un contact ou formulaire simple."],prompt:"Construis un micro-site mobile de recrutement cuisine pour cet établissement. Présente honnêtement une journée type, la carte tapas, les tâches répétitives, le coup de feu, l'équipe, les horaires, les conditions et les possibilités d'apprendre. Termine par quelques questions d'auto-positionnement et un lien de candidature.",g:"Les conditions affichées doivent être exactes, inclusives et validées avant publication."}
+      {c:"Performance",t:"Construire la boîte de réception des restaurants",d:"Un formulaire mobile relié à Google Sheets pour recevoir incidents, ruptures, besoins et décisions attendues dans un seul flux.",m:"Claude Code",e:"Intermédiaire",v:"Information terrain centralisée",steps:["Limiter le formulaire à une minute de saisie.","Stocker les réponses dans un Google Sheet partagé.","Définir des règles d’urgence et de responsabilité.","Générer un digest Gmail à heure fixe via Apps Script."],prompt:"Construis un dispositif léger avec Google Forms ou une page mobile, Google Sheets et Apps Script. Chaque remontée contient : établissement, catégorie, fait observé, impact, heure limite, action déjà tentée et pièce jointe facultative. Le système crée un digest à heure fixe, signale les données manquantes et n'envoie une alerte immédiate que selon des règles explicites. Fournis le script, le modèle de feuille, les droits d'accès et une procédure d'installation sans API métier.",g:"Ne jamais masquer une urgence de sécurité dans un digest ; conserver le circuit d’appel humain et limiter les accès au Sheet."}
     ];
 
     let selectedCategory = "Tous";
@@ -513,19 +477,21 @@
     };
 
     const intakeRecommendations = {
+      "Remontées des restaurants et incidents":["Trier les remontées des restaurants","Construire la boîte de réception des restaurants","Analyser les incidents"],
       "Performance des établissements":["Revue hebdomadaire d’un restaurant","Détecter une dérive","Briefing opérationnel du matin"],
       "Fournisseurs, achats et factures":["Comparer les tarifs fournisseurs","Contrôler les factures","Préparer une négociation"],
-      "Recrutement cuisine et salle":["Faire comprendre un poste cuisine","Préparer les entretiens","Fidéliser une équipe cuisine"],
+      "Trouver des cuisiniers qualifiés et fiables":["Trouver des cuisiniers qualifiés et fiables","Préparer les entretiens et essais cuisine","Construire le vivier cuisine et le suivi des essais"],
       "Stocks, commandes et préparation":["Préparer les commandes","Planifier la mise en place","Alerter sur une rupture"],
       "Organisation des équipes":["Estimer le besoin par rôle","Briefing opérationnel du matin","Revue hebdomadaire d’un restaurant"],
       "Carte, coût matière et marge":["Mettre à jour le coût des recettes","Analyser la rentabilité de la carte","Tester un concept à petite échelle"],
       "Nouveaux concepts et temps forts":["Imaginer de nouveaux concepts","Tester un concept à petite échelle","Programmer une soirée"],
       "Ambiance, musique et programmation":["Créer une playlist par moment","Imaginer l’ambiance lumineuse","Programmer une soirée"],
-      "Un petit outil à partir de mes fichiers Excel":["Construire un comparateur fournisseurs","Construire l’interrogateur de marges","Construire le briefing multi-sites"]
+      "Un petit outil à partir de mes fichiers Excel":["Construire la boîte de réception des restaurants","Construire un comparateur fournisseurs","Construire l’interrogateur de marges"]
     };
     const intakeCategories = {
+      "Remontées des restaurants et incidents":"Performance",
       "Performance des établissements":"Performance", "Fournisseurs, achats et factures":"Fournisseurs & achats",
-      "Recrutement cuisine et salle":"Recrutement", "Stocks, commandes et préparation":"Stocks & préparation",
+      "Trouver des cuisiniers qualifiés et fiables":"Recrutement", "Stocks, commandes et préparation":"Stocks & préparation",
       "Organisation des équipes":"Équipes", "Carte, coût matière et marge":"Carte & marge",
       "Nouveaux concepts et temps forts":"Concepts", "Ambiance, musique et programmation":"Ambiance & programmation",
       "Un petit outil à partir de mes fichiers Excel":"__tools__"
@@ -535,16 +501,16 @@
       "Briefing opérationnel du matin":["Même heure de coupure et mêmes définitions chaque jour","Exports de la veille + réservations du jour + incidents ouverts","1 jour courant et 4 semaines comparables"],
       "Revue hebdomadaire d’un restaurant":["Une référence et des objectifs validés","Excel hebdomadaire : CA, couverts, ticket, coût matière, heures + notes manager","Semaine analysée + 8 à 12 semaines"],
       "Détecter une dérive":["Seuils d’alerte décidés par l’exploitation","Historique CSV par service, sans jours futurs + calendrier des changements","12 mois idéalement, 12 semaines minimum"],
-      "Préparer la réunion groupe":["Décisions et responsables de la réunion précédente","Comptes rendus, KPI par site et liste des actions ouvertes","Dernière réunion + période à examiner"],
+      "Trier les remontées des restaurants":["Un établissement, une date et un niveau d’impact sont identifiables","Export Google Sheet, emails ou messages copiés : site, fait, impact, heure limite et action tentée","Remontées ouvertes du jour ou de la semaine"],
       "Registre des décisions et du ROI":["Une formule de gain explicite avant l’action","Journal Excel : décision, date, hypothèse, action, responsable, résultat","Depuis le début du pilote"],
       "Comparer les tarifs fournisseurs":["Un référentiel commun d’unités et de conditionnements","Mercuriales Excel/PDF + volumes achetés + référentiel articles","Tarifs actuels et précédents"],
       "Contrôler les factures":["Les quatre pièces portent une référence rapprochable","Commande + bon de livraison + accord tarifaire + facture","Chaque transaction contrôlée"],
       "Préparer une négociation":["Objectif, marge de manœuvre et seuil de sortie","Historique achats/prix + incidents + contrat + alternatives réelles","6 à 12 mois"],
       "Rationaliser le panel fournisseurs":["Familles d’achats et sites codifiés de la même façon","Grand livre achats Excel : fournisseur, article, site, quantité, montant","12 mois minimum"],
       "Sourcer un produit ou un équipement":["Besoin, budget et critères éliminatoires validés","Cahier des charges + devis + notices techniques","Offres valides à la même date"],
-      "Définir un poste clé":["Le manager recruteur décrit les réalités du poste","Organisation actuelle + horaires + missions + objectifs 30/60/90","Situation actuelle et besoin futur"],
+      "Trouver des cuisiniers qualifiés et fiables":["Le besoin, les conditions et les compétences indispensables sont validés","Fiche de besoin + canaux déjà testés + candidatures ou vivier existant","Campagne actuelle et quatre semaines à venir"],
       "Rédiger une offre attractive":["Conditions réelles du poste déjà arbitrées","Fiche de poste validée + éléments de culture et processus de candidature","Version en vigueur"],
-      "Préparer les entretiens":["Cinq compétences liées au poste et une notation commune","Fiche de poste + grille d’entretien existante + situations terrain","Avant le premier entretien"],
+      "Préparer les entretiens et essais cuisine":["Critères observables et conditions de l’essai validés","Fiche de besoin + carte + situations de service + grille existante","Avant le premier entretien ou essai"],
       "Synthétiser les candidatures":["CV anonymisés et critères identiques pour tous","CV anonymisés + notes structurées + critères du poste","Campagne en cours uniquement"],
       "Intégrer un chef ou un responsable de salle":["Un manager terrain et des points de suivi sont désignés","Fiche de poste + carte + fournisseurs + procédures cuisine ou salle","Premières semaines de prise de poste"],
       "Faire comprendre un poste cuisine":["Une personne de la cuisine décrit une journée réelle, sans la rendre artificiellement attractive","Carte tapas + horaires + tâches de mise en place, service et fermeture","Une journée type et un gros service"],
@@ -580,9 +546,9 @@
       "Construire un comparateur fournisseurs":["Deux fichiers utilisent des références, unités ou descriptions exploitables","Deux mercuriales Excel/CSV + volumes achetés si disponibles","Tarifs en vigueur à la même période"],
       "Construire l’interrogateur de marges":["Les articles vendus peuvent être reliés aux fiches techniques","Export ventes Excel + fiches techniques + prix d'achat datés","8 à 12 semaines et tarifs actuels"],
       "Construire le briefing multi-sites":["Chaque établissement fournit un export de caisse régulier","Exports Excel/CSV par site + objectifs ou références","Une semaine et 8 semaines de comparaison"],
-      "Construire le suivi des recrutements cuisine":["Les étapes du recrutement et les responsables sont définis","Tableau actuel des candidatures ou modèle vierge","Campagnes en cours et suivi des premières semaines"],
+      "Construire le vivier cuisine et le suivi des essais":["Les étapes, droits d’accès et durées de conservation sont définis","Google Sheet ou tableau actuel des candidatures et essais","Campagnes en cours uniquement"],
       "Construire l’assistant de commandes":["Stocks et ventes utilisent des unités compréhensibles","Excel de stock + ventes + contraintes fournisseurs","Dernier stock et 8 semaines de consommation"],
-      "Construire le mini-site recrutement cuisine":["Le poste, les horaires et les conditions sont validés","Photos autorisées + carte + journée type + conditions + contact","Version actuelle du poste et de l'établissement"]
+      "Construire la boîte de réception des restaurants":["Les catégories, règles d’urgence et destinataires sont validés","Un compte Google Workspace + liste des établissements + exemple de remontées réelles anonymisées","Pilote sur un ou deux établissements pendant deux semaines"]
     };
 
     function promptPackage(item) {
@@ -594,7 +560,11 @@
     function categoryCount(category) { return category === "Tous" ? catalogueCases().length : catalogueCases().filter(x => x.c === category).length; }
     function renderCodeTools() {
       const tools = cases.filter(item => codeToolTitles.has(item.t));
-      codeToolGrid.innerHTML = tools.map(item => `<article class="card" tabindex="0" role="button" data-title="${item.t}"><div class="card-top"><span class="tag">${item.c}</span><span class="effort">Excel / CSV</span></div><h3>${item.t}</h3><p>${item.d}</p><div class="card-bottom"><span class="mode">Petit outil local</span><span class="arrow">↗</span></div></article>`).join("");
+      codeToolGrid.innerHTML = tools.map(item => {
+        const connected = item.t === "Construire la boîte de réception des restaurants";
+        const shared = connected || item.t === "Construire le vivier cuisine et le suivi des essais";
+        return `<article class="card" tabindex="0" role="button" data-title="${item.t}"><div class="card-top"><span class="tag">${item.c}</span><span class="effort">${connected ? "Forms / Sheets" : shared ? "Google Sheets" : "Excel / CSV"}</span></div><h3>${item.t}</h3><p>${item.d}</p><div class="card-bottom"><span class="mode">${shared ? "Outil partagé" : "Petit outil local"}</span><span class="arrow">↗</span></div></article>`;
+      }).join("");
       codeToolGrid.querySelectorAll(".card").forEach(card => {
         const open = () => openCase(cases.find(item => item.t === card.dataset.title));
         card.addEventListener("click", open);
@@ -602,73 +572,13 @@
       });
     }
 
-    function csvLine(line, delimiter) {
-      const values = []; let value = ""; let quoted = false;
-      for (let index = 0; index < line.length; index += 1) {
-        const char = line[index];
-        if (char === '"' && line[index + 1] === '"' && quoted) { value += '"'; index += 1; }
-        else if (char === '"') quoted = !quoted;
-        else if (char === delimiter && !quoted) { values.push(value.trim()); value = ""; }
-        else value += char;
-      }
-      values.push(value.trim()); return values;
-    }
-    function cleanKey(value) { return String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, ""); }
-    function parseCsv(text) {
-      const lines = text.replace(/^\uFEFF/, "").split(/\r?\n/).filter(line => line.trim());
-      if (lines.length < 2) throw new Error("Le fichier doit contenir un en-tête et au moins une ligne.");
-      const delimiter = (lines[0].match(/;/g) || []).length >= (lines[0].match(/,/g) || []).length ? ";" : ",";
-      const headers = csvLine(lines[0], delimiter).map(cleanKey);
-      return lines.slice(1).map(line => {
-        const values = csvLine(line, delimiter); const row = {};
-        headers.forEach((header, index) => { row[header] = values[index] || ""; }); return row;
-      });
-    }
-    function rowValue(row, aliases) { const key = aliases.find(alias => Object.hasOwn(row, alias)); return key ? row[key] : ""; }
-    function numberValue(value) { const parsed = Number.parseFloat(String(value).replace(/\s/g, "").replace(",", ".").replace(/[^0-9.-]/g, "")); return Number.isFinite(parsed) ? parsed : null; }
-    function comparisonKey(row) {
-      const reference = rowValue(row, ["reference","ref","code","codearticle"]);
-      const article = rowValue(row, ["article","produit","libelle","designation"]);
-      return cleanKey(reference || article);
-    }
-    function articleName(row) { return rowValue(row, ["article","produit","libelle","designation"]) || rowValue(row, ["reference","ref","code","codearticle"]); }
-    function priceValue(row) { return numberValue(rowValue(row, ["prix","tarif","prixunitaire","pu","price"])); }
-    function safeText(value) { return String(value).replace(/[&<>"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[char]); }
-
-    document.getElementById("downloadSample").addEventListener("click", () => {
-      const sample = "reference;article;prix;conditionnement\nTOM01;Tomates concassées;2,35;boîte 2,5 kg\nFRI01;Frites surgelées;1,90;sac 2,5 kg\nHUI01;Huile de friture;3,20;bidon 10 L\n";
-      const link = document.createElement("a"); link.href = URL.createObjectURL(new Blob([sample], {type:"text/csv;charset=utf-8"})); link.download = "exemple-mercuriale.csv"; link.click(); URL.revokeObjectURL(link.href);
-    });
-    document.getElementById("runComparison").addEventListener("click", async () => {
-      const result = document.getElementById("comparisonResult");
-      const fileA = document.getElementById("supplierA").files[0]; const fileB = document.getElementById("supplierB").files[0];
-      if (!fileA || !fileB) { result.innerHTML = `<div class="lab-status">Ajoutez les deux fichiers CSV avant de lancer la comparaison.</div>`; result.classList.add("visible"); return; }
-      try {
-        const [rowsA, rowsB] = await Promise.all([fileA.text().then(parseCsv), fileB.text().then(parseCsv)]);
-        const indexB = new Map(rowsB.map(row => [comparisonKey(row), row]).filter(([key]) => key));
-        const comparisons = rowsA.map(rowA => {
-          const rowB = indexB.get(comparisonKey(rowA)); const priceA = priceValue(rowA); const priceB = rowB ? priceValue(rowB) : null;
-          if (!rowB || priceA === null || priceB === null) return null;
-          const delta = priceB - priceA; const percent = priceA ? (delta / priceA) * 100 : 0;
-          return {article:articleName(rowA),priceA,priceB,delta,percent,better:delta > 0 ? "A" : delta < 0 ? "B" : "Égal"};
-        }).filter(Boolean).sort((left, right) => Math.abs(right.percent) - Math.abs(left.percent));
-        const shown = comparisons.slice(0, 12);
-        if (!shown.length) throw new Error("Aucune référence commune avec un prix valide. Vérifiez les colonnes reference, article et prix.");
-        const prompt = `Voici le résultat d'une comparaison de deux mercuriales. Analyse les écarts les plus importants, demande-moi de vérifier les conditionnements et propose les lignes à négocier en priorité.\n\n${shown.map(row => `${row.article}: A ${row.priceA.toFixed(2)} €, B ${row.priceB.toFixed(2)} €, écart ${row.percent.toFixed(1)} %`).join("\n")}`;
-        result.innerHTML = `<div class="lab-status"><b>${comparisons.length} références communes comparées.</b> Résultats calculés localement. Vérifiez toujours unités, qualité et conditionnements.</div><table><thead><tr><th>Article</th><th>Prix A</th><th>Prix B</th><th>Écart</th><th>Avantage</th></tr></thead><tbody>${shown.map(row => `<tr><td>${safeText(row.article)}</td><td>${row.priceA.toFixed(2)} €</td><td>${row.priceB.toFixed(2)} €</td><td>${row.percent.toFixed(1)} %</td><td>${row.better}</td></tr>`).join("")}</tbody></table><div class="lab-actions"><button class="lab-run" id="copyComparisonPrompt">Copier le prompt d’analyse Claude</button></div>`;
-        result.classList.add("visible");
-        document.getElementById("copyComparisonPrompt").addEventListener("click", async event => { await navigator.clipboard.writeText(prompt); event.target.textContent = "Prompt copié ✓"; });
-      } catch (error) {
-        result.innerHTML = `<div class="lab-status"><b>Impossible de comparer ces fichiers.</b><br>${safeText(error instanceof Error ? error.message : "Format non reconnu")}</div>`; result.classList.add("visible");
-      }
-    });
     function renderNav() {
       nav.innerHTML = categories.filter(([name]) => name === "Tous" || categoryCount(name) > 0).map(([name, icon]) => `<button class="nav-button ${name === selectedCategory ? "active" : ""}" data-category="${name}"><span class="nav-icon">${icon}</span><span>${name}</span><span class="nav-count">${categoryCount(name)}</span></button>`).join("");
       nav.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => { selectedCategory = btn.dataset.category; renderNav(); renderCards(); document.getElementById("catalogue").scrollIntoView(); }));
     }
 
     function visibleCases() {
-      return catalogueCases().filter(item => (selectedCategory === "Tous" || item.c === selectedCategory) && (selectedMode === "Tous" || (selectedMode === "Essentiels" ? essentialCases.has(item.t) : selectedMode === "Rapide" ? item.e === "Rapide" : item.m === selectedMode)));
+      return catalogueCases().filter(item => (selectedCategory === "Tous" || item.c === selectedCategory) && (selectedMode === "Tous" || (selectedMode === "Rapide" && item.e === "Rapide")));
     }
     function displayTool(item) { return actionCases.has(item.t) && item.m === "Claude Code" ? "Claude + fichiers" : item.m; }
 
@@ -705,9 +615,9 @@
     }));
 
     const keywords = {
-      "Recrutement":["recrut","candidat","cuisin","chef","salle","embauch","entretien","poste"],
+      "Recrutement":["recrut","candidat","cuisin","chef","salle","embauch","entretien","poste","fiable","qualifié","vivier"],
       "Fournisseurs & achats":["fournisseur","facture","achat","tarif","prix","commande","négoci","mercuriale"],
-      "Performance":["performance","baisse","chiffre","vente","restaurant","kpi","décroche","réunion","pilotage"],
+      "Performance":["performance","baisse","chiffre","vente","restaurant","kpi","décroche","réunion","pilotage","remontée","message","whatsapp","alerte","information"],
       "Concepts":["concept","nouveau","idée","positionnement","tester","lancement","offre"],
       "Ambiance & programmation":["playlist","musique","lumière","éclairage","ambiance","dj","soirée","animation","programmation"],
       "Stocks & préparation":["stock","rupture","préparation","prévoir","couverts","transfert"],
@@ -730,6 +640,7 @@
 
     document.getElementById("askForm").addEventListener("submit", event => { event.preventDefault(); const q = document.getElementById("askInput").value.trim(); if (q) advise(q); });
     document.querySelectorAll("[data-question]").forEach(btn => btn.addEventListener("click", () => { document.getElementById("askInput").value = btn.dataset.question; advise(btn.dataset.question); }));
+    document.getElementById("openFieldInbox").addEventListener("click", () => openCase(cases.find(item => item.t === "Construire la boîte de réception des restaurants")));
 
     function openIntake() {
       document.getElementById("mailResult").classList.remove("visible");
