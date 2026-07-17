@@ -125,6 +125,11 @@
     .mode { font-size: 10px; font-weight: 700; }
     .arrow { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--green-2); color: var(--green); }
     .empty { grid-column: 1/-1; text-align: center; padding: 60px; color: var(--muted); border: 1px dashed var(--line); border-radius: 18px; }
+    .bonus-divider { grid-column: 1/-1; margin-top: 22px; padding: 24px 4px 4px; border-top: 1px solid var(--line); display: flex; align-items: end; justify-content: space-between; gap: 20px; }
+    .bonus-divider h3 { font: 600 30px Baskerville, Georgia, serif; margin: 4px 0 0; }
+    .bonus-divider p { max-width: 520px; margin: 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .bonus-card { background: rgba(239,201,93,.11); border-color: rgba(230,107,57,.22); }
+    .bonus-card .arrow { background: #fff1d1; color: #b94e24; }
 
     .venue-panel { margin: 44px auto 58px; max-width: 1080px; border: 1px solid var(--line); border-radius: 24px; background: rgba(255,253,248,.72); padding: clamp(22px,4vw,38px); }
     .venue-panel-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; }
@@ -239,6 +244,8 @@
       .mission-options { grid-template-columns: repeat(2,1fr); }
       .venue-panel-head { display: block; }
       .venue-panel-head p { margin-top: 10px; }
+      .bonus-divider { display: block; }
+      .bonus-divider p { margin-top: 8px; }
       .steps { grid-template-columns: 1fr; }
       .ask-box { grid-template-columns: 1fr; }
       .ask-box button { min-height: 48px; }
@@ -589,7 +596,12 @@
       const list = visibleCases();
       count.textContent = list.length;
       activeScope.textContent = selectedCategory === "Tous" ? "Toutes les catégories" : selectedCategory;
-      grid.innerHTML = list.length ? list.map(item => `<article class="card" tabindex="0" role="button" data-title="${item.t}"><div class="card-top"><span class="tag">${item.c}</span><span class="effort">${item.e}</span></div><h3>${item.t}</h3><p>${item.d}</p><div class="card-bottom"><span class="mode">${displayTool(item)}</span><span class="arrow">↗</span></div></article>`).join("") : `<div class="empty">Aucun cas d'usage ne correspond à ce filtre.</div>`;
+      const isCreative = item => item.c === "Concepts" || item.c === "Ambiance & programmation";
+      const firstCreative = list.findIndex(isCreative);
+      grid.innerHTML = list.length ? list.map((item, index) => {
+        const divider = index === firstCreative && firstCreative > 0 ? `<div class="bonus-divider"><div><span class="eyebrow">Bonus créatifs</span><h3>Faire vivre les lieux.</h3></div><p>Des usages bien réels évoqués par Hugo&nbsp;: nouveaux concepts, temps forts, playlists et lumière.</p></div>` : "";
+        return `${divider}<article class="card ${isCreative(item) ? "bonus-card" : ""}" tabindex="0" role="button" data-title="${item.t}"><div class="card-top"><span class="tag">${item.c}</span><span class="effort">${item.e}</span></div><h3>${item.t}</h3><p>${item.d}</p><div class="card-bottom"><span class="mode">${displayTool(item)}</span><span class="arrow">↗</span></div></article>`;
+      }).join("") : `<div class="empty">Aucun cas d'usage ne correspond à ce filtre.</div>`;
       grid.querySelectorAll(".card").forEach(card => {
         const open = () => openCase(cases.find(x => x.t === card.dataset.title));
         card.addEventListener("click", open);
