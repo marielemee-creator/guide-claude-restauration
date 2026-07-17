@@ -71,9 +71,8 @@
     .nav-button.active { color: var(--green); font-weight: 700; }
     .nav-icon { width: 25px; height: 25px; display: grid; place-items: center; border-radius: 8px; background: var(--paper-2); font-size: 13px; }
     .nav-count { margin-left: auto; font: 500 10px "SFMono-Regular", Consolas, monospace; color: var(--muted); }
-    .sidebar-note { margin-top: 28px; padding: 16px; background: var(--green); border-radius: 16px; color: #fff; }
-    .sidebar-note b { font: 800 18px/1.1 "Avenir Next", "Segoe UI", sans-serif; letter-spacing: -.02em; }
-    .sidebar-note p { margin: 7px 0 0; font-size: 12px; line-height: 1.55; color: rgba(255,255,255,.75); }
+    .tech-nav-link { margin-top: 24px; min-height: 46px; padding: 11px 13px; border: 1px solid var(--line); border-radius: 13px; background: var(--paper); color: var(--green); display: flex; align-items: center; gap: 10px; text-decoration: none; font-size: 11px; font-weight: 800; }
+    .tech-nav-link:hover { background: var(--green-2); border-color: rgba(18,107,85,.25); }
 
     main { min-width: 0; padding: 28px clamp(22px, 4vw, 68px) 70px; }
     .topbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 54px; }
@@ -173,6 +172,16 @@
     .venue-focus { margin-top: 20px; display: grid; grid-template-columns: .8fr 1.2fr; gap: 20px; padding: 22px; background: var(--paper); border-radius: 16px; }
     .venue-focus h3 { font: 800 27px/1.08 "Avenir Next", "Segoe UI", sans-serif; letter-spacing: -.03em; margin: 4px 0 8px; }
     .venue-focus p { color: var(--muted); font-size: 12px; line-height: 1.55; margin: 0; }
+    .venue-kpis { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-top: 18px; }
+    .venue-kpi { padding: 12px; border: 1px solid var(--line); border-radius: 11px; background: var(--white); }
+    .venue-kpi small { display: block; color: var(--muted); font-size: 9px; text-transform: uppercase; letter-spacing: .07em; }
+    .venue-kpi strong { display: block; margin-top: 6px; font-size: 17px; }
+    .venue-kpi strong.good { color: var(--green); }
+    .venue-kpi strong.watch { color: #c24f31; }
+    .venue-issues { display: grid; gap: 7px; margin-bottom: 12px; }
+    .venue-issue { padding: 11px 13px; border-radius: 11px; background: #fff8e8; border-left: 3px solid var(--yellow); font-size: 11px; line-height: 1.45; }
+    .venue-issue b { display: block; color: var(--ink); margin-bottom: 3px; }
+    .venue-issue span { color: var(--muted); }
     .venue-recos { display: grid; gap: 7px; }
     .venue-reco { border: 0; background: var(--white); border-radius: 11px; min-height: 44px; padding: 10px 13px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; text-align: left; font-size: 11px; font-weight: 700; }
     .venue-reco:hover { color: var(--green); box-shadow: 0 8px 20px rgba(33,44,38,.08); }
@@ -189,15 +198,32 @@
     .mission-deliverable { padding: 11px 13px; border-radius: 10px; background: var(--paper); font-size: 11px; }
     .mission-link { border: 0; background: var(--orange); color: white; border-radius: 10px; padding: 11px 14px; cursor: pointer; font-size: 11px; font-weight: 700; margin-top: 11px; }
 
-    .method { margin-top: 60px; background: linear-gradient(145deg, #101a16 0%, #17372c 100%); color: white; border-radius: 26px; padding: clamp(28px, 5vw, 58px); overflow: hidden; position: relative; }
-    .method::after { content: ""; position: absolute; width: 340px; height: 340px; border-radius: 50%; background: var(--orange); filter: blur(1px); opacity: .11; right: -170px; top: -170px; }
-    .method h2 { max-width: 620px; }
-    .method-intro { color: rgba(255,255,255,.65); max-width: 650px; line-height: 1.6; }
-    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,.14); margin-top: 32px; border: 1px solid rgba(255,255,255,.14); }
-    .step { background: var(--ink); padding: 22px; min-height: 190px; }
-    .step span { font: 500 11px "SFMono-Regular", Consolas, monospace; color: var(--yellow); }
-    .step h3 { font: 800 21px/1.08 "Avenir Next", "Segoe UI", sans-serif; letter-spacing: -.025em; margin: 28px 0 10px; }
-    .step p { color: rgba(255,255,255,.6); font-size: 11px; line-height: 1.55; margin: 0; }
+    .technical-kit { margin-top: 60px; padding: clamp(26px, 5vw, 52px); border-radius: 26px; background: linear-gradient(145deg, #101a16 0%, #17372c 100%); color: white; overflow: hidden; position: relative; }
+    .technical-kit::after { content: ""; position: absolute; width: 360px; height: 360px; border-radius: 50%; background: var(--orange); opacity: .1; right: -190px; top: -190px; pointer-events: none; }
+    .technical-head { position: relative; z-index: 1; display: grid; grid-template-columns: 1.2fr .8fr; gap: 30px; align-items: end; margin-bottom: 28px; }
+    .technical-head h2 { max-width: 650px; }
+    .technical-head p { margin: 0; color: rgba(255,255,255,.68); font-size: 13px; line-height: 1.65; }
+    .practice-list { position: relative; z-index: 1; display: grid; gap: 9px; }
+    .practice { border: 1px solid rgba(255,255,255,.14); border-radius: 15px; background: rgba(255,255,255,.07); overflow: hidden; }
+    .practice[open] { background: rgba(255,255,255,.11); }
+    .practice summary { list-style: none; min-height: 58px; padding: 15px 18px; display: flex; align-items: center; gap: 14px; cursor: pointer; font-size: 14px; font-weight: 800; }
+    .practice summary::-webkit-details-marker { display: none; }
+    .practice summary::after { content: "+"; margin-left: auto; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.1); color: var(--yellow); font-size: 18px; }
+    .practice[open] summary::after { content: "−"; }
+    .practice-number { color: var(--yellow); font: 600 10px "SFMono-Regular", Consolas, monospace; letter-spacing: .08em; }
+    .practice-body { padding: 0 18px 20px 62px; color: rgba(255,255,255,.74); font-size: 12px; line-height: 1.65; }
+    .practice-body p { margin: 0 0 13px; }
+    .practice-body ul, .practice-body ol { margin: 0; padding-left: 18px; }
+    .practice-body li + li { margin-top: 6px; }
+    .practice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .practice-box { padding: 15px; border-radius: 12px; background: rgba(0,0,0,.18); }
+    .practice-box strong { display: block; color: white; margin-bottom: 8px; font-size: 12px; }
+    .tech-code, .file-tree { margin: 13px 0 0; padding: 15px; border-radius: 11px; background: #07110d; color: #d8f7e9; overflow-x: auto; white-space: pre; font: 500 11px/1.7 "SFMono-Regular", Consolas, monospace; }
+    .file-tree { margin: 0; }
+    .practice-note { margin-top: 13px; padding: 12px 14px; border-left: 3px solid var(--yellow); background: rgba(255,209,102,.1); color: rgba(255,255,255,.84); border-radius: 0 10px 10px 0; }
+    .practice-links { position: relative; z-index: 1; margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .practice-links a { color: rgba(255,255,255,.72); border: 1px solid rgba(255,255,255,.14); border-radius: 999px; padding: 8px 11px; text-decoration: none; font-size: 10px; }
+    .practice-links a:hover { color: white; border-color: rgba(255,255,255,.35); }
 
     dialog { width: min(780px, calc(100vw - 24px)); max-height: calc(100vh - 24px); border: 0; border-radius: 24px; padding: 0; color: var(--ink); background: var(--white); box-shadow: 0 35px 100px rgba(0,0,0,.28); }
     dialog::backdrop { background: rgba(14, 24, 20, .65); backdrop-filter: blur(7px); }
@@ -254,7 +280,7 @@
       .app { grid-template-columns: 1fr; }
       .sidebar { height: auto; position: static; border-right: 0; border-bottom: 1px solid var(--line); padding: 18px 20px; }
       .brand { margin: 0; }
-      .nav-label, .nav-list, .sidebar-note { display: none; }
+      .nav-label, .nav-list, .tech-nav-link { display: none; }
       .mobile-category-filter { display: flex; align-items: center; gap: 10px; margin: -8px 0 16px; }
       .mobile-category-filter label { color: var(--muted); font-size: 11px; font-weight: 700; }
       .mobile-category-filter select { min-height: 44px; max-width: 330px; border: 1px solid var(--line); border-radius: 11px; background: var(--white); color: var(--ink); padding: 9px 36px 9px 12px; font: inherit; font-size: 12px; }
@@ -262,7 +288,7 @@
       .topbar { margin-bottom: 36px; }
       .proof-strip { grid-template-columns: 1fr; }
       .usecase-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
-      .steps { grid-template-columns: repeat(2,1fr); }
+      .technical-head { grid-template-columns: 1fr; }
     }
     @media (max-width: 620px) {
       body { font-size: 16px; }
@@ -292,13 +318,20 @@
       .proof-box b { font-size: 13px; }
       .proof-action, .catalogue-more button, .demo-case-link { min-height: 48px; font-size: 14px; }
       .usecase-grid, .facts, .source-kit, .need-grid, .venue-focus, .mission-output, .flow-steps { grid-template-columns: 1fr; }
+      .venue-kpis { grid-template-columns: repeat(2,1fr); }
       .connected-flow-head { display: block; }
       .connected-badge { display: inline-block; margin-top: 12px; font-size: 10px; }
       .mission-options { grid-template-columns: repeat(2,1fr); }
       .venue-panel-head { display: block; }
       .venue-panel { margin: 30px auto 38px; padding: 18px; border-radius: 20px; }
-      .venue-panel-head h2, .section-head h2, .method h2 { font-size: 32px; line-height: 1.05; }
+      .venue-panel-head h2, .section-head h2, .technical-kit h2 { font-size: 32px; line-height: 1.05; }
       .venue-panel-head p { margin-top: 10px; font-size: 14px; }
+      .venue-button { min-height: 46px; padding: 10px 14px; font-size: 13px; }
+      .venue-focus h3 { font-size: 28px; }
+      .venue-focus p, .venue-issue { font-size: 14px; }
+      .venue-kpi small { font-size: 10px; }
+      .venue-kpi strong { font-size: 20px; }
+      .venue-reco { min-height: 48px; font-size: 14px; }
       .connected-flow { padding: 18px; }
       .connected-flow h3 { font-size: 26px; line-height: 1.08; }
       .connected-flow p { font-size: 14px; }
@@ -311,7 +344,6 @@
       .proof-arrow { transform: rotate(90deg); justify-self: center; }
       .proof-action { width: 100%; }
       .demo-result-row { grid-template-columns: 1fr 1fr; font-size: 13px; }
-      .steps { grid-template-columns: 1fr; }
       .ask-box { grid-template-columns: 1fr; }
       .mobile-category-filter { display: grid; gap: 6px; }
       .mobile-category-filter label { font-size: 13px; }
@@ -328,12 +360,15 @@
       .card p { font-size: 14px; line-height: 1.55; }
       .mode { font-size: 12px; }
       .arrow { width: 36px; height: 36px; }
-      .method { margin-top: 42px; padding: 22px; }
-      .method-intro { font-size: 15px; }
-      .steps { margin-top: 24px; }
-      .step { min-height: 0; padding: 18px; }
-      .step h3 { margin: 18px 0 8px; font-size: 23px; }
-      .step p { font-size: 14px; }
+      .technical-kit { margin-top: 42px; padding: 22px 16px; border-radius: 20px; }
+      .technical-head { gap: 12px; margin-bottom: 22px; }
+      .technical-head p { font-size: 15px; }
+      .practice summary { min-height: 64px; padding: 14px; gap: 10px; font-size: 15px; line-height: 1.3; }
+      .practice-number { font-size: 10px; }
+      .practice-body { padding: 0 14px 18px; font-size: 14px; line-height: 1.6; }
+      .practice-grid { grid-template-columns: 1fr; }
+      .tech-code, .file-tree { font-size: 11px; }
+      .practice-links a { font-size: 12px; }
       .modal-head, .modal-body { padding-left: 18px; padding-right: 18px; }
       .modal-head { padding-top: 20px; padding-bottom: 18px; }
       .modal-head h2 { font-size: 28px; line-height: 1.05; }
@@ -364,7 +399,7 @@
       <div class="brand"><div class="brand-mark"><img src="./assets/hugo-rugbyman.png" alt=""></div><div><strong>Hugueleton</strong><small>Responsable opérationnel</small></div></div>
       <div class="nav-label">Explorer</div>
       <nav class="nav-list" id="categoryNav"></nav>
-      <div class="sidebar-note"><b>Une règle simple</b><p>Claude prépare, compare et recommande. Le responsable conserve la décision, surtout pour l'humain, les achats et les engagements.</p></div>
+      <a class="tech-nav-link" href="#technical-kit"><span aria-hidden="true">⚙</span> Bonnes pratiques &amp; Git</a>
     </aside>
 
     <main>
@@ -400,6 +435,12 @@
         <button class="proof-action" type="button" id="openSupplierDemo">Voir le résultat →</button>
       </section>
 
+      <section class="venue-panel" id="venuePilot" aria-labelledby="venuePilotTitle">
+        <div class="venue-panel-head"><div><span class="eyebrow">Vue établissement · données fictives</span><h2 id="venuePilotTitle">Chaque lieu a ses propres priorités.</h2></div><p>Changez d’établissement : les indicateurs, les problèmes détectés et les cas d’usage recommandés évoluent avec son activité et son concept.</p></div>
+        <div class="venue-list" id="venueList" aria-label="Choisir un établissement"></div>
+        <div class="venue-focus" id="venueFocus" aria-live="polite"></div>
+      </section>
+
       <section class="venue-panel" id="tools">
         <div class="venue-panel-head"><div><span class="eyebrow">Avec Claude Code</span><h2>Six micro-outils vraiment utiles.</h2></div><p>Le premier est détaillé juste dessous comme exemple connecté. Cinq autres outils suivent, autour de Google Drive, Sheets et des exports Excel déjà disponibles.</p></div>
         <div class="connected-flow">
@@ -425,15 +466,88 @@
         <div class="usecase-grid" id="usecaseGrid"></div>
         <div class="catalogue-more" id="catalogueMore"><button type="button" id="toggleAllCases">Afficher toutes les actions ↓</button></div>
 
-        <section class="method">
-          <span class="eyebrow" style="color:var(--yellow)">Bien démarrer</span>
-          <h2>Une IA utile commence par un problème mesurable.</h2>
-          <p class="method-intro">Ne cherchez pas à tout automatiser. Prenez une tâche fréquente, rendez les données lisibles, testez la recommandation puis mesurez le résultat.</p>
-          <div class="steps">
-            <div class="step"><span>01</span><h3>Décrire</h3><p>Quel travail prend du temps ? Quelle décision doit être prise ?</p></div>
-            <div class="step"><span>02</span><h3>Donner les sources</h3><p>Joindre les fichiers indiqués dans la fiche, avec période, unités et contexte.</p></div>
-            <div class="step"><span>03</span><h3>Faire vérifier</h3><p>Demander faits, hypothèses, données manquantes et niveau de confiance.</p></div>
-            <div class="step"><span>04</span><h3>Mesurer</h3><p>Temps gagné, économies, incidents évités ou meilleure exécution.</p></div>
+        <section class="technical-kit" id="technical-kit" aria-labelledby="technicalTitle">
+          <div class="technical-head">
+            <div><span class="eyebrow" style="color:var(--yellow)">Quand une idée devient un vrai outil</span><h2 id="technicalTitle">Le kit pour travailler proprement avec Claude Code ou Codex.</h2></div>
+            <p>Une méthode simple pour créer un mini-outil, le partager sans perdre le travail et permettre à un agent de le reprendre sans tout réexpliquer.</p>
+          </div>
+
+          <div class="practice-list">
+            <details class="practice">
+              <summary><span class="practice-number">01</span>Créer le projet et son dépôt GitHub</summary>
+              <div class="practice-body">
+                <p>Créez un dossier dédié, ajoutez d’abord un <strong>.gitignore</strong> et un <strong>.env.example</strong>, puis demandez à Claude Code ou Codex d’initialiser Git. Sur GitHub, partez en privé ; rendez public uniquement un prototype fictif destiné à être partagé.</p>
+                <pre class="tech-code">git init
+git add .
+git commit -m "Initial project"
+git branch -M main
+git remote add origin https://github.com/organisation/projet.git
+git push -u origin main</pre>
+                <div class="practice-note"><strong>Avant le premier <code>git add .</code> :</strong> vérifier qu’aucun mot de passe, fichier <code>.env</code> ou export réel n’est présent. Après chaque évolution : <code>git status</code>, <code>git diff</code>, commit clair, <code>git push</code>, puis contrôle sur GitHub et sur le site publié.</div>
+              </div>
+            </details>
+
+            <details class="practice">
+              <summary><span class="practice-number">02</span>Mettre les bons fichiers à la racine</summary>
+              <div class="practice-body">
+                <div class="practice-grid">
+                  <pre class="file-tree">README.md
+AGENTS.md          # Codex
+CLAUDE.md          # Claude Code
+PLANS.md           # phases complexes
+.gitignore
+.env.example
+.codex/config.toml
+.claude/settings.json
+.agents/skills/…/SKILL.md</pre>
+                  <div class="practice-box"><strong>Le minimum à écrire</strong><ul><li><strong>README.md</strong> : objectif, installation, lancement et limites.</li><li><strong>AGENTS.md / CLAUDE.md</strong> : structure, commandes, règles métier, tests et définition de « terminé ».</li><li><strong>PLANS.md</strong> : étapes et critères d’acceptation d’un chantier complexe.</li><li><strong>.env.example</strong> : noms des variables, jamais leurs vraies valeurs.</li></ul></div>
+                </div>
+                <div class="practice-note">Gardez ces instructions courtes et concrètes. Ajoutez une règle lorsqu’une erreur se répète ; retirez celles qui ne servent plus. Si Claude et Codex sont utilisés ensemble, placez les règles communes dans un fichier partagé et faites-y référence depuis leurs fichiers respectifs.</div>
+              </div>
+            </details>
+
+            <details class="practice">
+              <summary><span class="practice-number">03</span>Donner un bon brief à l’agent</summary>
+              <div class="practice-body">
+                <p>Un brief solide tient en quatre blocs. Joignez seulement les fichiers utiles et précisez lesquels font foi.</p>
+                <pre class="tech-code">Objectif : le résultat concret attendu.
+Contexte : utilisateurs, fichiers existants et fonctionnement actuel.
+Contraintes : périmètre, données fictives/réelles, sécurité, mobile, outils à conserver.
+Terminé quand : tests, comportement visible et livrable vérifiable.</pre>
+                <div class="practice-note">Pour une analyse ponctuelle de documents, utilisez Claude. Pour créer ou modifier plusieurs fichiers, tester un site, automatiser un tableur et gérer Git, utilisez Claude Code ou Codex.</div>
+              </div>
+            </details>
+
+            <details class="practice">
+              <summary><span class="practice-number">04</span>Suivre une boucle qui évite les bêtises</summary>
+              <div class="practice-body">
+                <ol><li><strong>Cadrer</strong> un résultat et les données autorisées.</li><li><strong>Inspecter</strong> l’existant et les modifications non enregistrées.</li><li><strong>Planifier</strong> si plusieurs fichiers ou décisions sont concernés.</li><li><strong>Construire petit</strong> avec des données fictives, sans réécrire ce qui fonctionne.</li><li><strong>Vérifier</strong> le comportement, les erreurs, le mobile, les tests, le lint et les types.</li><li><strong>Relire le diff</strong>, commit, push, puis vérifier le résultat publié.</li><li><strong>Mesurer</strong> le temps gagné ou le risque évité avant d’élargir.</li></ol>
+              </div>
+            </details>
+
+            <details class="practice">
+              <summary><span class="practice-number">05</span>Créer un skill seulement quand il sera réutilisé</summary>
+              <div class="practice-body">
+                <p>Un <strong>skill</strong> est une recette spécialisée que l’agent peut réappliquer : par exemple « contrôler une facture fournisseur », « publier ce microsite » ou « analyser l’export caisse hebdomadaire ». Ce n’est pas un énorme prompt fourre-tout.</p>
+                <div class="practice-grid"><div class="practice-box"><strong>Un bon SKILL.md contient</strong><ul><li>un nom et une description qui indiquent précisément quand l’utiliser ;</li><li>les entrées attendues et les étapes ;</li><li>les contrôles et le résultat final ;</li><li>si utile, des scripts, références ou modèles séparés.</li></ul></div><div class="practice-box"><strong>Règle pratique</strong><p>Après deux ou trois exécutions similaires, stabilisez la méthode puis créez le skill. Pour Codex, un skill partagé au projet peut vivre dans <code>.agents/skills/nom-du-skill/SKILL.md</code> et être versionné avec le reste.</p></div></div>
+              </div>
+            </details>
+
+            <details class="practice">
+              <summary><span class="practice-number">06</span>Savoir ce qu’on pousse — et ce qu’on garde dehors</summary>
+              <div class="practice-body">
+                <div class="practice-grid"><div class="practice-box"><strong>À versionner</strong><ul><li>code, tests, documentation et migrations ;</li><li><code>AGENTS.md</code>, <code>CLAUDE.md</code>, plans et skills partagés ;</li><li><code>.gitignore</code>, <code>.env.example</code> et configurations projet sans secret ;</li><li>petites données fictives nécessaires à la démonstration.</li></ul></div><div class="practice-box"><strong>À ne jamais pousser</strong><ul><li><code>.env</code>, clés API, jetons, mots de passe et certificats ;</li><li>données réelles de salariés, clients, ventes ou fournisseurs ;</li><li>exports lourds, caches, dépendances générées et réglages personnels ;</li><li>chemins locaux ou identifiants cachés dans une configuration.</li></ul></div></div>
+                <div class="practice-note">Une configuration partagée doit être portable et sans secret. Pour un connecteur MCP, utilisez des variables d’environnement comme <code>${NOM_DE_LA_CLE}</code>, jamais la valeur réelle dans le dépôt.</div>
+              </div>
+            </details>
+          </div>
+
+          <div class="practice-links" aria-label="Documentation officielle">
+            <a href="https://learn.chatgpt.com/guides/best-practices" target="_blank" rel="noopener noreferrer">Bonnes pratiques Codex ↗</a>
+            <a href="https://learn.chatgpt.com/docs/agent-configuration/agents-md" target="_blank" rel="noopener noreferrer">Guide AGENTS.md ↗</a>
+            <a href="https://learn.chatgpt.com/docs/build-skills" target="_blank" rel="noopener noreferrer">Créer un skill Codex ↗</a>
+            <a href="https://docs.anthropic.com/en/docs/claude-code/memory" target="_blank" rel="noopener noreferrer">Instructions CLAUDE.md ↗</a>
+            <a href="https://docs.github.com/en/get-started/start-your-journey/uploading-a-project-to-github" target="_blank" rel="noopener noreferrer">Publier sur GitHub ↗</a>
           </div>
         </section>
       </section>
@@ -566,6 +680,38 @@
     const intakeDialog = document.getElementById("intakeDialog");
     const intakeForm = document.getElementById("intakeForm");
     const codeToolGrid = document.getElementById("codeToolGrid");
+    const venueList = document.getElementById("venueList");
+    const venueFocus = document.getElementById("venueFocus");
+
+    const venueData = [
+      {
+        id:"tap", name:"Établissement A", concept:"Restaurant tapas · centre-ville", period:"Semaine en cours vs 8 semaines comparables",
+        kpis:[{label:"CA",value:"− 8 %",tone:"watch"},{label:"Couverts",value:"184",tone:""},{label:"Coût matière",value:"29,4 %",tone:"watch"},{label:"Poste cuisine",value:"1 ouvert",tone:"watch"}],
+        issues:[{title:"Le mardi soir décroche",detail:"Couverts en baisse sur 3 services comparables ; causes à vérifier avant d’agir."},{title:"Hausse sur deux produits clés",detail:"Poulet +11 % et huile +8 % dans le dernier tarif fournisseur."}],
+        recos:["Revue hebdomadaire d’un restaurant","Comparer les tarifs fournisseurs","Trouver des cuisiniers qualifiés et fiables"]
+      },
+      {
+        id:"bar", name:"Établissement B", concept:"Bar festif avec petite restauration", period:"7 derniers jours vs référence du même type de semaine",
+        kpis:[{label:"CA",value:"+ 12 %",tone:"good"},{label:"Couverts",value:"322",tone:"good"},{label:"Coût matière",value:"25,8 %",tone:"good"},{label:"Incidents",value:"3 ouverts",tone:"watch"}],
+        issues:[{title:"Risque de rupture samedi",detail:"Le stock de deux références bar paraît court au regard des réservations."},{title:"Ambiance irrégulière après 23 h",detail:"Plusieurs retours mentionnent le volume et les transitions musicales."}],
+        recos:["Alerter sur une rupture","Créer une playlist par moment","Trier les remontées des restaurants"]
+      },
+      {
+        id:"brasserie", name:"Établissement C", concept:"Brasserie urbaine · déjeuner et dîner", period:"Semaine en cours vs objectif et historique récent",
+        kpis:[{label:"CA",value:"− 3 %",tone:"watch"},{label:"Couverts",value:"148",tone:""},{label:"Coût matière",value:"31,2 %",tone:"watch"},{label:"Heures",value:"+ 9 %",tone:"watch"}],
+        issues:[{title:"Marge sous pression",detail:"Trois plats vendus contribuent peu après la dernière hausse des achats."},{title:"Équipe surdimensionnée lundi midi",detail:"Les heures progressent malgré une activité stable sur ce service."}],
+        recos:["Analyser la rentabilité de la carte","Analyser le staffing après service","Mettre à jour le coût des recettes"]
+      }
+    ];
+    let activeVenue = venueData[0].id;
+
+    function renderVenue() {
+      const venue = venueData.find(item => item.id === activeVenue);
+      venueList.innerHTML = venueData.map(item => `<button type="button" class="venue-button ${item.id === activeVenue ? "active" : ""}" data-venue="${item.id}" aria-pressed="${item.id === activeVenue}">${item.name} · ${item.concept.split(" · ")[0]}</button>`).join("");
+      venueFocus.innerHTML = `<div><span class="eyebrow">${venue.period}</span><h3>${venue.name}</h3><p>${venue.concept}. Les chiffres servent uniquement à montrer le fonctionnement du prototype.</p><div class="venue-kpis">${venue.kpis.map(kpi => `<div class="venue-kpi"><small>${kpi.label}</small><strong class="${kpi.tone}">${kpi.value}</strong></div>`).join("")}</div></div><div><div class="venue-issues">${venue.issues.map(issue => `<div class="venue-issue"><b>${issue.title}</b><span>${issue.detail}</span></div>`).join("")}</div><div class="venue-recos">${venue.recos.map(title => `<button type="button" class="venue-reco" data-venue-case="${title}"><span>${title}</span><span>→</span></button>`).join("")}</div></div>`;
+      venueList.querySelectorAll("[data-venue]").forEach(button => button.addEventListener("click", () => { activeVenue = button.dataset.venue; renderVenue(); }));
+      venueFocus.querySelectorAll("[data-venue-case]").forEach(button => button.addEventListener("click", () => openCase(cases.find(item => item.t === button.dataset.venueCase))));
+    }
 
     const sourceKits = {
       "Performance": {
@@ -881,7 +1027,7 @@
       });
     });
 
-    renderNav(); renderCards(); renderCodeTools();
+    renderNav(); renderCards(); renderCodeTools(); renderVenue();
   </script>
 </body>
 </html>
