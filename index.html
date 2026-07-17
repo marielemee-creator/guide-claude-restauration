@@ -36,7 +36,7 @@
 
     button, input { font: inherit; }
     button { color: inherit; }
-    button:focus-visible, input:focus-visible { outline: 3px solid rgba(230, 107, 57, .45); outline-offset: 2px; }
+    button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid rgba(230, 107, 57, .45); outline-offset: 2px; }
     .app { min-height: 100vh; display: grid; grid-template-columns: 310px minmax(0, 1fr); }
 
     .sidebar {
@@ -109,6 +109,7 @@
     .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
     .filter { border: 1px solid var(--line); background: transparent; border-radius: 999px; padding: 9px 14px; cursor: pointer; font-size: 12px; }
     .filter.active { color: white; background: var(--ink); border-color: var(--ink); }
+    .mobile-category-filter { display: none; }
 
     .usecase-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
     .card {
@@ -232,6 +233,9 @@
       .sidebar { height: auto; position: static; border-right: 0; border-bottom: 1px solid var(--line); padding: 18px 20px; }
       .brand { margin: 0; }
       .nav-label, .nav-list, .sidebar-note { display: none; }
+      .mobile-category-filter { display: flex; align-items: center; gap: 10px; margin: -8px 0 16px; }
+      .mobile-category-filter label { color: var(--muted); font-size: 11px; font-weight: 700; }
+      .mobile-category-filter select { min-height: 44px; max-width: 330px; border: 1px solid var(--line); border-radius: 11px; background: var(--white); color: var(--ink); padding: 9px 36px 9px 12px; font: inherit; font-size: 12px; }
       main { padding-top: 22px; }
       .topbar { margin-bottom: 36px; }
       .usecase-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
@@ -248,6 +252,8 @@
       .bonus-divider p { margin-top: 8px; }
       .steps { grid-template-columns: 1fr; }
       .ask-box { grid-template-columns: 1fr; }
+      .mobile-category-filter { display: grid; gap: 6px; }
+      .mobile-category-filter select { width: 100%; max-width: none; }
       .ask-box button { min-height: 48px; }
       .topbar .status { display: none; }
       h1 { font-size: 45px; }
@@ -308,6 +314,7 @@
 
       <section class="workspace" id="catalogue">
         <div class="section-head"><div><span class="eyebrow">Avec Claude</span><h2>Des actions concrètes, tout de suite.</h2></div><p><span id="activeScope">Toutes les catégories</span> · <span id="resultCount">0</span> fiches</p></div>
+        <div class="mobile-category-filter"><label for="mobileCategorySelect">Filtrer par catégorie</label><select id="mobileCategorySelect" aria-label="Filtrer les fiches par catégorie"></select></div>
         <div class="filters" id="filters">
           <button class="filter active" data-mode="Tous">Toutes les actions</button>
           <button class="filter" data-mode="Rapide">Mise en place rapide</button>
@@ -442,6 +449,7 @@
     const grid = document.getElementById("usecaseGrid");
     const count = document.getElementById("resultCount");
     const activeScope = document.getElementById("activeScope");
+    const mobileCategorySelect = document.getElementById("mobileCategorySelect");
     const dialog = document.getElementById("detailDialog");
     const intakeDialog = document.getElementById("intakeDialog");
     const intakeForm = document.getElementById("intakeForm");
@@ -601,9 +609,19 @@
     }
 
     function renderNav() {
-      nav.innerHTML = categories.filter(([name]) => name === "Tous" || categoryCount(name) > 0).map(([name, icon]) => `<button class="nav-button ${name === selectedCategory ? "active" : ""}" data-category="${name}"><span class="nav-icon">${icon}</span><span>${name}</span><span class="nav-count">${categoryCount(name)}</span></button>`).join("");
+      const availableCategories = categories.filter(([name]) => name === "Tous" || categoryCount(name) > 0);
+      nav.innerHTML = availableCategories.map(([name, icon]) => `<button class="nav-button ${name === selectedCategory ? "active" : ""}" data-category="${name}"><span class="nav-icon">${icon}</span><span>${name}</span><span class="nav-count">${categoryCount(name)}</span></button>`).join("");
+      mobileCategorySelect.innerHTML = availableCategories.map(([name]) => `<option value="${name}" ${name === selectedCategory ? "selected" : ""}>${name === "Tous" ? "Toutes les catégories" : name} · ${categoryCount(name)}</option>`).join("");
       nav.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => { selectedCategory = btn.dataset.category; renderNav(); renderCards(); document.getElementById("catalogue").scrollIntoView(); }));
     }
+
+    mobileCategorySelect.addEventListener("change", event => {
+      selectedCategory = event.target.value;
+      selectedMode = "Tous";
+      document.querySelectorAll(".filter").forEach(filter => filter.classList.toggle("active", filter.dataset.mode === "Tous"));
+      renderNav();
+      renderCards();
+    });
 
     function visibleCases() {
       return catalogueCases().filter(item => (selectedCategory === "Tous" || item.c === selectedCategory) && (selectedMode === "Tous" || (selectedMode === "Rapide" && item.e === "Rapide")));
