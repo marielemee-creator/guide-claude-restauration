@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Douze réflexes simples pour utiliser Claude, Claude Code ou Codex de façon fiable au travail.">
+  <link rel="icon" type="image/png" href="./assets/hugo-rugbyman.png">
+  <meta name="theme-color" content="#102d24">
+  <title>Hugueleton · Réflexes IA</title>
+  <link rel="stylesheet" href="./learning.css">
+</head>
+<body>
+  <div class="shell">
+    <header class="page-nav"><a href="./index.html#technical-kit">← Retour au guide</a><b class="mini-brand"><img src="./assets/hugo-rugbyman.png" alt="">Hugueleton</b><span>Réflexes IA</span></header>
+    <main>
+      <section class="page-hero">
+        <span class="eyebrow">Le manuel du bon copilote</span>
+        <h1>Bien utiliser l’IA,<br><em>pas juste lui parler.</em></h1>
+        <p>Les méthodes qui font la différence entre une réponse impressionnante et un résultat fiable, réutilisable et sûr pour l’exploitation.</p>
+        <nav class="jump-nav" aria-label="Sommaire de la page"><a href="#reflexes">12 réflexes</a><a href="#methode">La boucle en 6 temps</a><a href="#contexte">Gérer le contexte</a><a href="#verification">Vérifier</a><a href="#capitaliser">Capitaliser</a><a href="./glossaire-ia.html">Dico sans jargon →</a></nav>
+      </section>
+
+      <section class="intro-panel">
+        <div><span class="eyebrow">La règle qui change tout</span><h2>L’IA propose.<br>Hugo dispose.</h2></div>
+        <p>Une IA produit une réponse plausible à partir du contexte reçu. Elle ne connaît ni les règles du groupe, ni l’état réel d’un établissement derrière un chiffre. Sa réponse devient utile lorsqu’elle est cadrée, contrôlée et validée.</p>
+      </section>
+
+      <section class="learning-section" id="reflexes">
+        <div class="section-kicker">01 · Les fondamentaux</div>
+        <div class="section-content"><h2>Les 12 réflexes utiles</h2><div class="reflex-grid">
+          <article><span>01</span><h3>Partir du résultat</h3><p>Décris le livrable attendu : briefing, tableau comparatif, consigne manager ou mini-outil.</p></article>
+          <article><span>02</span><h3>Donner juste assez de contexte</h3><p>Établissement, service, objectif, destinataire et contraintes. Pas tout l’historique du groupe.</p></article>
+          <article><span>03</span><h3>Montrer un bon exemple</h3><p>Un briefing ou tableau déjà validé apprend souvent mieux le format que dix consignes.</p></article>
+          <article><span>04</span><h3>Faire poser les questions</h3><p>Demande : « Quelles informations critiques te manquent avant de commencer ? »</p></article>
+          <article><span>05</span><h3>Travailler par étapes</h3><p>Plan, validation, premier résultat, contrôle, version finale. Évite de demander tout d’un coup.</p></article>
+          <article><span>06</span><h3>Séparer faits et hypothèses</h3><p>Exige des rubriques distinctes : faits observés, interprétations et données manquantes.</p></article>
+          <article><span>07</span><h3>Demander une critique</h3><p>Fais relire la réponse comme un responsable sceptique cherchant les oublis et cas limites.</p></article>
+          <article><span>08</span><h3>Vérifier les sources</h3><p>Un chiffre ou un lien peut être faux. Ouvre la source et contrôle ce qu’elle soutient réellement.</p></article>
+          <article><span>09</span><h3>Tester petit</h3><p>Dix lignes fictives avant mille lignes réelles. Teste aussi le fichier vide et les colonnes manquantes.</p></article>
+          <article><span>10</span><h3>Conserver l’original</h3><p>Entrées en lecture seule, sorties séparées, noms datés et journal des transformations.</p></article>
+          <article><span>11</span><h3>Capitaliser le bon prompt</h3><p>Quand une méthode fonctionne deux ou trois fois, transforme-la en modèle avec des champs à remplir.</p></article>
+          <article><span>12</span><h3>Garder la validation humaine</h3><p>Aucune commande, communication, embauche ou modification opérationnelle ne part sans revue.</p></article>
+        </div></div>
+      </section>
+
+      <section class="learning-section" id="methode">
+        <div class="section-kicker">02 · La méthode</div>
+        <div class="section-content"><h2>La boucle en 6 temps</h2><div class="loop">
+          <article><span>1</span><b>Cadrer</b><p>Résultat, destinataire, contraintes et définition de « terminé ».</p></article>
+          <article><span>2</span><b>Questionner</b><p>Laisser l’IA identifier les informations manquantes.</p></article>
+          <article><span>3</span><b>Planifier</b><p>Demander un plan court avant toute production ou modification.</p></article>
+          <article><span>4</span><b>Produire</b><p>Créer une première version sur un petit périmètre.</p></article>
+          <article><span>5</span><b>Contredire</b><p>Chercher erreurs, hypothèses fragiles et cas limites.</p></article>
+          <article><span>6</span><b>Capitaliser</b><p>Archiver le prompt, le contrôle et le format validés.</p></article>
+        </div><div class="copy-block"><pre id="loopPrompt">Avant de répondre :
+1. Reformule mon objectif en une phrase.
+2. Liste les informations critiques qui te manquent.
+3. Propose un plan court avant de produire.
+4. Sépare faits, hypothèses et recommandations.
+5. Termine par les contrôles humains à effectuer.</pre><button class="copy-button" type="button" data-target="loopPrompt">Copier la méthode</button><span class="copy-status" aria-live="polite"></span></div></div>
+      </section>
+
+      <section class="learning-section" id="contexte">
+        <div class="section-kicker">03 · Le contexte</div>
+        <div class="section-content"><h2>Choisir le bon espace</h2><div class="context-grid">
+          <article><small>Conversation Claude</small><h3>Un sujet ponctuel</h3><p>Pour analyser un fichier, préparer un mail ou éclairer une décision. Ouvre une nouvelle conversation quand le sujet change.</p></article>
+          <article><small>Projet Claude</small><h3>Un travail récurrent</h3><p>Pour conserver les règles, modèles et documents d’un même sujet, comme les opérations restaurants.</p></article>
+          <article><small>Dossier Claude Code ou Codex</small><h3>Un outil à construire</h3><p>Pour créer ou modifier des fichiers, tester le résultat et garder un historique Git du projet.</p></article>
+        </div><div class="context-rule"><b>Quand repartir proprement ?</b><br>Si l’IA mélange deux sujets, oublie une règle ou se contredit, demande un résumé validé puis ouvre une nouvelle conversation avec ce résumé.</div></div>
+      </section>
+
+      <section class="learning-section" id="verification">
+        <div class="section-kicker">04 · Le contrôle</div>
+        <div class="section-content"><h2>Les quatre types d’erreurs</h2><div class="error-grid">
+          <article><b>Invention</b><p>Un chiffre, une règle ou une source paraît crédible mais n’existe pas.</p><span>Réflexe : exiger la source et la vérifier.</span></article>
+          <article><b>Mauvaise hypothèse</b><p>L’IA comble un contexte absent avec une situation seulement probable.</p><span>Réflexe : demander ce qui a été supposé.</span></article>
+          <article><b>Calcul fragile</b><p>Une formule, un total ou une unité peut être faux dans un tableau.</p><span>Réflexe : recalculer un échantillon.</span></article>
+          <article><b>Action excessive</b><p>Un agent peut modifier plus de fichiers ou connecter plus de services que prévu.</p><span>Réflexe : plan, aperçu, permissions minimales et diff.</span></article>
+        </div><div class="copy-block"><pre id="auditPrompt">Audite ta réponse précédente comme un responsable opérationnel sceptique.
+- Quelles affirmations ne sont pas directement établies ?
+- Quelles données, dates ou règles peuvent être fausses ou dépassées ?
+- Quels calculs et quelles unités dois-je contrôler ?
+- Quels établissements ou cas limites n’as-tu pas traités ?
+- Que dois-je impérativement valider humainement ?</pre><button class="copy-button" type="button" data-target="auditPrompt">Copier le contre-prompt</button><span class="copy-status" aria-live="polite"></span></div></div>
+      </section>
+
+      <section class="learning-section" id="capitaliser">
+        <div class="section-kicker">05 · La capitalisation</div>
+        <div class="section-content"><h2>Transformer un succès en méthode</h2><div class="capital-flow">
+          <article><span>01</span><b>Nommer</b><p>« Brief opérationnel du lundi — version 1 ».</p></article>
+          <article><span>02</span><b>Templatiser</b><p>Remplacer les données par des champs [À COMPLÉTER].</p></article>
+          <article><span>03</span><b>Documenter</b><p>Entrées, étapes, contrôle et format de sortie.</p></article>
+          <article><span>04</span><b>Versionner</b><p>Dater les changements et garder la dernière version validée.</p></article>
+          <article><span>05</span><b>Transmettre</b><p>Faire tester le modèle par une autre personne.</p></article>
+        </div></div>
+      </section>
+
+      <section class="closing"><div><span class="eyebrow">Prêt à essayer</span><h2>Un seul réflexe cette semaine.</h2><p>Sur ton prochain besoin, demande d’abord à l’IA de reformuler l’objectif et d’identifier les informations manquantes.</p></div><a class="button" href="./index.html#catalogue">Choisir un cas d’usage →</a></section>
+    </main>
+    <footer><span>Guide pédagogique · aucune donnée opérationnelle réelle</span><a href="./glossaire-ia.html">Continuer avec le dico sans jargon →</a></footer>
+  </div>
+  <button class="back-to-top" id="backToTop" type="button" aria-label="Retourner en haut de la page">↑ Haut de page</button>
+  <script>
+    function fallbackCopy(text) {
+      const area = document.createElement("textarea");
+      area.value = text; area.setAttribute("readonly", ""); area.style.position = "fixed"; area.style.opacity = "0";
+      document.body.appendChild(area); area.select(); const copied = document.execCommand("copy"); area.remove(); return copied;
+    }
+    document.querySelectorAll(".copy-button").forEach(button => button.addEventListener("click", async () => {
+      const text = document.getElementById(button.dataset.target).textContent;
+      let copied = false;
+      try { await navigator.clipboard.writeText(text); copied = true; } catch { copied = fallbackCopy(text); }
+      button.nextElementSibling.textContent = copied ? "Copié ✓" : "Sélectionnez le texte ci-dessus";
+    }));
+    const backToTop = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => backToTop.classList.toggle("visible", window.scrollY > 650), {passive:true});
+    backToTop.addEventListener("click", () => window.scrollTo({top:0, behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}));
+  </script>
+</body>
+</html>

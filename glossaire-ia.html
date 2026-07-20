@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Le vocabulaire de Claude Code et Codex expliqué sans jargon, avec des exemples liés aux opérations de restaurants.">
+  <link rel="icon" type="image/png" href="./assets/hugo-rugbyman.png">
+  <meta name="theme-color" content="#102d24">
+  <title>Hugueleton · Le dico sans jargon</title>
+  <link rel="stylesheet" href="./learning.css">
+</head>
+<body>
+  <div class="shell">
+    <header class="page-nav"><a href="./tips-ia.html">← Retour aux réflexes</a><b class="mini-brand"><img src="./assets/hugo-rugbyman.png" alt="">Hugueleton</b><span>Dico IA</span></header>
+    <main>
+      <section class="page-hero">
+        <span class="eyebrow">Les mots traduits en français normal</span>
+        <h1>Le dico<br><em>sans jargon.</em></h1>
+        <p>Ces termes apparaissent dans Claude Code, Codex et les tutoriels. Tu n’as pas besoin d’être développeur pour les comprendre ou demander à l’agent de les expliquer.</p>
+        <nav class="jump-nav" aria-label="Navigation complémentaire"><a href="./tips-ia.html">Voir les réflexes IA</a><a href="./index.html#technical-kit">Installer et démarrer</a><a href="./index.html#catalogue">Choisir un cas d’usage</a></nav>
+      </section>
+
+      <section class="analogy"><div><span class="eyebrow">L’image à retenir</span><h2>L’agent travaille dans un bureau.</h2></div><p>Le <b>dossier de travail</b> est son bureau. Le <b>prompt</b> est ta mission. Le <b>contexte</b> correspond aux documents posés sur la table. Une <b>skill</b> est son mode opératoire. Un <b>commit</b> est une photo datée du bureau avant de continuer.</p></section>
+
+      <section class="dictionary" aria-label="Dictionnaire de seize termes liés à l’IA">
+        <article><span>01</span><h2>Prompt</h2><p>La demande écrite à l’IA. Un bon prompt ressemble à un brief : contexte, objectif, données autorisées, résultat attendu et contrôles.</p><small>En clair : ta consigne.</small></article>
+        <article><span>02</span><h2>Contexte</h2><p>Tout ce que l’IA utilise pour répondre : conversation, fichiers, instructions et exemples. Trop peu crée des erreurs ; trop crée du bruit.</p><small>En clair : ce qu’elle sait pour cette mission.</small></article>
+        <article><span>03</span><h2>Agent</h2><p>Une IA capable d’enchaîner plusieurs étapes et d’utiliser des outils : lire un dossier, modifier un fichier ou lancer un contrôle.</p><small>En clair : une IA qui peut agir, pas seulement répondre.</small></article>
+        <article class="featured"><span>04</span><h2>Skill</h2><p>Un mode d’emploi spécialisé donné à l’agent pour une tâche précise. Il décrit la méthode, les règles, les outils autorisés et les vérifications.</p><small>En clair : une fiche de compétence pour l’IA.</small></article>
+        <article class="featured"><span>05</span><h2>Fichier Markdown <i>.md</i></h2><p>Un fichier texte structuré avec des titres, listes et liens. <code>README.md</code> explique un projet ; <code>SKILL.md</code> décrit une méthode réutilisable.</p><small>En clair : une note structurée, lisible sans logiciel spécial.</small></article>
+        <article><span>06</span><h2>Dossier de travail</h2><p>Le dossier que tu autorises Claude Code ou Codex à consulter et modifier. L’agent doit rester dans ce périmètre.</p><small>En clair : son bureau pour la mission.</small></article>
+        <article><span>07</span><h2>Terminal</h2><p>Une fenêtre où des commandes textuelles pilotent l’ordinateur. L’agent peut s’en servir pour toi et doit expliquer les actions sensibles.</p><small>En clair : les commandes techniques que l’agent peut gérer.</small></article>
+        <article><span>08</span><h2>CLI</h2><p>« Command Line Interface » : la version d’un outil utilisée par commandes plutôt qu’avec des boutons. Tu n’as pas besoin de les mémoriser.</p><small>En clair : un outil piloté depuis le Terminal.</small></article>
+        <article><span>09</span><h2>Dépôt Git</h2><p>Un dossier dont les versions sont suivies. Il permet de comprendre les changements et de revenir à un état précédent.</p><small>En clair : un dossier avec mémoire.</small></article>
+        <article><span>10</span><h2>Commit</h2><p>Un point de sauvegarde nommé dans l’historique Git. Il regroupe un ensemble cohérent de modifications.</p><small>En clair : une sauvegarde expliquée.</small></article>
+        <article><span>11</span><h2>GitHub</h2><p>Un service en ligne qui héberge des dépôts Git. Il facilite le partage, la sauvegarde et la publication d’un site.</p><small>En clair : l’espace en ligne du dossier avec mémoire.</small></article>
+        <article><span>12</span><h2>API</h2><p>Une porte standard permettant à deux logiciels d’échanger automatiquement, par exemple une application et une source météo.</p><small>En clair : un passage entre deux outils.</small></article>
+        <article><span>13</span><h2>Connecteur / MCP</h2><p>Un moyen encadré de donner à l’IA accès à un service comme Drive ou GitHub. Les droits accordés doivent rester limités au besoin.</p><small>En clair : une prise contrôlée entre l’IA et un service.</small></article>
+        <article><span>14</span><h2>Modèle</h2><p>Le moteur d’IA utilisé par l’outil. Certains modèles sont rapides ; d’autres sont plus adaptés au raisonnement ou au code.</p><small>En clair : le moteur choisi pour la tâche.</small></article>
+        <article><span>15</span><h2>Token</h2><p>Une petite unité de texte utilisée pour mesurer ce que le modèle lit et écrit. Une conversation très longue utilise davantage de tokens.</p><small>En clair : les morceaux de texte comptés par l’IA.</small></article>
+        <article><span>16</span><h2>Hallucination</h2><p>Une réponse inventée mais formulée avec assurance : chiffre, source, règle ou explication qui semble vraie.</p><small>En clair : une erreur convaincante.</small></article>
+      </section>
+
+      <section class="closing"><div><span class="eyebrow">Le bon réflexe</span><h2>Un mot inconnu ? Demande avant d’accepter.</h2><p>« Explique ce terme comme si je n’avais jamais utilisé un outil de développement, puis donne-moi un exemple lié à la gestion d’un restaurant ou d’un bar. »</p></div><a class="button" href="./tips-ia.html">Revenir aux réflexes IA →</a></section>
+    </main>
+    <footer><span>Guide pédagogique · aucune donnée opérationnelle réelle</span><a href="./index.html#technical-kit">Retour aux bonnes pratiques →</a></footer>
+  </div>
+  <button class="back-to-top" id="backToTop" type="button" aria-label="Retourner en haut de la page">↑ Haut de page</button>
+  <script>
+    const backToTop = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => backToTop.classList.toggle("visible", window.scrollY > 650), {passive:true});
+    backToTop.addEventListener("click", () => window.scrollTo({top:0, behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}));
+  </script>
+</body>
+</html>

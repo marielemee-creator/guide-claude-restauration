@@ -19,6 +19,8 @@ Puis ouvrir `http://localhost:4173`.
 - un circuit progressif de remontée terrain, détaillé dans `reception-terrain.html`, du mode manuel assisté à l’application connectée, avec formulaire ou note vocale validée ;
 - des sources publiques rennaises directement reliées à leurs catalogues officiels pour enrichir météo, événements, mobilité et calendrier ;
 - une page `exemples.html` séparant les démonstrations fournisseurs et multi-établissements du catalogue principal ;
+- une page `tips-ia.html` avec douze réflexes, une méthode en six temps et deux contre-prompts copiables ;
+- un `glossaire-ia.html` de seize termes pour comprendre Claude Code, Codex, Git et les connecteurs sans jargon ;
 - recherche conversationnelle locale par mots-clés ;
 - filtre de mise en place rapide ;
 - méthode, prompt de départ et point de vigilance pour chaque cas ;
