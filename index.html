@@ -454,6 +454,131 @@
       .back-to-top { right: 14px; bottom: 14px; min-height: 50px; padding: 12px 15px; font-size: 13px; }
       footer { flex-direction: column; font-size: 12px; line-height: 1.45; }
     }
+    /* Refonte éditoriale — carnet de bord opérationnel */
+    :root {
+      --ink: #13251e;
+      --muted: #68746f;
+      --paper: #f3efe6;
+      --paper-2: #e8e3d8;
+      --green: #176b54;
+      --green-2: #dff0e8;
+      --orange: #f06445;
+      --yellow: #f5ca58;
+      --line: #ddd8cd;
+      --shadow: 0 22px 60px rgba(31, 49, 40, .11);
+    }
+    body {
+      background:
+        radial-gradient(circle at 77% 5%, rgba(240,100,69,.13), transparent 25rem),
+        radial-gradient(circle at 8% 70%, rgba(23,107,84,.1), transparent 30rem),
+        #f3efe6;
+    }
+    .sidebar { background: #102d24; border-right: 0; color: white; box-shadow: 12px 0 40px rgba(16,45,36,.08); }
+    .brand { padding: 7px 8px 25px; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,.12); }
+    .brand-mark { width: 64px; height: 64px; border: 3px solid rgba(255,255,255,.9); box-shadow: 0 12px 30px rgba(0,0,0,.22); }
+    .brand strong { color: white; font-size: 24px; }
+    .brand small, .nav-label { color: rgba(255,255,255,.58); }
+    .nav-list { gap: 4px; }
+    .nav-button { color: rgba(255,255,255,.73); border: 1px solid transparent; }
+    .nav-button:hover { background: rgba(255,255,255,.08); box-shadow: none; color: white; }
+    .nav-button.active { background: var(--yellow); color: #163026; box-shadow: 0 10px 24px rgba(0,0,0,.17); }
+    .nav-icon { background: rgba(255,255,255,.1); }
+    .nav-button.active .nav-icon { background: rgba(255,255,255,.6); }
+    .nav-count { color: inherit; opacity: .68; }
+    .tech-nav-link { background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.14); color: white; box-shadow: none; }
+    .tech-nav-link span { color: var(--green); }
+    .tech-nav-link:hover { background: rgba(255,255,255,.15); border-color: rgba(255,255,255,.25); }
+    main { padding-top: 20px; }
+    .topbar { position: sticky; top: 14px; z-index: 2; max-width: 1080px; margin: 0 auto 24px; padding: 8px 9px 8px 16px; border: 1px solid rgba(221,216,205,.85); border-radius: 999px; background: rgba(250,248,243,.82); backdrop-filter: blur(16px); box-shadow: 0 9px 28px rgba(31,49,40,.07); }
+    .hero { max-width: 1080px; margin: 0 auto 34px; padding: clamp(28px,5vw,54px); border-radius: 32px; background: linear-gradient(135deg, #102d24 0%, #174c3d 66%, #1b624d 100%); color: white; overflow: hidden; position: relative; box-shadow: 0 28px 75px rgba(16,45,36,.2); }
+    .hero::before { content: ""; position: absolute; width: 430px; height: 430px; right: -170px; top: -220px; border-radius: 50%; background: var(--orange); opacity: .18; }
+    .hero::after { content: ""; position: absolute; width: 210px; height: 210px; left: 44%; bottom: -170px; border-radius: 50%; border: 38px solid rgba(245,202,88,.1); }
+    .hero-head { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0,1.45fr) minmax(210px,.55fr); gap: 38px; align-items: center; }
+    .hero .eyebrow { color: var(--yellow); }
+    .hero h1 { color: white; max-width: 760px; margin-bottom: 20px; }
+    .hero h1 span { color: var(--yellow); }
+    .hero-copy { color: rgba(255,255,255,.72); }
+    .hero-visual { min-height: 270px; display: grid; place-items: center; position: relative; }
+    .hero-portrait { width: min(220px,100%); aspect-ratio: 1; border-radius: 44% 56% 48% 52% / 46% 43% 57% 54%; overflow: hidden; background: #f6e7bf; border: 6px solid rgba(255,255,255,.92); box-shadow: 0 24px 45px rgba(0,0,0,.24); transform: rotate(3deg); }
+    .hero-portrait img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-bubble { position: absolute; right: -3px; bottom: 7px; max-width: 155px; padding: 11px 13px; border-radius: 15px 15px 4px 15px; background: var(--orange); color: white; font-size: 12px; font-weight: 800; line-height: 1.3; transform: rotate(-2deg); box-shadow: 0 12px 30px rgba(0,0,0,.2); }
+    .ask-box { position: relative; z-index: 1; margin-top: 30px; border: 0; box-shadow: 0 18px 45px rgba(0,0,0,.18); }
+    .suggestions { position: relative; z-index: 1; }
+    .hero .chip { border-color: rgba(255,255,255,.17); background: rgba(255,255,255,.09); color: rgba(255,255,255,.83); }
+    .hero .chip:hover { background: rgba(255,255,255,.17); color: white; }
+    .hero .answer { position: relative; z-index: 1; background: white; color: var(--ink); }
+    .hero-stats { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; max-width: 630px; margin-top: 22px; }
+    .hero-stat { padding: 12px 14px; border: 1px solid rgba(255,255,255,.12); border-radius: 13px; background: rgba(255,255,255,.07); }
+    .hero-stat strong { display: block; color: white; font-size: 20px; line-height: 1; }
+    .hero-stat span { display: block; margin-top: 5px; color: rgba(255,255,255,.58); font-size: 10px; }
+    .proof-strip { margin: -4px auto 52px; border: 0; border-radius: 24px; background: #fffaf0; box-shadow: 0 18px 50px rgba(47,55,48,.09); }
+    .proof-box { background: white; }
+    .section-head { position: relative; padding-left: 16px; }
+    .section-head::before { content: ""; position: absolute; left: 0; top: 2px; bottom: 2px; width: 4px; border-radius: 999px; background: var(--orange); }
+    .filters { padding: 6px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.55); width: max-content; max-width: 100%; }
+    .filter { border: 0; min-height: 40px; }
+    .usecase-grid { gap: 16px; }
+    .card { --accent: var(--green); position: relative; overflow: hidden; border: 0; border-radius: 22px; background: rgba(255,255,255,.9); box-shadow: 0 9px 28px rgba(31,49,40,.07); }
+    .card::before { content: ""; position: absolute; inset: 0 0 auto; height: 5px; background: var(--accent); }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 24px 52px rgba(31,49,40,.14); }
+    .tag { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-weight: 700; }
+    .tag::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+    .card h3 { margin-top: 20px; }
+    .arrow { background: var(--accent); color: white; transition: transform .2s; }
+    .card:hover .arrow { transform: rotate(-12deg) scale(1.06); }
+    .venue-panel { border: 0; border-radius: 28px; background: rgba(255,255,255,.88); box-shadow: 0 20px 60px rgba(31,49,40,.09); }
+    #venuePilot { background: linear-gradient(145deg,#fff 0%,#f8f4eb 100%); }
+    #tools { background: linear-gradient(145deg,#fff 0%,#f4ece3 100%); }
+    .venue-list { padding: 6px; border-radius: 999px; background: var(--paper); width: max-content; max-width: 100%; }
+    .venue-button { border: 0; }
+    .venue-focus { border-radius: 20px; background: #f5f1e8; }
+    .venue-kpi { border: 0; box-shadow: 0 7px 20px rgba(31,49,40,.06); }
+    .connected-flow { border-radius: 22px; background: linear-gradient(135deg,#102d24 0%,#176b54 100%); box-shadow: 0 18px 40px rgba(16,45,36,.17); }
+    .flow-step { transition: background .2s, transform .2s; }
+    .flow-step:hover { background: rgba(255,255,255,.13); transform: translateY(-2px); }
+    .technical-kit { border-radius: 30px; box-shadow: 0 30px 75px rgba(16,45,36,.19); }
+    dialog { border-radius: 28px; }
+    .back-to-top { background: var(--orange); border: 0; }
+    .back-to-top:hover { background: var(--green); }
+    .card { animation: cardIn .45s ease both; }
+    .card:nth-child(2) { animation-delay: .04s; }
+    .card:nth-child(3) { animation-delay: .08s; }
+    .card:nth-child(4) { animation-delay: .12s; }
+    .card:nth-child(5) { animation-delay: .16s; }
+    .card:nth-child(6) { animation-delay: .2s; }
+    @keyframes cardIn { from { opacity: 0; transform: translateY(12px); } }
+
+    @media (max-width: 980px) {
+      .sidebar { background: #102d24; }
+      .brand { padding: 0; border: 0; }
+      .hero-head { grid-template-columns: 1fr .42fr; gap: 20px; }
+      .hero-visual { min-height: 190px; }
+      .hero-portrait { width: 165px; }
+      .hero-bubble { font-size: 10px; max-width: 130px; }
+    }
+    @media (max-width: 620px) {
+      main { padding: 14px 13px 70px; }
+      .topbar { top: 8px; margin-bottom: 16px; padding: 0; border: 0; border-radius: 14px; background: transparent; box-shadow: none; }
+      .diagnostic-trigger { width: 100%; border-radius: 14px; }
+      .hero { padding: 24px 18px 20px; border-radius: 24px; }
+      .hero-head { grid-template-columns: 1fr; }
+      .hero-visual { min-height: 130px; display: flex; justify-content: flex-start; gap: 12px; }
+      .hero-portrait { width: 116px; border-width: 4px; }
+      .hero-bubble { position: static; max-width: 170px; font-size: 12px; transform: none; }
+      .hero h1 { font-size: 39px; }
+      .hero-stats { grid-template-columns: repeat(3,1fr); }
+      .hero-stat { padding: 10px 8px; }
+      .hero-stat strong { font-size: 18px; }
+      .hero-stat span { font-size: 9px; line-height: 1.25; }
+      .hero .chip { font-size: 12px; }
+      .proof-strip { border-radius: 20px; }
+      .filters { width: 100%; border-radius: 18px; }
+      .filter { flex: 1; }
+      .card { border-radius: 19px; }
+      .venue-list { width: 100%; border-radius: 16px; }
+      .venue-button { width: 100%; }
+      .venue-panel, .technical-kit { border-radius: 22px; }
+    }
     @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; animation: none !important; transition: none !important; } }
   </style>
 </head>
@@ -473,9 +598,10 @@
       </div>
 
       <section class="hero">
-        <span class="eyebrow">Le copilote qui met les problèmes à table</span>
-        <h1>Qu’est-ce que Claude peut vous faire gagner aujourd’hui&nbsp;?</h1>
-        <p class="hero-copy">Décrivez une difficulté et obtenez une méthode prête à appliquer. Remontées des restaurants, fournisseurs, marges, stocks, concepts ou recrutement cuisine&nbsp;: on part des fichiers et outils déjà utilisés.</p>
+        <div class="hero-head">
+          <div><span class="eyebrow">Le copilote qui met les problèmes à table</span><h1>Qu’est-ce que Claude peut vous faire <span>gagner aujourd’hui&nbsp;?</span></h1><p class="hero-copy">Décrivez une difficulté et obtenez une méthode prête à appliquer. Remontées des restaurants, fournisseurs, marges, stocks, concepts ou recrutement cuisine&nbsp;: on part des fichiers et outils déjà utilisés.</p></div>
+          <div class="hero-visual" aria-hidden="true"><div class="hero-portrait"><img src="./assets/hugo-rugbyman.png" alt=""></div><div class="hero-bubble">On attaque quoi aujourd’hui&nbsp;?</div></div>
+        </div>
         <form class="ask-box" id="askForm">
           <input id="askInput" aria-label="Votre question" autocomplete="off" placeholder="Ex. Je perds trop de temps à comparer les tarifs fournisseurs…">
           <button type="submit">Demander au conseiller →</button>
@@ -486,6 +612,7 @@
           <button class="chip" data-question="Comment comparer mes fournisseurs ?">Comparer les fournisseurs</button>
           <button class="chip" data-question="Comment tester un nouveau concept ?">Tester un nouveau concept</button>
         </div>
+        <div class="hero-stats" aria-label="Contenu du guide"><div class="hero-stat"><strong>22</strong><span>actions métier</span></div><div class="hero-stat"><strong>6</strong><span>micro-outils à créer</span></div><div class="hero-stat"><strong>2 min</strong><span>pour le diagnostic</span></div></div>
         <div class="answer" id="answer" aria-live="polite"></div>
       </section>
 
@@ -705,6 +832,13 @@ Terminé quand : tests, comportement visible et livrable vérifiable.</pre>
       ["Concepts", "✦"], ["Ambiance & programmation", "♫"]
     ];
     const categoryOrder = new Map(categories.map(([name], index) => [name, index]));
+    const categoryColors = {
+      "Performance":"#2f73d9", "Fournisseurs & achats":"#df8a18", "Stocks & préparation":"#6b8f45",
+      "Carte & marge":"#e25d43", "Équipes":"#7b61b8", "Qualité & procédures":"#168e82",
+      "Maintenance & outils":"#667680", "Recrutement":"#d95772", "Concepts":"#e27622",
+      "Ambiance & programmation":"#a4529d"
+    };
+    function cardAccent(category) { return categoryColors[category] || "#176b54"; }
 
     const actionCases = new Set([
       "Briefing opérationnel du matin", "Revue hebdomadaire d’un restaurant", "Détecter une dérive", "Trier les remontées des restaurants",
@@ -981,7 +1115,7 @@ Terminé quand : tests, comportement visible et livrable vérifiable.</pre>
       codeToolGrid.innerHTML = tools.map(item => {
         const connected = item.t === "Construire la boîte de réception des restaurants";
         const shared = connected || item.t === "Construire le vivier cuisine et le suivi des essais";
-        return `<article class="card" tabindex="0" role="button" data-title="${item.t}"><div class="card-top"><span class="tag">${item.c}</span><span class="effort">${connected ? "Forms / Sheets" : shared ? "Google Sheets" : "Excel / CSV"}</span></div><h3>${item.t}</h3><p>${item.d}</p><div class="card-bottom"><span class="mode">${shared ? "Outil partagé" : "Petit outil local"}</span><span class="arrow">↗</span></div></article>`;
+        return `<article class="card" tabindex="0" role="button" data-title="${item.t}" data-category="${item.c}" style="--accent:${cardAccent(item.c)}"><div class="card-top"><span class="tag">${item.c}</span><span class="effort">${connected ? "Forms / Sheets" : shared ? "Google Sheets" : "Excel / CSV"}</span></div><h3>${item.t}</h3><p>${item.d}</p><div class="card-bottom"><span class="mode">${shared ? "Outil partagé" : "Petit outil local"}</span><span class="arrow">↗</span></div></article>`;
       }).join("");
       codeToolGrid.querySelectorAll(".card").forEach(card => {
         const open = () => openCase(cases.find(item => item.t === card.dataset.title));
@@ -1030,7 +1164,7 @@ Terminé quand : tests, comportement visible et livrable vérifiable.</pre>
       count.textContent = isCollapsedHomepage ? `${list.length} sur ${coreCases().length}` : list.length;
       activeScope.textContent = isCollapsedHomepage ? "Sélection prioritaire" : selectedCategory === "Tous" ? "Toutes les actions" : selectedCategory;
       grid.innerHTML = list.length ? list.map(item => {
-        return `<article class="card" tabindex="0" role="button" data-title="${item.t}"><div class="card-top"><span class="tag">${item.c}</span><span class="effort">${item.e}</span></div><h3>${item.t}</h3><p>${item.d}</p><div class="card-bottom"><span class="mode">${displayTool(item)}</span><span class="arrow">↗</span></div></article>`;
+        return `<article class="card" tabindex="0" role="button" data-title="${item.t}" data-category="${item.c}" style="--accent:${cardAccent(item.c)}"><div class="card-top"><span class="tag">${item.c}</span><span class="effort">${item.e}</span></div><h3>${item.t}</h3><p>${item.d}</p><div class="card-bottom"><span class="mode">${displayTool(item)}</span><span class="arrow">↗</span></div></article>`;
       }).join("") : `<div class="empty">Aucun cas d'usage ne correspond à ce filtre.</div>`;
       catalogueMore.hidden = !(selectedCategory === "Tous" && selectedMode === "Tous");
       toggleAllCases.textContent = showAllCards ? "Réduire à 6 actions ↑" : `Afficher les ${coreCases().length - featuredActionTitles.length} autres actions ↓`;
