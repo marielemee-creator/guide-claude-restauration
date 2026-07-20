@@ -266,31 +266,43 @@
     .practice-links a { color: rgba(255,255,255,.72); border: 1px solid rgba(255,255,255,.14); border-radius: 999px; padding: 8px 11px; text-decoration: none; font-size: 10px; }
     .practice-links a:hover { color: white; border-color: rgba(255,255,255,.35); }
 
-    dialog { width: min(780px, calc(100vw - 24px)); max-height: calc(100vh - 24px); border: 0; border-radius: 24px; padding: 0; color: var(--ink); background: var(--white); box-shadow: 0 35px 100px rgba(0,0,0,.28); }
+    dialog { width: min(860px, calc(100vw - 24px)); max-height: calc(100vh - 24px); border: 0; border-radius: 24px; padding: 0; color: var(--ink); background: var(--white); box-shadow: 0 35px 100px rgba(0,0,0,.28); }
     dialog::backdrop { background: rgba(14, 24, 20, .65); backdrop-filter: blur(7px); }
-    .modal-head { padding: 28px 32px 22px; border-bottom: 1px solid var(--line); display: flex; gap: 24px; justify-content: space-between; }
-    .modal-head h2 { margin-top: 8px; }
-    .close { border: 1px solid var(--line); background: transparent; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; flex: none; }
-    .modal-body { padding: 28px 32px 34px; overflow: auto; }
+    #detailDialog[open] { display: grid; grid-template-rows: auto minmax(0,1fr); --dialog-accent: var(--green); }
+    .modal-head { padding: 25px 30px 22px; border-bottom: 1px solid rgba(255,255,255,.1); display: flex; gap: 24px; justify-content: space-between; background: linear-gradient(125deg, #102d24, color-mix(in srgb, var(--dialog-accent) 62%, #102d24)); color: white; }
+    .modal-head .eyebrow { color: var(--yellow); }
+    .modal-head h2 { margin-top: 8px; color: white; max-width: 680px; }
+    .close { border: 1px solid rgba(255,255,255,.24); background: rgba(255,255,255,.08); color: white; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; flex: none; transition: background .2s, transform .2s; }
+    .close:hover { background: rgba(255,255,255,.18); transform: rotate(4deg); }
+    .modal-body { padding: 24px 30px 32px; overflow: auto; background: #faf8f3; }
     .modal-summary { font-size: 15px; line-height: 1.65; color: var(--muted); margin-top: 0; }
-    .facts { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 25px 0; }
-    .fact { background: var(--paper); padding: 15px; border-radius: 12px; }
+    .facts { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 22px; }
+    .fact { display: flex; align-items: center; gap: 8px; background: white; padding: 9px 12px; border: 1px solid var(--line); border-radius: 999px; }
     .fact small { display: block; color: var(--muted); font-size: 9px; text-transform: uppercase; letter-spacing: .1em; }
-    .fact b { display: block; margin-top: 7px; font-size: 12px; }
+    .fact b { display: block; font-size: 11px; }
     .modal-body h3 { font: 800 22px/1.08 "Avenir Next", "Segoe UI", sans-serif; letter-spacing: -.025em; margin: 28px 0 12px; }
     .modal-body ol { padding-left: 20px; color: var(--muted); line-height: 1.7; font-size: 13px; }
     .source-kit { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .source-box { border: 1px solid var(--line); border-radius: 14px; padding: 17px; background: #f8f5ed; }
     .source-box strong { display: block; margin-bottom: 10px; color: var(--green); font-size: 12px; }
     .source-box ul { margin: 0; padding-left: 17px; color: var(--muted); font-size: 11px; line-height: 1.65; }
-    .specific-need { border: 1px solid rgba(24,92,75,.25); background: var(--white); border-radius: 14px; padding: 18px; margin-bottom: 10px; }
+    .case-flow { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin: 0 0 24px; }
+    .case-step { min-height: 74px; padding: 13px; border-radius: 14px; background: color-mix(in srgb, var(--dialog-accent) 8%, white); border: 1px solid color-mix(in srgb, var(--dialog-accent) 20%, white); color: var(--muted); font-size: 11px; line-height: 1.45; }
+    .case-step b { display: block; margin-bottom: 5px; color: var(--dialog-accent); font-size: 11px; }
+    .specific-need { border: 0; background: transparent; margin-bottom: 18px; }
     .specific-need strong { color: var(--green); font-size: 13px; }
-    .need-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 14px; margin-top: 12px; }
-    .need-grid div { font-size: 11px; line-height: 1.55; color: var(--muted); }
-    .need-grid small { display: block; color: var(--ink); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
+    .need-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 10px; margin-top: 12px; }
+    .need-grid div { padding: 17px; border: 1px solid var(--line); border-radius: 15px; background: white; font-size: 12px; line-height: 1.55; color: var(--muted); }
+    .need-grid small { display: flex; align-items: center; gap: 7px; color: var(--ink); font-weight: 800; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+    .need-grid small::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--dialog-accent); }
     .format-note { margin-top: 10px; padding: 12px 14px; border-radius: 10px; background: var(--green-2); color: var(--green); font-size: 11px; line-height: 1.55; }
-    .prompt { background: var(--ink); color: rgba(255,255,255,.8); border-radius: 14px; padding: 18px; font: 400 11px/1.65 "SFMono-Regular", Consolas, monospace; white-space: pre-wrap; }
-    .copy { margin-top: 10px; border: 0; background: var(--orange); color: white; border-radius: 10px; padding: 11px 16px; cursor: pointer; font-weight: 700; }
+    .prompt-shell { overflow: hidden; border-radius: 17px; background: var(--ink); box-shadow: 0 18px 42px rgba(19,37,30,.15); }
+    .prompt-toolbar { min-height: 58px; padding: 9px 10px 9px 17px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border-bottom: 1px solid rgba(255,255,255,.1); }
+    .prompt-label { color: white; font-size: 12px; font-weight: 800; }
+    .prompt-label small { display: block; margin-top: 3px; color: rgba(255,255,255,.48); font-size: 9px; font-weight: 500; }
+    .prompt { max-height: 330px; overflow: auto; color: rgba(255,255,255,.78); padding: 18px; font: 400 11px/1.65 "SFMono-Regular", Consolas, monospace; white-space: pre-wrap; }
+    .copy { flex: none; border: 0; background: var(--orange); color: white; border-radius: 11px; min-height: 40px; padding: 10px 14px; cursor: pointer; font-weight: 800; transition: transform .2s, background .2s; }
+    .copy:hover { background: #dc5337; transform: translateY(-1px); }
     .guardrail { padding: 15px 18px; background: #fff4d5; border-left: 3px solid var(--yellow); border-radius: 0 10px 10px 0; font-size: 12px; line-height: 1.55; }
     .intake-dialog { width: min(720px, calc(100vw - 24px)); }
     .intake-intro { padding: 28px 32px 0; }
@@ -432,15 +444,23 @@
       .practice-grid { grid-template-columns: 1fr; }
       .tech-code, .file-tree { font-size: 11px; }
       .practice-links a { font-size: 12px; }
+      #detailDialog { width: calc(100vw - 12px); max-height: calc(100dvh - 12px); border-radius: 20px; }
       .modal-head, .modal-body { padding-left: 18px; padding-right: 18px; }
       .modal-head { padding-top: 20px; padding-bottom: 18px; }
       .modal-head h2 { font-size: 28px; line-height: 1.05; }
       .modal-summary { font-size: 16px; line-height: 1.55; }
-      .fact small { font-size: 10px; }
-      .fact b { font-size: 14px; }
+      .facts { gap: 6px; }
+      .fact { padding: 8px 10px; }
+      .fact small { font-size: 9px; }
+      .fact b { font-size: 12px; }
+      .case-flow { grid-template-columns: 1fr; gap: 6px; }
+      .case-step { min-height: 0; display: grid; grid-template-columns: 74px 1fr; align-items: center; padding: 10px 12px; font-size: 13px; }
+      .case-step b { margin: 0; }
+      .need-grid { grid-template-columns: 1fr; }
       .need-grid div { font-size: 14px; }
-      .prompt { padding: 16px; font-size: 12.5px; line-height: 1.6; overflow-wrap: anywhere; }
-      .copy { min-height: 46px; font-size: 13px; }
+      .prompt-toolbar { align-items: stretch; flex-direction: column; padding: 13px; }
+      .copy { width: 100%; min-height: 46px; font-size: 13px; }
+      .prompt { max-height: 300px; padding: 16px; font-size: 12.5px; line-height: 1.6; overflow-wrap: anywhere; }
       .guardrail { font-size: 14px; }
       .intake-intro { padding: 22px 18px 0; }
       .intake-intro p { font-size: 15px; }
@@ -1179,9 +1199,10 @@ Terminé quand : tests, comportement visible et livrable vérifiable.</pre>
       if (!item) return;
       const specific = caseRequirements[item.t];
       const fullPrompt = promptPackage(item);
+      dialog.style.setProperty("--dialog-accent", cardAccent(item.c));
       document.getElementById("dialogCategory").textContent = item.c;
       document.getElementById("dialogTitle").textContent = item.t;
-      document.getElementById("dialogBody").innerHTML = `<p class="modal-summary">${item.d}</p><div class="facts"><div class="fact"><small>À utiliser avec</small><b>${displayTool(item)}</b></div><div class="fact"><small>Effort</small><b>${item.e}</b></div><div class="fact"><small>Intérêt</small><b>${item.v}</b></div></div><h3>Le minimum pour commencer</h3><div class="specific-need"><div class="need-grid"><div><small>Prérequis</small>${specific[0]}</div><div><small>À charger dans Claude</small>${specific[1]}</div></div></div><h3>Ce que Claude vous aide à obtenir</h3><p class="modal-summary">${item.d} Vous gardez la validation de la décision et pouvez demander à Claude de signaler ce qui lui manque.</p><h3>Prompt prêt à copier</h3><div class="prompt" id="promptText">${fullPrompt}</div><button class="copy" id="copyPrompt">Copier le prompt</button><h3>À garder en tête</h3><div class="guardrail">${item.g}</div>`;
+      document.getElementById("dialogBody").innerHTML = `<p class="modal-summary">${item.d}</p><div class="facts"><div class="fact"><small>Outil</small><b>${displayTool(item)}</b></div><div class="fact"><small>Mise en place</small><b>${item.e}</b></div><div class="fact"><small>Gain visé</small><b>${item.v}</b></div></div><div class="case-flow" aria-label="Mode d'emploi"><div class="case-step"><b>01 · Préparer</b>Réunissez les éléments indiqués ci-dessous.</div><div class="case-step"><b>02 · Copier</b>Copiez le prompt puis joignez vos fichiers.</div><div class="case-step"><b>03 · Compléter</b>Remplacez les champs entre crochets et lancez.</div></div><h3>Ce qu’il vous faut</h3><div class="specific-need"><div class="need-grid"><div><small>Avant de commencer</small>${specific[0]}</div><div><small>Documents utiles</small>${specific[1]}<div class="format-note">Période conseillée : ${specific[2]}</div></div></div></div><div class="prompt-shell"><div class="prompt-toolbar"><div class="prompt-label">Prompt prêt à l’emploi<small>À coller dans Claude ou dans votre projet</small></div><button class="copy" id="copyPrompt">Copier le prompt</button></div><div class="prompt" id="promptText">${fullPrompt}</div></div>`;
       document.getElementById("copyPrompt").addEventListener("click", async event => {
         try { await navigator.clipboard.writeText(fullPrompt); event.target.textContent = "Prompt copié ✓"; }
         catch { event.target.textContent = "Sélectionnez le texte ci-dessus"; }
