@@ -16,7 +16,7 @@ Puis ouvrir `http://localhost:4173`.
 
 - 22 actions opérationnelles réparties par catégorie ;
 - 6 idées de micro-outils réalisables avec Claude Code autour d’Excel, Google Sheets et Drive ;
-- un circuit simple de remontée terrain via formulaire, Sheet partagé et digest Gmail ;
+- un circuit progressif de remontée terrain, détaillé dans `reception-terrain.html`, du mode manuel assisté à l’application connectée ;
 - recherche conversationnelle locale par mots-clés ;
 - filtre de mise en place rapide ;
 - méthode, prompt de départ et point de vigilance pour chaque cas ;

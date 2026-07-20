@@ -166,7 +166,11 @@
     .flow-step small { color: var(--yellow); font: 500 9px "SFMono-Regular", Consolas, monospace; }
     .flow-step b { display: block; margin: 13px 0 6px; font-size: 12px; }
     .flow-step span { display: block; color: rgba(255,255,255,.58); font-size: 10px; line-height: 1.45; }
-    .flow-action { margin-top: 13px; border: 0; border-radius: 10px; padding: 11px 14px; background: var(--orange); color: white; cursor: pointer; font-size: 11px; font-weight: 700; }
+    .flow-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 13px; }
+    .flow-action { border: 0; border-radius: 10px; min-height: 42px; padding: 11px 14px; background: var(--orange); color: white; cursor: pointer; font-size: 11px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; }
+    .flow-action.secondary { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); }
+    .flow-action:hover { background: #dc5337; }
+    .flow-action.secondary:hover { background: rgba(255,255,255,.18); }
     .venue-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
     .venue-button { border: 1px solid var(--line); background: var(--white); border-radius: 999px; padding: 9px 13px; cursor: pointer; font-size: 11px; }
     .venue-button:hover, .venue-button.active { color: white; background: var(--green); border-color: var(--green); }
@@ -396,7 +400,8 @@
       .flow-step small { font-size: 10px; }
       .flow-step b { margin: 9px 0 6px; font-size: 15px; }
       .flow-step span { font-size: 13px; line-height: 1.5; }
-      .flow-action { width: 100%; min-height: 48px; font-size: 14px; }
+      .flow-actions { display: grid; }
+      .flow-action { width: 100%; min-height: 48px; justify-content: center; font-size: 14px; }
       .proof-flow { grid-template-columns: 1fr; }
       .proof-arrow { transform: rotate(90deg); justify-self: center; }
       .proof-action { width: 100%; }
@@ -655,14 +660,14 @@
       <section class="venue-panel" id="tools">
         <div class="venue-panel-head"><div><span class="eyebrow">Avec Claude Code</span><h2>Six micro-outils vraiment utiles.</h2></div><p>Le premier est détaillé juste dessous comme exemple connecté. Cinq autres outils suivent, autour de Google Drive, Sheets et des exports Excel déjà disponibles.</p></div>
         <div class="connected-flow">
-          <div class="connected-flow-head"><div><span class="eyebrow" style="color:var(--yellow)">Le circuit connecté le plus simple</span><h3>Une boîte de réception pour tous les restaurants.</h3><p>Chaque manager remplit un formulaire mobile d’une minute. Les réponses alimentent un Google Sheet et Hugo reçoit un digest priorisé, sans déployer de nouveau logiciel métier.</p></div><span class="connected-badge">Google Workspace · sans API métier</span></div>
+          <div class="connected-flow-head"><div><span class="eyebrow" style="color:var(--yellow)">Du terrain au briefing groupe</span><h3>Une seule synthèse, sans relancer chaque restaurant.</h3><p>Un formulaire d’une minute devient un briefing enrichi par les informations disponibles. Hugo reçoit les trois priorités et garde la décision.</p></div><span class="connected-badge">3 niveaux possibles</span></div>
           <div class="flow-steps">
-            <div class="flow-step"><small>01</small><b>Le restaurant signale</b><span>Site, sujet, impact, heure limite et photo ou lien facultatif.</span></div>
-            <div class="flow-step"><small>02</small><b>Sheets centralise</b><span>Une ligne datée par remontée dans un tableau Drive partagé.</span></div>
-            <div class="flow-step"><small>03</small><b>Les règles distribuent</b><span>Apps Script applique les priorités et envoie seulement les alertes prévues.</span></div>
-            <div class="flow-step"><small>04</small><b>Hugo décide</b><span>Il reçoit le digest et peut charger le Sheet dans Claude pour le synthétiser.</span></div>
+            <div class="flow-step"><small>01</small><b>Le restaurant signale</b><span>Fait observé, impact, action tentée et heure limite.</span></div>
+            <div class="flow-step"><small>02</small><b>Le contexte enrichit</b><span>Météo, événements, vacances, réservations ou effectifs disponibles.</span></div>
+            <div class="flow-step"><small>03</small><b>L’IA synthétise</b><span>Doublons, contradictions, informations manquantes et trois priorités maximum.</span></div>
+            <div class="flow-step"><small>04</small><b>Hugo décide</b><span>Résumé par e-mail, puis validation ou modification dans l’application.</span></div>
           </div>
-          <button class="flow-action" type="button" id="openFieldInbox">Voir comment le construire →</button>
+          <div class="flow-actions"><a class="flow-action" href="./reception-terrain.html">Comparer les 3 options →</a><button class="flow-action secondary" type="button" id="openFieldInbox">Voir le prompt de construction</button></div>
         </div>
         <div class="usecase-grid" id="codeToolGrid" style="margin-top:24px"></div>
       </section>
@@ -940,7 +945,7 @@ Terminé quand : tests, comportement visible et livrable vérifiable.</pre>
       {c:"Performance",t:"Construire le briefing multi-sites",d:"Déposer les exports de caisse des établissements et produire chaque semaine une page de priorités groupe.",m:"Claude Code",e:"Intermédiaire",v:"Pilotage groupe plus rapide",steps:["Importer les exports par site.","Uniformiser les colonnes.","Comparer chaque lieu à sa propre référence.","Sortir trois décisions maximum."],prompt:"Construis un outil local qui importe les exports Excel hebdomadaires de plusieurs établissements et génère une synthèse groupe : changements, écarts, questions à vérifier et trois décisions maximum avec responsables et échéances.",g:"Ne pas comparer brutalement un restaurant, un pub et un club ; conserver des références adaptées au concept."},
       {c:"Recrutement",t:"Construire le vivier cuisine et le suivi des essais",d:"Un tableau partagé pour ne perdre aucun bon profil et suivre source, disponibilité, entretien, essai et prochaine action.",m:"Claude Code",e:"Intermédiaire",v:"Sourcing mieux suivi",steps:["Définir les quelques champs utiles.","Importer le tableau existant ou partir d’un Google Sheet.","Afficher les relances et essais à venir.","Limiter les données personnelles et leur durée de conservation."],prompt:"Construis un outil simple à partir d'un Google Sheet pour suivre le vivier cuisine : source, poste, disponibilité, compétences vérifiées, statut, essai, prochaine action et responsable. Ajoute une vue des relances en retard. Ne classe ni ne rejette automatiquement les personnes et prévois une suppression à échéance.",g:"L'outil suit des étapes et des preuves professionnelles ; il ne prédit pas la fiabilité d'une personne."},
       {c:"Stocks & préparation",t:"Construire l’assistant de commandes",d:"Importer stock, ventes et contraintes fournisseurs pour préparer une proposition de commande modifiable.",m:"Claude Code",e:"Intermédiaire",v:"Commandes plus rapides",steps:["Importer stock et ventes Excel.","Lire délais et minimums.","Calculer une proposition expliquée.","Valider ou modifier chaque ligne."],prompt:"Construis une application locale qui importe stock, ventes récentes et contraintes fournisseurs depuis Excel. Elle propose une commande par fournisseur, explique chaque quantité et permet de modifier ou refuser chaque ligne avant export.",g:"L'outil ne transmet jamais automatiquement une commande au fournisseur."},
-      {c:"Performance",t:"Construire la boîte de réception des restaurants",d:"Un formulaire mobile relié à Google Sheets pour recevoir incidents, ruptures, besoins et décisions attendues dans un seul flux.",m:"Claude Code",e:"Intermédiaire",v:"Information terrain centralisée",steps:["Limiter le formulaire à une minute de saisie.","Stocker les réponses dans un Google Sheet partagé.","Définir des règles d’urgence et de responsabilité.","Générer un digest Gmail à heure fixe via Apps Script."],prompt:"Construis un dispositif léger avec Google Forms ou une page mobile, Google Sheets et Apps Script. Chaque remontée contient : établissement, catégorie, fait observé, impact, heure limite, action déjà tentée et pièce jointe facultative. Le système crée un digest à heure fixe, signale les données manquantes et n'envoie une alerte immédiate que selon des règles explicites. Fournis le script, le modèle de feuille, les droits d'accès et une procédure d'installation sans API métier.",g:"Ne jamais masquer une urgence de sécurité dans un digest ; conserver le circuit d’appel humain et limiter les accès au Sheet."}
+      {c:"Performance",t:"Construire la boîte de réception des restaurants",d:"Transformer les remontées terrain en une synthèse groupe enrichie, courte et directement arbitrable.",m:"Claude Code",e:"Intermédiaire",v:"Information terrain centralisée",steps:["Limiter le formulaire à une minute de saisie.","Conserver les faits terrain dans un Google Sheet partagé.","Rapprocher les sources disponibles sans inventer les données manquantes.","Préparer un digest et trois décisions maximum à valider."],prompt:"Construis un dispositif progressif avec Google Forms ou une page mobile, Google Sheets et Apps Script. Chaque remontée contient : établissement, service, fait observé, impact, heure limite, action déjà tentée et pièce jointe facultative. Prévois trois modes activables : synthèse manuelle dans Claude, synthèse semi-automatique déclenchée par un humain, puis enrichissement connecté. Le rapprochement peut utiliser seulement les sources réellement fournies : météo, événements validés, vacances, réservations et effectifs. Pour chaque priorité, cite les sources et leur fraîcheur, distingue fait, hypothèse et donnée manquante, puis propose une action, un responsable et une échéance. Prépare un brouillon d'e-mail et un lien vers le registre des décisions. Une urgence de sécurité reste hors digest et suit le circuit d'appel humain. Fournis le modèle de formulaire, la feuille, les règles, les droits, les états d'erreur et une procédure d'installation simple. N'ajoute aucune API ou transmission externe sans validation.",g:"Ne jamais masquer une urgence de sécurité dans un digest ; conserver le circuit d’appel humain et limiter les accès au Sheet."}
     ];
 
     let selectedCategory = "Tous";
