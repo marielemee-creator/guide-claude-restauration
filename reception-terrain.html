@@ -75,6 +75,8 @@
     .input-card small { color: var(--yellow); font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: .1em; }
     .input-card h3 { margin: 10px 0 8px; font-size: 22px; }
     .input-card p { margin: 0; color: rgba(255,255,255,.67); font-size: 12px; line-height: 1.6; }
+    .voice-example { margin: 15px 0 0; padding: 12px 13px; border-left: 3px solid var(--yellow); border-radius: 0 11px 11px 0; background: rgba(0,0,0,.13); color: rgba(255,255,255,.88); font-size: 11px; line-height: 1.55; }
+    .voice-example strong { display: block; margin-top: 7px; color: var(--yellow); font-size: 10px; }
     .voice-flow { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 15px; }
     .voice-flow span { padding: 7px 9px; border-radius: 9px; background: rgba(255,255,255,.1); font-size: 10px; font-weight: 800; }
     .local-sources { margin: 62px 0 28px; }
@@ -153,16 +155,16 @@
     <main>
       <section class="hero">
         <div class="hero-grid">
-          <div><span class="eyebrow">Remontées des restaurants</span><h1>Du terrain au briefing groupe.</h1><p>Trois façons réalistes de recevoir les informations des établissements, les enrichir et donner au responsable opérationnel une synthèse réellement arbitrable.</p><div class="recommendation">Notre conseil · commencer par l’option 2</div></div>
+          <div><span class="eyebrow">Avant le coup de feu</span><h1>Du terrain au briefing groupe.</h1><p>Absence cuisine, livraison en retard, réservations qui accélèrent, terrasse à ouvrir ou incident matériel : chaque restaurant remonte ce qui change, puis Hugo reçoit uniquement les arbitrages utiles avant le service.</p><div class="recommendation">Notre conseil · commencer par l’option 2</div></div>
           <img src="./assets/hugo-rugbyman.png" alt="Mascotte Hugueleton">
         </div>
       </section>
 
-      <section class="flow" aria-label="Parcours commun aux trois options">
-        <article><small>01</small><b>Signaler</b><span>Le restaurant transmet un fait, son impact et son heure limite.</span></article>
-        <article><small>02</small><b>Enrichir</b><span>Le contexte disponible est rapproché sans masquer les données manquantes.</span></article>
-        <article><small>03</small><b>Synthétiser</b><span>L’IA regroupe, explique et limite le briefing à trois priorités.</span></article>
-        <article><small>04</small><b>Décider</b><span>Le responsable valide, modifie ou refuse et nomme la prochaine action.</span></article>
+      <section class="flow" aria-label="Exemple fictif avant un service du vendredi soir">
+        <article><small>18:05 · LE RESTO</small><b>« On a un cuisinier absent »</b><span>86 réservations, livraison de fûts en retard et terrasse possible si le temps tient.</span></article>
+        <article><small>18:06 · LE SYSTÈME</small><b>Recouper ce qui existe</b><span>Planning, réservations, météo, événement voisin et dernier statut fournisseur.</span></article>
+        <article><small>18:07 · LE BRIEFING</small><b>Sortir trois priorités</b><span>Renfort cuisine, appel fournisseur et niveau de mise en place à confirmer.</span></article>
+        <article><small>AVANT 18:25 · HUGO</small><b>Arbitrer avant le service</b><span>Appeler, déplacer un renfort ou adapter la préparation — puis nommer qui fait quoi.</span></article>
       </section>
 
       <section aria-labelledby="options-title">
@@ -171,22 +173,22 @@
           <article class="option">
             <span class="option-number">Option 1 · Sans API</span><h3>Manuel assisté</h3><p>La voie la plus rapide pour vérifier que le briefing fait réellement gagner du temps.</p>
             <div class="pills"><span class="pill">Forms</span><span class="pill">Sheets</span><span class="pill">Claude</span></div>
-            <h4>Ce qui se passe</h4><ul><li>Les réponses arrivent dans un Sheet.</li><li>Hugo charge le rapport dans Claude.</li><li>Claude prépare la synthèse et les questions.</li><li>Hugo envoie ou adapte le briefing.</li></ul>
-            <div class="human"><strong>Action humaine</strong><span>Déclencher l’analyse et transmettre le résultat. Environ 5 à 10 minutes par briefing.</span></div>
+            <h4>Ce qui se passe</h4><ul><li>Chaque manager remplit le point avant service.</li><li>Les remontées arrivent dans un même Sheet.</li><li>Hugo ajoute si besoin planning ou réservations.</li><li>Claude trie les urgences et les questions à poser.</li></ul>
+            <div class="human"><strong>Action humaine</strong><span>Charger les fichiers, appeler lorsqu’un point est flou puis partager le briefing. Environ 5 à 10 minutes.</span></div>
           </article>
 
           <article class="option recommended">
             <span class="recommended-badge">Recommandée</span><span class="option-number">Option 2 · Contrôle humain</span><h3>Semi-automatique</h3><p>Le bon équilibre pour un petit groupe : automatiser la préparation, pas la décision.</p>
             <div class="pills"><span class="pill">Forms</span><span class="pill">Sheets</span><span class="pill">Apps Script</span><span class="pill">IA</span></div>
-            <h4>Ce qui se passe</h4><ul><li>Le rapport est construit automatiquement.</li><li>Un bouton lance l’enrichissement et la synthèse.</li><li>Un brouillon d’e-mail est préparé.</li><li>Hugo vérifie puis valide les décisions.</li></ul>
-            <div class="human"><strong>Action humaine</strong><span>Compléter les informations manquantes, arbitrer les trois priorités et confirmer l’envoi.</span></div>
+            <h4>Ce qui se passe</h4><ul><li>Le manager écrit ou dicte son point terrain.</li><li>La remontée est classée par lieu et service.</li><li>Les sources disponibles ajoutent le contexte.</li><li>Un briefing et les relances à faire sont préparés.</li></ul>
+            <div class="human"><strong>Action humaine</strong><span>Vérifier l’absence, appeler le fournisseur ou le manager concerné, puis valider les trois priorités.</span></div>
           </article>
 
           <article class="option">
             <span class="option-number">Option 3 · Progressive</span><h3>Connectée</h3><p>La version cible lorsque l’usage est validé et que les sources sont suffisamment fiables.</p>
             <div class="pills"><span class="pill">Application</span><span class="pill">Planning</span><span class="pill">Réservations</span><span class="pill">Signaux locaux</span></div>
-            <h4>Ce qui se passe</h4><ul><li>Les sources autorisées se mettent à jour.</li><li>Chaque signal conserve sa date et son origine.</li><li>Le briefing arrive dans l’application.</li><li>Les décisions et résultats sont historisés.</li></ul>
-            <div class="human"><strong>Action humaine</strong><span>Surveiller la qualité des sources et conserver la validation finale des actions.</span></div>
+            <h4>Ce qui se passe</h4><ul><li>Réservations, planning et signaux locaux s’actualisent.</li><li>Une alerte apparaît seulement si une action reste possible.</li><li>Le briefing arrive avec source et heure limite.</li><li>La décision et son exécution sont historisées.</li></ul>
+            <div class="human"><strong>Action humaine</strong><span>Garder les appels et arbitrages sensibles : déplacement d’une personne, achat, sécurité ou changement de service.</span></div>
           </article>
         </div>
       </section>
@@ -194,8 +196,8 @@
       <section class="input-modes" aria-labelledby="input-title">
         <div class="section-head"><div><span class="eyebrow">Deux façons de signaler</span><h2 id="input-title">Écrire… ou simplement parler.</h2></div><p>Le canal change, mais le rapport final garde la même structure afin de comparer les remontées entre établissements.</p></div>
         <div class="input-grid">
-          <article class="input-card"><small>Mode classique</small><h3>Formulaire express</h3><p>Le manager renseigne le fait, l’impact, l’action déjà tentée et l’heure limite. Idéal quand les chiffres ou références doivent être précis.</p></article>
-          <article class="input-card featured"><small>Option terrain · note vocale</small><h3>Dicter en 30 à 60 secondes</h3><p>L’audio est transcrit, puis l’IA extrait les mêmes champs et affiche ce qui manque. Le manager relit et confirme avant que la remontée rejoigne le briefing.</p><div class="voice-flow"><span>🎙 Dicter</span><span>Transcrire</span><span>Structurer</span><span>✓ Confirmer</span></div></article>
+          <article class="input-card"><small>Mode classique</small><h3>Six champs, pas un rapport</h3><p>Établissement, service, ce qui a changé, impact attendu, action déjà tentée et heure avant laquelle Hugo doit trancher.</p><div class="voice-example">Exemple : « Livraison boissons non reçue · risque de rupture à partir de 21 h · fournisseur déjà relancé. »</div></article>
+          <article class="input-card featured"><small>Option terrain · note vocale</small><h3>Dicter en 30 à 60 secondes</h3><p>Le manager parle comme il le ferait dans un vocal WhatsApp. L’IA extrait les faits, mais il relit avant l’envoi.</p><div class="voice-example">« Ce soir on a 86 réservations, un cuisinier absent et les fûts ne sont toujours pas arrivés. On pourrait ouvrir la terrasse. »<strong>Extrait : dîner · tension cuisine · livraison à confirmer · décision avant 18:25</strong></div><div class="voice-flow"><span>🎙 Dicter</span><span>Transcrire</span><span>Structurer</span><span>✓ Confirmer</span></div></article>
         </div>
       </section>
 
@@ -215,9 +217,9 @@
       <section class="roles" aria-labelledby="roles-title">
         <span class="eyebrow" style="color:var(--orange)">Dans l’option recommandée</span><h2 id="roles-title">Qui fait quoi, concrètement&nbsp;?</h2>
         <div class="roles-grid">
-          <article class="role"><small>Restaurant · 1 minute</small><h3>Décrire le fait</h3><p>Le manager renseigne le service, l’impact, l’action déjà tentée et l’heure limite. Une urgence de sécurité continue de passer par l’appel humain.</p></article>
-          <article class="role"><small>Système · automatique</small><h3>Préparer les preuves</h3><p>Il centralise, rapproche les sources disponibles, date les informations et prépare une synthèse. Il signale ce qu’il ne sait pas.</p></article>
-          <article class="role"><small>Responsable · quelques minutes</small><h3>Arbitrer et suivre</h3><p>Hugo vérifie, complète, valide ou refuse. Il attribue l’action puis indique ensuite si elle a réellement été exécutée.</p></article>
+          <article class="role"><small>Manager · avant service</small><h3>Dire ce qui a changé</h3><p>Pas de compte rendu général : seulement l’absence, la panne, la rupture, la hausse de réservations ou le blocage qui demande un arbitrage.</p></article>
+          <article class="role"><small>Système · en préparation</small><h3>Éviter les relances inutiles</h3><p>Il regroupe les remontées, ajoute les données déjà disponibles et demande explicitement l’information manquante au bon établissement.</p></article>
+          <article class="role"><small>Hugo · avant l’heure limite</small><h3>Passer les bons appels</h3><p>Il confirme le renfort, sécurise une livraison ou adapte le service. L’action est attribuée puis cochée lorsqu’elle est réellement faite.</p></article>
         </div>
         <div class="boundaries"><strong>La frontière utile</strong><p>L’IA regroupe et explique. Les règles déterminent les urgences prévues. Le responsable conserve les décisions concernant les personnes, les achats, la sécurité et les engagements.</p></div>
       </section>
