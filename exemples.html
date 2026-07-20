@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Exemples fictifs montrant comment Claude transforme des données opérationnelles en décisions à vérifier.">
+  <title>Hugueleton · Exemples concrets</title>
+  <style>
+    :root { --ink:#13251e; --muted:#68746f; --paper:#f3efe6; --white:#fffdf9; --green:#176b54; --deep:#102d24; --orange:#f06445; --yellow:#f5ca58; --line:#ddd8cd; --shadow:0 24px 65px rgba(25,46,37,.12); }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; color:var(--ink); background:radial-gradient(circle at 86% 4%,rgba(240,100,69,.13),transparent 28rem),radial-gradient(circle at 3% 74%,rgba(23,107,84,.1),transparent 30rem),var(--paper); font-family:"Avenir Next","Trebuchet MS",sans-serif; }
+    a { color:inherit; }
+    .shell { width:min(1120px,calc(100% - 32px)); margin:auto; }
+    .topbar { position:sticky; top:12px; z-index:5; display:flex; align-items:center; justify-content:space-between; gap:18px; margin-top:12px; padding:9px 10px 9px 16px; border:1px solid rgba(221,216,205,.85); border-radius:999px; background:rgba(255,253,249,.86); backdrop-filter:blur(16px); box-shadow:0 10px 30px rgba(31,49,40,.08); }
+    .brand { display:flex; align-items:center; gap:10px; text-decoration:none; font-weight:900; }
+    .brand img { width:38px; height:38px; object-fit:cover; border-radius:50%; border:2px solid var(--deep); background:#f6e7bf; }
+    .back { min-height:44px; display:inline-flex; align-items:center; padding:10px 15px; border-radius:999px; background:var(--deep); color:white; text-decoration:none; font-size:12px; font-weight:800; }
+    .hero { position:relative; overflow:hidden; display:grid; grid-template-columns:minmax(0,1fr) 180px; gap:36px; align-items:center; margin:28px 0 22px; padding:clamp(30px,6vw,66px); border-radius:34px; color:white; background:linear-gradient(135deg,var(--deep),#174c3d 68%,#1b624d); box-shadow:0 30px 80px rgba(16,45,36,.2); }
+    .hero::after { content:""; position:absolute; width:360px; height:360px; right:-150px; top:-210px; border-radius:50%; background:var(--orange); opacity:.2; }
+    .hero > * { position:relative; z-index:1; }
+    .eyebrow { display:block; color:var(--yellow); font-size:11px; font-weight:900; text-transform:uppercase; letter-spacing:.12em; }
+    h1 { max-width:760px; margin:10px 0 17px; font-size:clamp(45px,7vw,76px); line-height:.94; letter-spacing:-.055em; }
+    .hero p { max-width:700px; margin:0; color:rgba(255,255,255,.72); font-size:17px; line-height:1.65; }
+    .hero img { width:165px; aspect-ratio:1; object-fit:cover; border:5px solid white; border-radius:46% 54% 48% 52%; background:#f6e7bf; transform:rotate(3deg); box-shadow:0 20px 40px rgba(0,0,0,.22); }
+    .example-nav { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin-bottom:48px; }
+    .example-nav a { min-height:74px; padding:15px; border:1px solid var(--line); border-radius:16px; background:rgba(255,253,249,.86); text-decoration:none; }
+    .example-nav small { color:var(--orange); font-size:9px; font-weight:900; text-transform:uppercase; letter-spacing:.1em; }
+    .example-nav b { display:block; margin-top:8px; font-size:14px; }
+    .example { margin:0 0 28px; padding:clamp(24px,5vw,45px); border-radius:28px; background:var(--white); box-shadow:var(--shadow); }
+    .example-head { display:grid; grid-template-columns:1fr minmax(250px,.55fr); gap:28px; align-items:end; margin-bottom:24px; }
+    h2 { margin:7px 0 0; font-size:clamp(32px,5vw,50px); line-height:1; letter-spacing:-.045em; }
+    .example-head p { margin:0; color:var(--muted); font-size:13px; line-height:1.6; }
+    .files { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:16px; }
+    .file { padding:8px 11px; border:1px solid var(--line); border-radius:999px; background:var(--paper); font:600 10px "SFMono-Regular",Consolas,monospace; }
+    .supplier-table { overflow:hidden; border:1px solid var(--line); border-radius:17px; }
+    .supplier-row { display:grid; grid-template-columns:1.35fr .7fr .7fr 1fr; gap:12px; align-items:center; min-height:58px; padding:13px 16px; border-top:1px solid var(--line); font-size:12px; }
+    .supplier-row:first-child { border-top:0; }
+    .supplier-row small { color:var(--muted); }
+    .supplier-row strong:last-child { color:var(--green); }
+    .example-note { margin-top:15px; padding:13px 15px; border-left:3px solid var(--yellow); border-radius:0 11px 11px 0; background:#fff6da; color:var(--muted); font-size:11px; line-height:1.55; }
+    .venue-tabs { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:16px; padding:6px; border-radius:17px; background:var(--paper); }
+    .venue-tab { min-height:43px; padding:10px 13px; border:0; border-radius:12px; background:transparent; color:var(--ink); cursor:pointer; font:700 11px inherit; }
+    .venue-tab.active { background:var(--green); color:white; }
+    .venue-detail { display:grid; grid-template-columns:.85fr 1.15fr; gap:18px; padding:21px; border-radius:19px; background:#f7f3ea; }
+    .venue-detail h3 { margin:6px 0 8px; font-size:28px; letter-spacing:-.035em; }
+    .venue-detail p { margin:0; color:var(--muted); font-size:12px; line-height:1.55; }
+    .kpis { display:grid; grid-template-columns:repeat(2,1fr); gap:7px; margin-top:17px; }
+    .kpi { padding:12px; border-radius:12px; background:white; }
+    .kpi small { display:block; color:var(--muted); font-size:9px; text-transform:uppercase; letter-spacing:.08em; }
+    .kpi strong { display:block; margin-top:6px; font-size:18px; }
+    .kpi .watch { color:#bd4c32; }
+    .kpi .good { color:var(--green); }
+    .issues { display:grid; gap:7px; }
+    .issue { padding:12px 14px; border-left:3px solid var(--orange); border-radius:0 11px 11px 0; background:white; }
+    .issue b { display:block; margin-bottom:4px; font-size:12px; }
+    .issue span { color:var(--muted); font-size:11px; line-height:1.45; }
+    .recos { display:flex; flex-wrap:wrap; gap:6px; margin-top:11px; }
+    .reco { padding:8px 10px; border-radius:999px; background:var(--deep); color:white; font-size:10px; font-weight:800; }
+    .terrain { display:flex; align-items:center; justify-content:space-between; gap:26px; padding:28px; border-radius:24px; background:linear-gradient(135deg,var(--deep),var(--green)); color:white; }
+    .terrain h2 { margin:5px 0 8px; font-size:31px; }
+    .terrain p { max-width:680px; margin:0; color:rgba(255,255,255,.66); font-size:12px; line-height:1.6; }
+    .button { min-height:46px; flex:none; display:inline-flex; align-items:center; justify-content:center; padding:12px 16px; border-radius:12px; background:var(--orange); color:white; text-decoration:none; font-size:12px; font-weight:900; }
+    footer { display:flex; justify-content:space-between; gap:16px; padding:28px 0; color:var(--muted); font-size:11px; }
+    @media(max-width:760px){ .hero{grid-template-columns:1fr 115px}.hero img{width:110px}.example-nav,.example-head,.venue-detail{grid-template-columns:1fr}.supplier-row{grid-template-columns:1.2fr 1fr}.supplier-row strong:last-child{grid-column:1/-1}.terrain{align-items:stretch;flex-direction:column}.button{width:100%} }
+    @media(max-width:520px){ .shell{width:calc(100% - 20px)}.topbar{top:7px;margin-top:7px;padding-left:10px}.brand span{display:none}.back{font-size:11px}.hero{grid-template-columns:1fr;margin-top:14px;padding:27px 20px;border-radius:24px}.hero img{width:96px}h1{font-size:45px}.hero p{font-size:15px}.example-nav{grid-template-columns:1fr}.example{padding:22px 16px;border-radius:22px}.supplier-row{grid-template-columns:1fr 1fr;font-size:11px}.supplier-row b{grid-column:1/-1}.venue-tab{width:100%}.terrain{padding:22px 18px}footer{flex-direction:column} }
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar"><a class="brand" href="./index.html"><img src="./assets/hugo-rugbyman.png" alt=""><span>Hugueleton</span></a><a class="back" href="./index.html">← Retour aux cas d’usage</a></header>
+    <main>
+      <section class="hero"><div><span class="eyebrow">Données fictives · démonstrations</span><h1>Voir avant de se lancer.</h1><p>Trois exemples pour comprendre le résultat attendu. Ils illustrent une méthode et ne prétendent pas traiter des données réelles dans ce site.</p></div><img src="./assets/hugo-rugbyman.png" alt="Mascotte Hugueleton"></section>
+      <nav class="example-nav" aria-label="Choisir un exemple"><a href="#fournisseurs"><small>Exemple 01</small><b>Deux fournisseurs comparés</b></a><a href="#etablissements"><small>Exemple 02</small><b>Trois lieux, trois priorités</b></a><a href="./reception-terrain.html"><small>Exemple 03</small><b>Du terrain au briefing groupe ↗</b></a></nav>
+
+      <section class="example" id="fournisseurs" aria-labelledby="supplier-title">
+        <div class="example-head"><div><span class="eyebrow" style="color:var(--orange)">Fournisseurs · avant / après</span><h2 id="supplier-title">Deux fichiers deviennent trois vérifications.</h2></div><p>Claude rapproche les désignations, normalise les unités et sépare les équivalences certaines de celles qui demandent un contrôle.</p></div>
+        <div class="files"><span class="file">Tarifs_fournisseur_A.xlsx</span><span class="file">Tarifs_fournisseur_B.csv</span><span class="file">Volumes_achats.xlsx</span></div>
+        <div class="supplier-table"><div class="supplier-row"><b>Huile de friture · 10 L</b><small>A · 31,80 €</small><small>B · 29,40 €</small><strong>2,40 € à négocier</strong></div><div class="supplier-row"><b>Poulet · prix au kg</b><small>A · 7,90 €</small><small>B · 7,55 €</small><strong>Qualité à vérifier</strong></div><div class="supplier-row"><b>Frites · carton 10 kg</b><small>A · 18,20 €</small><small>B · 17,90 €</small><strong>Équivalence incertaine</strong></div></div>
+        <div class="example-note">Aucun rapprochement incertain n’est validé automatiquement. Qualité, marque, conditionnement et coût complet restent à vérifier.</div>
+      </section>
+
+      <section class="example" id="etablissements" aria-labelledby="venue-title">
+        <div class="example-head"><div><span class="eyebrow" style="color:var(--orange)">Pilotage multi-sites</span><h2 id="venue-title">Le même groupe, pas les mêmes problèmes.</h2></div><p>Changer d’établissement modifie les indicateurs observés et les cas d’usage à examiner. Les chiffres ci-dessous sont entièrement fictifs.</p></div>
+        <div class="venue-tabs" id="venueTabs" aria-label="Choisir un établissement"></div><div class="venue-detail" id="venueDetail" aria-live="polite"></div>
+      </section>
+
+      <section class="terrain"><div><span class="eyebrow">Exemple 03</span><h2>Du terrain au briefing groupe.</h2><p>Comparez les versions manuelle, semi-automatique et connectée du dispositif de remontées terrain.</p></div><a class="button" href="./reception-terrain.html">Voir les 3 options →</a></section>
+    </main>
+    <footer><span>Prototype pédagogique · aucune donnée opérationnelle réelle</span><span>Les exemples montrent un résultat attendu, pas un traitement actif.</span></footer>
+  </div>
+  <script>
+    const venues = [
+      {id:"tap",name:"Établissement A",concept:"Restaurant tapas · centre-ville",period:"Semaine vs 8 semaines comparables",kpis:[["CA","− 8 %","watch"],["Couverts","184",""] ,["Coût matière","29,4 %","watch"],["Poste cuisine","1 ouvert","watch"]],issues:[["Le mardi soir décroche","Couverts en baisse sur trois services comparables ; causes à vérifier."],["Hausse sur deux produits clés","Poulet +11 % et huile +8 % dans le dernier tarif."]],recos:["Revue hebdomadaire","Comparer les fournisseurs","Sourcer des cuisiniers"]},
+      {id:"bar",name:"Établissement B",concept:"Bar festif avec petite restauration",period:"7 jours vs semaine comparable",kpis:[["CA","+ 12 %","good"],["Couverts","322","good"],["Coût matière","25,8 %","good"],["Incidents","3 ouverts","watch"]],issues:[["Risque de rupture samedi","Deux références paraissent courtes au regard des réservations."],["Ambiance irrégulière après 23 h","Plusieurs retours concernent le volume et les transitions."]],recos:["Alerter sur une rupture","Créer une playlist","Trier les remontées"]},
+      {id:"brasserie",name:"Établissement C",concept:"Brasserie urbaine · déjeuner et dîner",period:"Semaine vs objectif et historique",kpis:[["CA","− 3 %","watch"],["Couverts","148",""],["Coût matière","31,2 %","watch"],["Heures","+ 9 %","watch"]],issues:[["Marge sous pression","Trois plats contribuent peu après la hausse des achats."],["Équipe surdimensionnée lundi midi","Les heures progressent malgré une activité stable."]],recos:["Analyser la carte","Analyser le staffing","Actualiser les coûts"]}
+    ];
+    let activeVenue = "tap";
+    const tabs = document.getElementById("venueTabs");
+    const detail = document.getElementById("venueDetail");
+    function renderVenue(){
+      const venue=venues.find(item=>item.id===activeVenue);
+      tabs.innerHTML=venues.map(item=>`<button class="venue-tab ${item.id===activeVenue?"active":""}" type="button" data-venue="${item.id}" aria-pressed="${item.id===activeVenue}">${item.name} · ${item.concept.split(" · ")[0]}</button>`).join("");
+      detail.innerHTML=`<div><span class="eyebrow" style="color:var(--orange)">${venue.period}</span><h3>${venue.name}</h3><p>${venue.concept}</p><div class="kpis">${venue.kpis.map(k=>`<div class="kpi"><small>${k[0]}</small><strong class="${k[2]}">${k[1]}</strong></div>`).join("")}</div></div><div><div class="issues">${venue.issues.map(i=>`<div class="issue"><b>${i[0]}</b><span>${i[1]}</span></div>`).join("")}</div><div class="recos">${venue.recos.map(r=>`<span class="reco">${r}</span>`).join("")}</div></div>`;
+      tabs.querySelectorAll("[data-venue]").forEach(button=>button.addEventListener("click",()=>{activeVenue=button.dataset.venue;renderVenue();}));
+    }
+    renderVenue();
+  </script>
+</body>
+</html>

@@ -26,7 +26,7 @@
     .topbar { position: sticky; top: 12px; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: 12px; padding: 9px 10px 9px 16px; border: 1px solid rgba(221,216,205,.85); border-radius: 999px; background: rgba(255,253,249,.85); backdrop-filter: blur(16px); box-shadow: 0 10px 30px rgba(31,49,40,.08); }
     .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 900; }
     .brand img { width: 38px; height: 38px; object-fit: cover; border-radius: 50%; border: 2px solid var(--deep); background: #f6e7bf; }
-    .back { min-height: 42px; display: inline-flex; align-items: center; padding: 10px 15px; border-radius: 999px; background: var(--deep); color: white; text-decoration: none; font-size: 12px; font-weight: 800; }
+    .back { min-height: 44px; display: inline-flex; align-items: center; padding: 10px 15px; border-radius: 999px; background: var(--deep); color: white; text-decoration: none; font-size: 12px; font-weight: 800; }
     .hero { position: relative; overflow: hidden; margin: 28px 0 20px; padding: clamp(30px,6vw,68px); border-radius: 34px; color: white; background: linear-gradient(135deg, var(--deep), #174c3d 65%, #1b624d); box-shadow: 0 30px 80px rgba(16,45,36,.2); }
     .hero::after { content: ""; position: absolute; width: 340px; height: 340px; right: -130px; top: -190px; border-radius: 50%; background: var(--orange); opacity: .2; }
     .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0,1fr) 190px; gap: 36px; align-items: center; }
@@ -66,6 +66,27 @@
     .human span { color: var(--muted); font-size: 11px; line-height: 1.5; }
     .recommended .human span { color: rgba(255,255,255,.62); }
     .recommended-badge { position: absolute; right: 18px; top: 18px; padding: 7px 9px; border-radius: 999px; background: var(--yellow); color: var(--deep); font-size: 9px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; }
+    .input-modes { margin: 58px 0 28px; padding: clamp(24px,5vw,44px); border-radius: 28px; color: white; background: linear-gradient(145deg, #173d31, var(--deep)); box-shadow: var(--shadow); }
+    .input-modes .section-head { margin-bottom: 24px; }
+    .input-modes .section-head p { color: rgba(255,255,255,.66); }
+    .input-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; }
+    .input-card { padding: 21px; border: 1px solid rgba(255,255,255,.12); border-radius: 19px; background: rgba(255,255,255,.07); }
+    .input-card.featured { border-color: rgba(245,202,88,.55); background: rgba(245,202,88,.1); }
+    .input-card small { color: var(--yellow); font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: .1em; }
+    .input-card h3 { margin: 10px 0 8px; font-size: 22px; }
+    .input-card p { margin: 0; color: rgba(255,255,255,.67); font-size: 12px; line-height: 1.6; }
+    .voice-flow { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 15px; }
+    .voice-flow span { padding: 7px 9px; border-radius: 9px; background: rgba(255,255,255,.1); font-size: 10px; font-weight: 800; }
+    .local-sources { margin: 62px 0 28px; }
+    .source-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+    .source-card { display: flex; flex-direction: column; min-height: 185px; padding: 20px; border: 1px solid var(--line); border-radius: 19px; background: rgba(255,253,249,.86); text-decoration: none; transition: transform .18s ease, box-shadow .18s ease; }
+    .source-card:hover { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(31,49,40,.09); }
+    .source-card small { color: var(--orange); font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: .09em; }
+    .source-card h3 { margin: 11px 0 8px; font-size: 19px; }
+    .source-card p { margin: 0 0 16px; color: var(--muted); font-size: 12px; line-height: 1.55; }
+    .access-badge { width: max-content; margin-top: auto; padding: 6px 8px; border-radius: 999px; background: #e8f2ed; color: var(--green); font-size: 9px; font-weight: 900; }
+    .source-note { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-top: 14px; padding: 16px 18px; border-radius: 15px; background: rgba(255,255,255,.62); color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .source-note a { flex: 0 0 auto; color: var(--green); font-weight: 900; text-decoration: none; }
     .roles { margin: 64px 0 28px; padding: clamp(26px,5vw,48px); border-radius: 28px; background: var(--white); box-shadow: var(--shadow); }
     .roles-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 24px; }
     .role { padding: 19px; border-radius: 17px; background: var(--paper); }
@@ -91,6 +112,7 @@
       .option { min-height: 0; }
       .option.recommended { transform: none; }
       .section-head, .roles-grid { grid-template-columns: 1fr; }
+      .source-grid { grid-template-columns: repeat(2,1fr); }
     }
     @media (max-width: 560px) {
       .shell { width: min(100% - 20px, 1120px); }
@@ -109,6 +131,10 @@
       .section-head p { margin-top: 12px; }
       .option { padding: 20px; border-radius: 20px; }
       .option > p { min-height: 0; }
+      .input-modes { margin-top: 40px; padding: 22px 16px; border-radius: 22px; }
+      .input-grid, .source-grid { grid-template-columns: 1fr; }
+      .source-card { min-height: 0; }
+      .source-note { align-items: flex-start; flex-direction: column; }
       .roles { margin-top: 42px; padding: 22px 16px; border-radius: 22px; }
       .boundaries, .cta, footer { flex-direction: column; align-items: stretch; }
       .cta-actions { justify-content: stretch; }
@@ -163,6 +189,27 @@
             <div class="human"><strong>Action humaine</strong><span>Surveiller la qualité des sources et conserver la validation finale des actions.</span></div>
           </article>
         </div>
+      </section>
+
+      <section class="input-modes" aria-labelledby="input-title">
+        <div class="section-head"><div><span class="eyebrow">Deux façons de signaler</span><h2 id="input-title">Écrire… ou simplement parler.</h2></div><p>Le canal change, mais le rapport final garde la même structure afin de comparer les remontées entre établissements.</p></div>
+        <div class="input-grid">
+          <article class="input-card"><small>Mode classique</small><h3>Formulaire express</h3><p>Le manager renseigne le fait, l’impact, l’action déjà tentée et l’heure limite. Idéal quand les chiffres ou références doivent être précis.</p></article>
+          <article class="input-card featured"><small>Option terrain · note vocale</small><h3>Dicter en 30 à 60 secondes</h3><p>L’audio est transcrit, puis l’IA extrait les mêmes champs et affiche ce qui manque. Le manager relit et confirme avant que la remontée rejoigne le briefing.</p><div class="voice-flow"><span>🎙 Dicter</span><span>Transcrire</span><span>Structurer</span><span>✓ Confirmer</span></div></article>
+        </div>
+      </section>
+
+      <section class="local-sources" aria-labelledby="sources-title">
+        <div class="section-head"><div><span class="eyebrow" style="color:var(--orange)">Sources déjà disponibles à Rennes</span><h2 id="sources-title">On ne part pas de zéro.</h2></div><p>Ces signaux publics peuvent enrichir progressivement le briefing. Chaque donnée doit conserver sa source, son heure de mise à jour et son niveau de fraîcheur.</p></div>
+        <div class="source-grid">
+          <a class="source-card" href="https://openagenda.com/fr/rennes-metropole" target="_blank" rel="noreferrer"><small>Affluence locale ↗</small><h3>Événements</h3><p>Repérer concerts, festivals et rendez-vous susceptibles de déplacer la fréquentation.</p><span class="access-badge">OpenAgenda · export ou clé API</span></a>
+          <a class="source-card" href="https://data.rennesmetropole.fr/explore/dataset/etat-du-trafic-en-temps-reel/api/" target="_blank" rel="noreferrer"><small>Accessibilité ↗</small><h3>Trafic routier</h3><p>Expliquer un accès dégradé, des retards attendus ou un risque sur les livraisons.</p><span class="access-badge">Rennes Métropole · API ouverte</span></a>
+          <a class="source-card" href="https://data.rennesmetropole.fr/explore/dataset/alertes-trafic-en-temps-reel-sur-les-lignes-du-reseau-star/table/" target="_blank" rel="noreferrer"><small>Mobilité ↗</small><h3>Réseau STAR</h3><p>Tenir compte des perturbations bus et métro qui touchent clients ou équipes.</p><span class="access-badge">Alertes et données temps réel</span></a>
+          <a class="source-card" href="https://www.data.gouv.fr/organizations/meteo-france/dataservices" target="_blank" rel="noreferrer"><small>Terrasse &amp; demande ↗</small><h3>Météo</h3><p>Contextualiser la fréquentation, la terrasse et certaines préparations sans promettre une précision artificielle.</p><span class="access-badge">Météo-France · compte selon l’API</span></a>
+          <a class="source-card" href="https://www.data.gouv.fr/dataservices/api-calendrier-scolaire" target="_blank" rel="noreferrer"><small>Effet calendrier ↗</small><h3>Vacances &amp; jours fériés</h3><p>Ajouter les vacances de la zone B et les jours fériés aux comparaisons historiques.</p><span class="access-badge">API gouvernementale ouverte</span></a>
+          <a class="source-card" href="https://data.rennesmetropole.fr/explore/dataset/api-parkings-rennes-metropole/" target="_blank" rel="noreferrer"><small>Accès centre-ville ↗</small><h3>Parkings</h3><p>Observer la pression sur les parkings comme signal complémentaire, en contrôlant sa fraîcheur.</p><span class="access-badge">Rennes Open Data · sans inscription</span></a>
+        </div>
+        <div class="source-note"><span><strong>À compléter par les sources internes autorisées :</strong> réservations, caisse, effectifs, stocks et commandes. Le catalogue rennais comprend aussi les chantiers et travaux. Une source absente reste « inconnue » ; l’IA ne la reconstitue pas.</span><a href="https://data.rennesmetropole.fr/api/explore/v2.1/" target="_blank" rel="noreferrer">Explorer l’API Rennes ↗</a></div>
       </section>
 
       <section class="roles" aria-labelledby="roles-title">

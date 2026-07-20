@@ -16,7 +16,9 @@ Puis ouvrir `http://localhost:4173`.
 
 - 22 actions opérationnelles réparties par catégorie ;
 - 6 idées de micro-outils réalisables avec Claude Code autour d’Excel, Google Sheets et Drive ;
-- un circuit progressif de remontée terrain, détaillé dans `reception-terrain.html`, du mode manuel assisté à l’application connectée ;
+- un circuit progressif de remontée terrain, détaillé dans `reception-terrain.html`, du mode manuel assisté à l’application connectée, avec formulaire ou note vocale validée ;
+- des sources publiques rennaises directement reliées à leurs catalogues officiels pour enrichir météo, événements, mobilité et calendrier ;
+- une page `exemples.html` séparant les démonstrations fournisseurs et multi-établissements du catalogue principal ;
 - recherche conversationnelle locale par mots-clés ;
 - filtre de mise en place rapide ;
 - méthode, prompt de départ et point de vigilance pour chaque cas ;
